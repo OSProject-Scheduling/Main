@@ -24,7 +24,7 @@ public class GhanttChartPanel extends JPanel{
 		this.GhanttchartScroll = GhanttchartScroll;
 	}
 	
-	public void adding(JLabel FCFSName) {				// Áö¿ö¾ß ÇÔ
+	public void adding(JLabel FCFSName) {				// ì§€ì›Œì•¼ í•¨
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout());
 		panel.setBackground(Color.BLUE);

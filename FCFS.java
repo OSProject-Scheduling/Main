@@ -12,7 +12,7 @@ import java.util.Queue;
 public class FCFS {
 
 	GhanttChartPanel ghanttchartPanel;
-	LinkedList<FCFSProcess> SRTNList = new LinkedList<>();		// ¿©±â¿¡ FCFS°¡ ÀúÀåµÇ¾î ÀÖÀ½ ¿©±â¿¡ ÀÖ´Â°Å »©°¡¾ß ÇÔ.
+	LinkedList<FCFSProcess> SRTNList = new LinkedList<>();		// ì—¬ê¸°ì— FCFSê°€ ì €ì¥ë˜ì–´ ìˆìŒ ì—¬ê¸°ì— ìˆëŠ”ê±° ë¹¼ê°€ì•¼ í•¨.
 	LinkedList<FCFSProcess> ReadyQueue = new LinkedList<>();
 	FCFSProcess PresentSRTN = null;
 	FCFSProcess Process = null;
@@ -28,26 +28,26 @@ public class FCFS {
 	}
 	
 	public void start() {
-		Timer timer = new Timer(); 																				// timer¿Í timertask¸¦ »ç¿ëÇØ Ä«¿îÆ®¸¦ ±¸Çö½ÃÄ×½À´Ï´Ù
+		Timer timer = new Timer(); 																				// timerì™€ timertaskë¥¼ ì‚¬ìš©í•´ ì¹´ìš´íŠ¸ë¥¼ êµ¬í˜„ì‹œì¼°ìŠµë‹ˆë‹¤
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-					Schedulling(); 																				// 1ÃÊ ¸¶´Ù ½ÇÇà
+					Schedulling(); 																				// 1ì´ˆ ë§ˆë‹¤ ì‹¤í–‰
 					if(SRTNList.isEmpty() && ReadyQueue.isEmpty() && PresentSRTN == null) timer.cancel(); 
-					time++; 																					// timeº¯¼ö¸¦ Áõ°¡½ÃÄÑÁà ÃÊ¸¦ Ç¥Çö
+					time++; 																					// timeë³€ìˆ˜ë¥¼ ì¦ê°€ì‹œì¼œì¤˜ ì´ˆë¥¼ í‘œí˜„
 				}
 			};
-			timer.schedule(task, 1000,1000); 																	// 1ÃÊ¸¶´Ù ½ÇÇà
+			timer.schedule(task, 1000,1000); 																	// 1ì´ˆë§ˆë‹¤ ì‹¤í–‰
 	}
 	void Schedulling() {
-		if(!SRTNList.isEmpty() && time == SRTNList.peekFirst().ArrivalTime) ReadyQueue.add(SRTNList.poll()); 	// FCFSList¿¡¼­ ReadyQueue·Î ÀÌµ¿(ArrivalTime¿¡ ¸ÂÀ¸¸é)
-		if(PresentSRTN == null) {																				// ÇöÀç FCFS°¡ ºñ¾îÀÖÀ»¶§ 
-			if(!ReadyQueue.isEmpty()) {																			// ReadyQueue°¡ ºñ¾îÀÖÁö ¾ÊÀ¸¸é ÇöÀç FCFS·Î poll
+		if(!SRTNList.isEmpty() && time == SRTNList.peekFirst().ArrivalTime) ReadyQueue.add(SRTNList.poll()); 	// FCFSListì—ì„œ ReadyQueueë¡œ ì´ë™(ArrivalTimeì— ë§ìœ¼ë©´)
+		if(PresentSRTN == null) {																				// í˜„ì¬ FCFSê°€ ë¹„ì–´ìˆì„ë•Œ 
+			if(!ReadyQueue.isEmpty()) {																			// ReadyQueueê°€ ë¹„ì–´ìˆì§€ ì•Šìœ¼ë©´ í˜„ì¬ FCFSë¡œ poll
 				PresentSRTN = ReadyQueue.poll();
 			}
 		}
 		if(PresentSRTN==null) ghanttchartPanel.adding(new JLabel("    "));			
-		else ghanttchartPanel.adding(new JLabel(PresentSRTN.Name));												// GhanttChart Ç¥½Ã
+		else ghanttchartPanel.adding(new JLabel(PresentSRTN.Name));												// GhanttChart í‘œì‹œ
 		if(!(PresentSRTN == null)) {
 			for(int i = SRTNList.size()-2;i>=0;i--) {
 				if(SRTNList.get(SRTNList.size()-pass).BurstTime < SRTNList.get(i).BurstTime) {
@@ -59,7 +59,7 @@ public class FCFS {
 			}
 			PresentSRTN = SRTNList.get(0);
 			pass = 1;
-			PresentSRTN.BurstTime -= CoreWork;											// ÇöÀç FCFS°¡ ºñ¾îÀÖÁö ¾ÊÀ¸¸é bursttime¿¡¼­ Ã³¸®·® »©ÁÖ±â
+			PresentSRTN.BurstTime -= CoreWork;											// í˜„ì¬ FCFSê°€ ë¹„ì–´ìˆì§€ ì•Šìœ¼ë©´ bursttimeì—ì„œ ì²˜ë¦¬ëŸ‰ ë¹¼ì£¼ê¸°
 		}
 		if(!(PresentSRTN == null) && PresentSRTN.BurstTime <= 0) PresentSRTN = null;
 	}

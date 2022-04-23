@@ -40,7 +40,7 @@ public class MainFrame extends JFrame{
 	}
 	
 	
-	private void Base() {					// FrameÃ¢ ±âº» ¼³Á¤
+	private void Base() {					// Frameì°½ ê¸°ë³¸ ì„¤ì •
 		setLayout(null);
 		setSize(1014, 797);
 		setTitle("OSProject");
