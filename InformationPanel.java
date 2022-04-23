@@ -44,8 +44,8 @@ public class InformationPanel extends JPanel{
 	}
 	
 	public void AddAlgorithm(FCFSProcess FCFS) {
-		model.addRow(new Object[] {FCFS.Name, Integer.toString(FCFS.ArrivalTime), Integer.toString(FCFS.BurstTime),
-				Integer.toString(FCFS.WaitingTime), Integer.toString(FCFS.TurnaroundTime),
+			model.addRow(new Object[] {FCFS.Name, Double.toString(FCFS.ArrivalTime), Double.toString(FCFS.BurstTime),
+				Double.toString(FCFS.WaitingTime), Double.toString(FCFS.TurnaroundTime),
 				FCFS.NormalizedTime
 				});
 	}

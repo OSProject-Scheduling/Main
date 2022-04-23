@@ -1,19 +1,17 @@
+
 public class FCFSProcess {
 	String Name;
-	int ArrivalTime;
-	int BurstTime;
-	int WaitingTime;
-	int TurnaroundTime;
-	int NormalizedTime;
-	
-	public FCFSProcess(String Name, int ArrivalTime, int BurstTIme,
-			int WaitingTime, int TurnaroundTime, int NormalizedTime) {
+	double ArrivalTime;
+	double BurstTime;
+	double WaitingTime;
+	double TurnaroundTime = 0;
+	double NormalizedTime = 0;
+	double StaticBurstTime;
+	double ResponseRatio = -1;
+	public FCFSProcess(String Name, int ArrivalTime, int StaticBurstTime) {
 		this.ArrivalTime = ArrivalTime;
-		this.BurstTime = BurstTIme;
+		this.StaticBurstTime = StaticBurstTime;
+		this.BurstTime = StaticBurstTime;
 		this.Name = Name;
-		this.WaitingTime = WaitingTime;
-		this.TurnaroundTime = TurnaroundTime;
-		this.NormalizedTime = NormalizedTime;
-		
 	}
 }

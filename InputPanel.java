@@ -98,13 +98,13 @@ public class InputPanel extends JPanel{
 	public FCFSProcess AlgorithmSetting() {
 		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// 입력칸에 빈칸인 경우 경고메세지 출력
 				|| BurstTimeTextField.getText().equals("")) {
-			return new FCFSProcess("ERROR", -1, -1, -1, -1, -1);
+			return new FCFSProcess("ERROR", -1, -1);
 		}
 		
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
 
-		return new FCFSProcess(ProcessNameTextField.getText(), ArrivalTime, BurstTime, 0, 0, 0);
+		return new FCFSProcess(ProcessNameTextField.getText(), ArrivalTime, BurstTime);
 	}
 	
 	public void Update() {
