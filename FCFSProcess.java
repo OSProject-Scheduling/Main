@@ -14,6 +14,6 @@ public class FCFSProcess {
 		this.WaitingTime = WaitingTime;
 		this.TurnaroundTime = TurnaroundTime;
 		this.NormalizedTime = NormalizedTime;
-		d
+		
 	}
 }
