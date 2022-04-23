@@ -75,15 +75,15 @@ public class InputPanel extends JPanel{
 		add(BurstTimeTextField);
 	}
 	
-	private class ProcessNameKeyListener extends KeyAdapter{		// ÇÁ·Î¼¼½º ÀÌ¸§ °ü¸® ¸®½º³Ê
+	private class ProcessNameKeyListener extends KeyAdapter{		// í”„ë¡œì„¸ìŠ¤ ì´ë¦„ ê´€ë¦¬ ë¦¬ìŠ¤ë„ˆ
 		public void keyTyped(KeyEvent e) {	
 			JTextField t = (JTextField)e.getSource();
-			if(t.getText().length()>=10) e.consume();		// ±ÛÀÚ ¼ö Á¦ÇÑ
+			if(t.getText().length()>=10) e.consume();		// ê¸€ì ìˆ˜ ì œí•œ
 		}
 	}
 	
 	private class TimeKeyListener extends KeyAdapter{
-		public void keyTyped(KeyEvent e) {				// ¼ıÀÚ ¿Ü¿¡´Â ÀÛ¼ºÇÒ ¼ö ¾øµµ·Ï ¼³Á¤
+		public void keyTyped(KeyEvent e) {				// ìˆ«ì ì™¸ì—ëŠ” ì‘ì„±í•  ìˆ˜ ì—†ë„ë¡ ì„¤ì •
 			JTextField t = (JTextField)e.getSource();
 			if((e.getKeyChar() == '0') ||(e.getKeyChar() == '1') ||(e.getKeyChar() == '2') ||
 					(e.getKeyChar() == '3') ||(e.getKeyChar() == '4') ||(e.getKeyChar() == '5') ||
@@ -91,12 +91,12 @@ public class InputPanel extends JPanel{
 					(e.getKeyChar() == '9')) {
 			}
 			else e.consume();
-			if(t.getText().length()>=2) e.consume();	// 3ÀÚ¸® ¼ö ÀÌ»ó ¼³Á¤ ºÒ°¡
+			if(t.getText().length()>=2) e.consume();	// 3ìë¦¬ ìˆ˜ ì´ìƒ ì„¤ì • ë¶ˆê°€
 		}
 	}
 	
 	public FCFSProcess AlgorithmSetting() {
-		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// ÀÔ·ÂÄ­¿¡ ºóÄ­ÀÎ °æ¿ì °æ°í¸Ş¼¼Áö Ãâ·Â
+		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// ì…ë ¥ì¹¸ì— ë¹ˆì¹¸ì¸ ê²½ìš° ê²½ê³ ë©”ì„¸ì§€ ì¶œë ¥
 				|| BurstTimeTextField.getText().equals("")) {
 			return new FCFSProcess("ERROR", -1, -1, -1, -1, -1);
 		}
