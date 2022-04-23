@@ -34,7 +34,7 @@ public class InformationPanel extends JPanel{
 		
 		scrollpane.setBounds(2, 0, 695, 400);
 		
-		dtcr.setHorizontalAlignment(SwingConstants.CENTER);	// Å×ÀÌºí °¡¿îµ¥ Á¤·Ä
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);	// ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½îµ¥ ï¿½ï¿½ï¿½ï¿½
 		TableColumnModel tcmSchedule = table.getColumnModel();
 		for(int i=0; i<table.getColumnCount(); i++) {
 			tcmSchedule.getColumn(i).setCellRenderer(dtcr);
