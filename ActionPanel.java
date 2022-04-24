@@ -68,7 +68,9 @@ public class ActionPanel extends JPanel{
 				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				new FCFS(FCFSList, ghanttchartpanel);
+					if(inputpanel.SetAlgorithm.equals(""))
+						inputpanel.SetAlgorithm = "FCFS";
+					new FCFS(FCFSList, ghanttchartpanel, inputpanel.SetAlgorithm);
 			}
 		}
 	}
