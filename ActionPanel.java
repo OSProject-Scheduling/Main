@@ -70,6 +70,7 @@ public class ActionPanel extends JPanel{
 			else {
 					if(inputpanel.SetAlgorithm.equals(""))
 						inputpanel.SetAlgorithm = "FCFS";
+					ghanttchartpanel.information = informationpanel;
 					new FCFS(FCFSList, ghanttchartpanel, inputpanel.SetAlgorithm);
 			}
 		}
