@@ -1,4 +1,3 @@
-
 public class Process {
 	String Name;
 	double ArrivalTime;
@@ -8,6 +7,7 @@ public class Process {
 	double NormalizedTime = 0;
 	double StaticBurstTime;
 	double ResponseRatio = -1;
+	
 	public Process(String Name, int ArrivalTime, int StaticBurstTime) {
 		this.ArrivalTime = ArrivalTime;
 		this.StaticBurstTime = StaticBurstTime;

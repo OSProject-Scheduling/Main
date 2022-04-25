@@ -1,30 +1,17 @@
-
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.JLabel;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Queue;
 
 public abstract class Algorithm {
-
+	abstract void schedulling();
+	
 	protected GhanttChartPanel ghanttchartPanel;
 	protected LinkedList<Process> AlgorithmList = new LinkedList<>();		
 	protected LinkedList<Process> ReadyQueue = new LinkedList<>();
 	protected Process PresentProcess = null;
-	// FCFSProcess Process; 이거는 hrrn에서 따로 선언 ㄱ
 	
-	abstract void schedulling();
-	
-	int time = 0;
-	int CoreWork = 1;
-	//	int pass = 1;   -- SRTN만
-	
-	// String SetAlgorithm; -- 알고리즘 선택(이거 GUI에서 해결할것)
+	protected int time = 0;
+	protected int CoreWork = 1;
 	
 	public Algorithm(LinkedList<Process> AlgorithmList, GhanttChartPanel ghanttchartPanel) {
 		this.AlgorithmList = AlgorithmList;
@@ -46,7 +33,7 @@ public abstract class Algorithm {
 	}
 	
 	
-	public void Core() { // 예정
+	protected void Core() { // 예정
 		// -> CoreWork 이거 변경해주는거 
 		// 상황에 맞게 CoreWork 변경
 	}
