@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 public class GhanttChartPanel extends JPanel{
 
 	JScrollPane GhanttchartScroll;
+	public InformationPanel information;
 	public GhanttChartPanel() {
 		setBackground(Color.green);
 		setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -36,5 +37,9 @@ public class GhanttChartPanel extends JPanel{
 		add(panel);
 		revalidate();
 		GhanttchartScroll.getHorizontalScrollBar().setValue(GhanttchartScroll.getHorizontalScrollBar().getMaximum());
+	}
+	public void InformationRelay(double TT, double WT, double NTT, String Row) {
+		int row = Integer.parseInt(Row);
+		information.ChangeInformation(TT, WT, NTT, row);
 	}
 }

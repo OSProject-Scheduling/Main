@@ -18,19 +18,20 @@ public class FCFS {
 	FCFSProcess PresentFCFS = null;
 	FCFSProcess Process;
 		
-	int Quantum = 3;
+	int Quantum;
 	int ForQuantum = 0;
 	
 	int time = 0;
 	int CoreWork = 1;
 	int pass = 1;
-	double burstTime;
-	boolean isChnge = false;
-	boolean isburstSubtract = false;
-	int changeTime = 0;
-	public FCFS(LinkedList<FCFSProcess> FCFSprocess, GhanttChartPanel ghanttchartPanel) {
+	
+	String SetAlgorithm;
+	
+	public FCFS(LinkedList<FCFSProcess> FCFSprocess, GhanttChartPanel ghanttchartPanel, String SetAlgorithm) {
 		this.FCFSList = FCFSprocess;
 		this.ghanttchartPanel = ghanttchartPanel;
+		this.Quantum = FCFSList.get(0).Quanturm;
+		this.SetAlgorithm = SetAlgorithm;
 		start();
 	}
 	
@@ -39,7 +40,16 @@ public class FCFS {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-					SRTNSchedulling(); 																				// 1초 마다 실행
+					if(SetAlgorithm == "FCFS")
+						FCFSSchedulling();
+					else if(SetAlgorithm == "RR")
+						RRSchedulling();
+					else if(SetAlgorithm == "SPN")
+						SPNSchedulling();
+					else if(SetAlgorithm == "SRTN")
+						SRTNSchedulling();
+					else if(SetAlgorithm == "HRRN")
+						HRRNSchedulling();
 					if(FCFSList.isEmpty() && ReadyQueue.isEmpty() && PresentFCFS == null) timer.cancel(); 
 					time++; 																					// time변수를 증가시켜줘 초를 표현
 				}
@@ -56,11 +66,15 @@ public class FCFS {
 		}
 		if(PresentFCFS==null) ghanttchartPanel.adding(new JLabel("    "));			
 		else ghanttchartPanel.adding(new JLabel(PresentFCFS.Name));												// GhanttChart 표시
-		if(!(PresentFCFS == null)) PresentFCFS.BurstTime -= CoreWork;											// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기
+		if(!(PresentFCFS == null)) {
+			if(time>=1)
+				PresentFCFS.BurstTime -= CoreWork;
+		}										// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기
 		if(!(PresentFCFS == null) && PresentFCFS.BurstTime <= 0) {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;									 	// TT 계산
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;					// WT 계산
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;				// NTT 계산
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			PresentFCFS = null;							// bursttime이 0 이하가 되면 null로 변화
 		}
 	}
@@ -108,6 +122,7 @@ public class FCFS {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;							// TT 계산
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;		// WT 계산
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;	// NTT 계산
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			PresentFCFS = null;
 		}
 	}
@@ -136,6 +151,7 @@ public class FCFS {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;										// 끝난 프로세스의 TT,WT,NTT 계산
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			System.out.println(PresentFCFS.Name + "����" + " " + "Time:" + time + " " + "TT: " + PresentFCFS.TurnaroundTime +" " + "WT: " + PresentFCFS.WaitingTime + " " + "NTT: " +  PresentFCFS.NormalizedTime);
 			PresentFCFS = null;
 			for (int i = 0; i < ReadyQueue.size(); i++) {														//현재 ReadyQueue에 있는 프로세스들의 TT,WT,ResponseRatio 계산
@@ -173,6 +189,7 @@ public class FCFS {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			PresentFCFS = null;							// bursttime이 0 이하가 되면 null로 변화
 			ForQuantum = 0;
 		}
@@ -210,11 +227,12 @@ public class FCFS {
 		if(PresentFCFS==null) ghanttchartPanel.adding(new JLabel("    "));			
 		else ghanttchartPanel.adding(new JLabel(PresentFCFS.Name));												// GhanttChart 표시
 		if(!(PresentFCFS == null)) PresentFCFS.BurstTime -= CoreWork;											// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기
-		if(!(PresentFCFS == null) && PresentFCFS.BurstTime <= 0) {
-			PresentFCFS = null;							// bursttime이 0 이하가 되면 null로 변화
+		if(!(PresentFCFS == null) && PresentFCFS.BurstTime <= 0) {						// bursttime이 0 이하가 되면 null로 변화
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
+			PresentFCFS = null;	
 		}
 	}
 	public void Core() { // 예정
@@ -222,4 +240,3 @@ public class FCFS {
 		// 상황에 맞게 CoreWork 변경
 	}
 }
-

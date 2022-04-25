@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -26,6 +28,11 @@ public class InputPanel extends JPanel{
 	
 	JTextField BurstTimeTextField = new JTextField(10);
 
+	BaseLabel QuanturmTimeLabel = new BaseLabel("Quenturm");
+	
+	JTextField QuanturmTimeTextField = new JTextField(10);
+	
+	public String SetAlgorithm;
 	
 	public InputPanel() {
 		Base();
@@ -73,6 +80,36 @@ public class InputPanel extends JPanel{
 		BurstTimeTextField.setSize(110, 20);
 		BurstTimeTextField.addKeyListener(new TimeKeyListener());
 		add(BurstTimeTextField);
+		
+		QuanturmTimeLabel.setLocation(10, 130);
+		add(QuanturmTimeLabel);
+		
+		QuanturmTimeTextField.setHorizontalAlignment(JTextField.CENTER);
+		QuanturmTimeTextField.setLocation(120, 135);
+		QuanturmTimeTextField.setSize(110, 20);
+		QuanturmTimeTextField.addKeyListener(new TimeKeyListener());
+		add(QuanturmTimeTextField);
+		
+		QuanturmTimeLabel.setVisible(false);
+		QuanturmTimeTextField.setVisible(false);
+		AlgorithmComboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
+				if(SetAlgorithm == "RR") {
+					QuanturmTimeLabel.setVisible(true);
+					QuanturmTimeTextField.setVisible(true);
+				}
+				else {
+					QuanturmTimeLabel.setVisible(false);
+					QuanturmTimeTextField.setVisible(false);
+					QuanturmTimeTextField.setText("");
+				}
+			}
+		});
+		
+		
 	}
 	
 	private class ProcessNameKeyListener extends KeyAdapter{		// 프로세스 이름 관리 리스너
@@ -98,13 +135,17 @@ public class InputPanel extends JPanel{
 	public FCFSProcess AlgorithmSetting() {
 		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// 입력칸에 빈칸인 경우 경고메세지 출력
 				|| BurstTimeTextField.getText().equals("")) {
-			return new FCFSProcess("ERROR", -1, -1);
+			return new FCFSProcess("ERROR", -1, -1, -1);
 		}
-		
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
+		int QuanturmTime;
+		if(QuanturmTimeTextField.getText().equals(""))
+			QuanturmTime = 0;
+		else
+			QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
 
-		return new FCFSProcess(ProcessNameTextField.getText(), ArrivalTime, BurstTime);
+		return new FCFSProcess(ProcessNameTextField.getText(), ArrivalTime, BurstTime, QuanturmTime);
 	}
 	
 	public void Update() {
@@ -112,5 +153,6 @@ public class InputPanel extends JPanel{
 		ProcessNameTextField.setText("");
 		ArrivalTimeTextField.setText("");
 		BurstTimeTextField.setText("");
+		
 	}
 }
