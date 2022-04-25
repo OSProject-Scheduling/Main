@@ -43,7 +43,7 @@ public class InformationPanel extends JPanel{
 		add(scrollpane);
 	}
 	
-	public void AddAlgorithm(FCFSProcess FCFS) {
+	public void AddAlgorithm(Process FCFS) {
 			model.addRow(new Object[] {FCFS.Name, Double.toString(FCFS.ArrivalTime), Double.toString(FCFS.BurstTime),
 				Double.toString(FCFS.WaitingTime), Double.toString(FCFS.TurnaroundTime),
 				Double.toString(FCFS.NormalizedTime)
@@ -51,9 +51,9 @@ public class InformationPanel extends JPanel{
 			System.out.print(model.getRowCount());
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-		System.out.print(model.getColumnCount());
-		model.setValueAt(WT, Row-1, 3);
-		model.setValueAt(TT, Row-1, 4);
-		model.setValueAt(NTT, Row-1, 5);
+//		System.out.print(model.getColumnCount());
+//		model.setValueAt(WT, Row-1, 3);
+//		model.setValueAt(TT, Row-1, 4);
+//		model.setValueAt(NTT, Row-1, 5);
 	}
 }
