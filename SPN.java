@@ -1,74 +1,46 @@
-
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.JLabel;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Queue;
 
 //spn
-public class SPN {
+public class SPN extends Algorithm{
 
-	GhanttChartPanel ghanttchartPanel;
-	LinkedList<FCFSProcess> FCFSList = new LinkedList<>();		// ���⿡ FCFS�� ����Ǿ� ���� ���⿡ �ִ°� ������ ��.
-	LinkedList<FCFSProcess> ReadyQueue = new LinkedList<>();
-	FCFSProcess PresentFCFS = null;
-	
-	int time = 0;
-	int CoreWork = 1;
-	
-	public SPN(LinkedList<FCFSProcess> FCFSprocess, GhanttChartPanel ghanttchartPanel) {
-		this.FCFSList = FCFSprocess;
-		this.ghanttchartPanel = ghanttchartPanel;
-		start();
+	public SPN(LinkedList<Process> AlgorithmList, GhanttChartPanel ghanttchartPanel) {
+		super(AlgorithmList, ghanttchartPanel);
+		// TODO Auto-generated constructor stub
 	}
-	
-	public void start() {
-		Timer timer = new Timer(); 																				// timer�� timertask�� ����� ī��Ʈ�� �������׽��ϴ�
-		TimerTask task = new TimerTask() {
-			@Override
-			public void run() {
-					Schedulling(); 																				// 1�� ���� ����
-					if(FCFSList.isEmpty() && ReadyQueue.isEmpty() && PresentFCFS == null) timer.cancel(); 
-					time++; 																					// time������ ���������� �ʸ� ǥ��
-				}
-			};
-			timer.schedule(task, 1000,1000); 																	// 1�ʸ��� ����
-	}
-	
-	public void Schedulling() {
-		if(!FCFSList.isEmpty() && time == FCFSList.peekFirst().ArrivalTime) {
+
+	void schedulling() {
+if(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
 			
 			for (int i = 0; i<=ReadyQueue.size(); i++) {
 				if(i==ReadyQueue.size()) {
-					ReadyQueue.add(FCFSList.poll());
+					ReadyQueue.add(AlgorithmList.poll());
 					break;
 				}
 				
-				if(ReadyQueue.get(i).BurstTime > FCFSList.peekFirst().BurstTime) {
-					ReadyQueue.add(i, FCFSList.poll());
+				if(ReadyQueue.get(i).BurstTime > AlgorithmList.peekFirst().BurstTime) {
+					ReadyQueue.add(i, AlgorithmList.poll());
 					break;
 				}
 			}		
 		}
 		
-		if(PresentFCFS == null) {																				// ���� FCFS�� ��������� 
-			if(!ReadyQueue.isEmpty()) {																			// ReadyQueue�� ������� ������ ���� FCFS�� poll
-				PresentFCFS = ReadyQueue.poll();
+		if(PresentProcess == null) {																				// 현재 FCFS가 비어있을때
+			if(!ReadyQueue.isEmpty()) {																			// ReadyQueue가 비어있지 않으면 현재 FCFS로 poll
+				PresentProcess = ReadyQueue.poll();
 			}
 		}
-		if(PresentFCFS==null) ghanttchartPanel.adding(new JLabel("    "));			
-		else ghanttchartPanel.adding(new JLabel(PresentFCFS.Name));												// GhanttChart ǥ��
-		if(!(PresentFCFS == null)) PresentFCFS.BurstTime -= CoreWork;											// ���� FCFS�� ������� ������ bursttime���� ó���� ���ֱ�
-		if(!(PresentFCFS == null) && PresentFCFS.BurstTime <= 0) PresentFCFS = null;							// bursttime�� 0 ���ϰ� �Ǹ� null�� ��ȭ
+		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "));			
+		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name));												// GhanttChart 표시
+		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork;											// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기
+		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {						// bursttime이 0 이하가 되면 null로 변화
+			PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;
+			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
+			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
+			ghanttchartPanel.InformationRelay(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, PresentProcess.Name.substring(1));
+			PresentProcess = null;	
+		}
 	}
 	
-	public void Core() { // ����
-		// -> CoreWork �̰� �������ִ°� 
-		// ��Ȳ�� �°� CoreWork ����
-		
-	}
 }
 

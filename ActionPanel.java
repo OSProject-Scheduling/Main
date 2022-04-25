@@ -11,13 +11,18 @@ public class ActionPanel extends JPanel{
 	JButton AddButton = new JButton("Add");
 	JButton RunButton = new JButton("Run");
 	InputPanel inputpanel;
-	LinkedList<FCFSProcess> FCFSList = new LinkedList<>();
+	LinkedList<Process> AlgorithmList = new LinkedList<>();
 	InformationPanel informationpanel;
 	GhanttChartPanel ghanttchartpanel;
-	FCFSProcess FCFS;
+	Process AddProcess;
 	
 	public ActionPanel(InputPanel inputpanel, InformationPanel informationpanel, 
 			GhanttChartPanel ghanttchartpanel) {
+		AlgorithmList.add(new Process("P1", 0, 3));
+		AlgorithmList.add(new Process("P2", 1, 7));
+		AlgorithmList.add(new Process("P3", 3, 2));
+		AlgorithmList.add(new Process("P4", 5, 5));
+		AlgorithmList.add(new Process("P5", 6, 3));
 		this.inputpanel = inputpanel;
 		this.informationpanel = informationpanel;
 		this.ghanttchartpanel = ghanttchartpanel;
@@ -54,9 +59,9 @@ public class ActionPanel extends JPanel{
 				JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				FCFS = inputpanel.AlgorithmSetting();
-				FCFSList.add(FCFS);
-				informationpanel.AddAlgorithm(FCFS);
+				AddProcess = inputpanel.AlgorithmSetting();
+				AlgorithmList.add(AddProcess);
+				informationpanel.AddAlgorithm(AddProcess);
 				inputpanel.Update();
 			}
 		}
@@ -64,14 +69,17 @@ public class ActionPanel extends JPanel{
 	
 	private class RunActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			if(FCFSList.isEmpty()) {
+			if(AlgorithmList.isEmpty()) {
 				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
 					if(inputpanel.SetAlgorithm.equals(""))
 						inputpanel.SetAlgorithm = "FCFS";
 					ghanttchartpanel.information = informationpanel;
-					new FCFS(FCFSList, ghanttchartpanel, inputpanel.SetAlgorithm);
+					if(inputpanel.SetAlgorithm == "FCFS") new FCFS(AlgorithmList, ghanttchartpanel);
+					else if(inputpanel.SetAlgorithm == "SPN") new SPN(AlgorithmList, ghanttchartpanel);
+					else if(inputpanel.SetAlgorithm == "SRTN") new SRTN(AlgorithmList, ghanttchartpanel);
+					else if(inputpanel.SetAlgorithm == "HRRN") new HRRN(AlgorithmList, ghanttchartpanel);
 			}
 		}
 	}

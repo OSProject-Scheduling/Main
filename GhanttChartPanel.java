@@ -29,7 +29,9 @@ public class GhanttChartPanel extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout());
 		panel.setBackground(Color.BLUE);
-		JLabel label = new JLabel("   " + FCFSName.getText() + "   ");
+		JLabel label = new JLabel(FCFSName.getText());
+		label.setVerticalAlignment(JLabel.BOTTOM);
+		label.setHorizontalAlignment(JLabel.CENTER);
 		panel.add(label);
 		label.setOpaque(true);
 		label.setBackground(Color.yellow);

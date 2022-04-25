@@ -32,7 +32,7 @@ public class InputPanel extends JPanel{
 	
 	JTextField QuanturmTimeTextField = new JTextField(10);
 	
-	public String SetAlgorithm;
+	public String SetAlgorithm = "";
 	
 	public InputPanel() {
 		Base();
@@ -132,10 +132,10 @@ public class InputPanel extends JPanel{
 		}
 	}
 	
-	public FCFSProcess AlgorithmSetting() {
+	public Process AlgorithmSetting() {
 		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// 입력칸에 빈칸인 경우 경고메세지 출력
 				|| BurstTimeTextField.getText().equals("")) {
-			return new FCFSProcess("ERROR", -1, -1, -1);
+			return new Process("ERROR", -1, -1);
 		}
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
@@ -145,7 +145,7 @@ public class InputPanel extends JPanel{
 		else
 			QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
 
-		return new FCFSProcess(ProcessNameTextField.getText(), ArrivalTime, BurstTime, QuanturmTime);
+		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime);
 	}
 	
 	public void Update() {
