@@ -122,6 +122,7 @@ public class FCFS {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;							// TT 계산
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;		// WT 계산
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;	// NTT 계산
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			PresentFCFS = null;
 		}
 	}
@@ -150,6 +151,7 @@ public class FCFS {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;										// 끝난 프로세스의 TT,WT,NTT 계산
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			System.out.println(PresentFCFS.Name + "����" + " " + "Time:" + time + " " + "TT: " + PresentFCFS.TurnaroundTime +" " + "WT: " + PresentFCFS.WaitingTime + " " + "NTT: " +  PresentFCFS.NormalizedTime);
 			PresentFCFS = null;
 			for (int i = 0; i < ReadyQueue.size(); i++) {														//현재 ReadyQueue에 있는 프로세스들의 TT,WT,ResponseRatio 계산
@@ -187,6 +189,7 @@ public class FCFS {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			PresentFCFS = null;							// bursttime이 0 이하가 되면 null로 변화
 			ForQuantum = 0;
 		}
@@ -228,6 +231,7 @@ public class FCFS {
 			PresentFCFS.TurnaroundTime = time - PresentFCFS.ArrivalTime;
 			PresentFCFS.WaitingTime = PresentFCFS.TurnaroundTime - PresentFCFS.StaticBurstTime;
 			PresentFCFS.NormalizedTime = PresentFCFS.TurnaroundTime / PresentFCFS.StaticBurstTime;
+			ghanttchartPanel.InformationRelay(PresentFCFS.TurnaroundTime, PresentFCFS.WaitingTime, PresentFCFS.NormalizedTime, PresentFCFS.Name.substring(1));
 			PresentFCFS = null;	
 		}
 	}
