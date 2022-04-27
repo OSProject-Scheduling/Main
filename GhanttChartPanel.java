@@ -16,7 +16,6 @@ public class GhanttChartPanel extends JPanel{
 	JScrollPane GhanttchartScroll;
 	public int second;	// core에 따라 달라짐
 	
-	public InformationPanel information;
 	public GhanttChartPanel() {
 		setBackground(Color.green);
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -42,6 +41,7 @@ public class GhanttChartPanel extends JPanel{
 		label.setPreferredSize(new Dimension(60, 120));
 		add(label);
 		
+		
 		JLabel SecondLabel = new JLabel(Integer.toString(second));
 		SecondLabel.setVerticalAlignment(JLabel.BOTTOM);
 		SecondLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -52,8 +52,4 @@ public class GhanttChartPanel extends JPanel{
 		GhanttchartScroll.getHorizontalScrollBar().setValue(GhanttchartScroll.getHorizontalScrollBar().getMaximum());
 	}
 	
-	public void InformationRelay(double TT, double WT, double NTT, String Row) {
-		int row = Integer.parseInt(Row);
-		information.ChangeInformation(TT, WT, NTT, row);
-	}
 }

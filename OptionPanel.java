@@ -7,11 +7,14 @@ public class OptionPanel extends JPanel{
 	ActionPanel actionpanel;
 	InformationPanel informationpanel;
 	GhanttChartPanel ghanttchartpanel;
-	public OptionPanel(InformationPanel informationpanel, GhanttChartPanel ghanttchartpanel) {
+	ReadyQueuePanel readyQueue;
+	ProjectManager manager;
+	public OptionPanel(InformationPanel informationpanel, GhanttChartPanel ghanttchartpanel, ReadyQueuePanel readyQueue) {
 		this.informationpanel = informationpanel;
 		this.ghanttchartpanel = ghanttchartpanel;
-		actionpanel = new ActionPanel(inputpanel, informationpanel, ghanttchartpanel);
+		this.readyQueue = readyQueue;
 		Base();
+		actionpanel = new ActionPanel(manager);
 		add(inputpanel);
 		add(actionpanel);
 	}
@@ -20,6 +23,8 @@ public class OptionPanel extends JPanel{
 		setSize(260, 740);
 		setLocation(730, 10);
 		setBackground(Color.white);
+		manager = new ProjectManager(informationpanel, readyQueue, ghanttchartpanel, null, inputpanel);
 		setLayout(null);
+		
 	}
 }

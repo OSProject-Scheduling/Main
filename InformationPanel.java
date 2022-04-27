@@ -48,12 +48,10 @@ public class InformationPanel extends JPanel{
 				Double.toString(FCFS.WaitingTime), Double.toString(FCFS.TurnaroundTime),
 				Double.toString(FCFS.NormalizedTime)
 				});
-			System.out.print(model.getRowCount());
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-//		System.out.print(model.getColumnCount());
-//		model.setValueAt(WT, Row-1, 3);
-//		model.setValueAt(TT, Row-1, 4);
-//		model.setValueAt(NTT, Row-1, 5);
+		model.setValueAt(WT, Row-1, 3);
+		model.setValueAt(TT, Row-1, 4);
+		model.setValueAt(NTT, Row-1, 5);
 	}
 }
