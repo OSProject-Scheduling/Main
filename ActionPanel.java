@@ -15,17 +15,18 @@ public class ActionPanel extends JPanel{
 	InformationPanel informationpanel;
 	GhanttChartPanel ghanttchartpanel;
 	Process AddProcess;
-	
-	public ActionPanel(InputPanel inputpanel, InformationPanel informationpanel, 
-			GhanttChartPanel ghanttchartpanel) {
-		AlgorithmList.add(new Process("P1", 0, 3));
-		AlgorithmList.add(new Process("P2", 1, 7));
-		AlgorithmList.add(new Process("P3", 3, 2));
-		AlgorithmList.add(new Process("P4", 5, 5));
-		AlgorithmList.add(new Process("P5", 6, 3));
-		this.inputpanel = inputpanel;
-		this.informationpanel = informationpanel;
-		this.ghanttchartpanel = ghanttchartpanel;
+	ProjectManager manager;
+	public ActionPanel(ProjectManager manager) {
+//		AlgorithmList.add(new Process("P1", 0, 3));
+//		AlgorithmList.add(new Process("P2", 1, 7));
+//		AlgorithmList.add(new Process("P3", 3, 2));
+//		AlgorithmList.add(new Process("P4", 5, 5));
+//		AlgorithmList.add(new Process("P5", 6, 3));
+		this.inputpanel = manager.input;
+		this.informationpanel = manager.information;
+		this.ghanttchartpanel = manager.GhanttChart;
+		this.manager = manager;
+		manager.action = this;
 		Base();
 		ComponentSetting();
 	}
@@ -75,11 +76,11 @@ public class ActionPanel extends JPanel{
 			else {
 					if(inputpanel.SetAlgorithm.equals(""))
 						inputpanel.SetAlgorithm = "FCFS";
-					ghanttchartpanel.information = informationpanel;
-					if(inputpanel.SetAlgorithm == "FCFS") new FCFS(AlgorithmList, ghanttchartpanel);
-					else if(inputpanel.SetAlgorithm == "SPN") new SPN(AlgorithmList, ghanttchartpanel);
-					else if(inputpanel.SetAlgorithm == "SRTN") new SRTN(AlgorithmList, ghanttchartpanel);
-					else if(inputpanel.SetAlgorithm == "HRRN") new HRRN(AlgorithmList, ghanttchartpanel);
+					if(inputpanel.SetAlgorithm == "FCFS") new FCFS(manager);
+					else if(inputpanel.SetAlgorithm == "RR") new RR(manager,manager.input.QuanturmTime);
+					else if(inputpanel.SetAlgorithm == "SPN") new SPN(manager);
+					else if(inputpanel.SetAlgorithm == "SRTN") new SRTN(manager);
+					else if(inputpanel.SetAlgorithm == "HRRN") new HRRN(manager);
 			}
 		}
 	}

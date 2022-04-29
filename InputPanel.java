@@ -34,6 +34,8 @@ public class InputPanel extends JPanel{
 	
 	public String SetAlgorithm = "";
 	
+	int QuanturmTime;
+	
 	public InputPanel() {
 		Base();
 		ComponentSetting();
@@ -139,7 +141,6 @@ public class InputPanel extends JPanel{
 		}
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
-		int QuanturmTime;
 		if(QuanturmTimeTextField.getText().equals(""))
 			QuanturmTime = 0;
 		else

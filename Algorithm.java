@@ -9,13 +9,14 @@ public abstract class Algorithm {
 	protected LinkedList<Process> AlgorithmList = new LinkedList<>();		
 	protected LinkedList<Process> ReadyQueue = new LinkedList<>();
 	protected Process PresentProcess = null;
-	
+	protected ProjectManager manager;
 	protected int time = 0;
 	protected int CoreWork = 1;
 	
-	public Algorithm(LinkedList<Process> AlgorithmList, GhanttChartPanel ghanttchartPanel) {
-		this.AlgorithmList = AlgorithmList;
-		this.ghanttchartPanel = ghanttchartPanel;
+	public Algorithm(ProjectManager manager) {
+		this.AlgorithmList = manager.action.AlgorithmList;
+		this.ghanttchartPanel = manager.GhanttChart;
+		this.manager = manager;
 		start();
 	}
 	
