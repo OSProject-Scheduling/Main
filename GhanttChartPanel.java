@@ -17,7 +17,6 @@ public class GhanttChartPanel extends JPanel{
 	public int second;	// core에 따라 달라짐
 	
 	public GhanttChartPanel() {
-		setBackground(Color.green);
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	}
 	
@@ -37,7 +36,7 @@ public class GhanttChartPanel extends JPanel{
 		JLabel label = new JLabel(ProcessName.getText());
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setOpaque(true);
-		label.setBackground(Color.yellow);
+		// label.setBackground(Color.yellow);
 		label.setPreferredSize(new Dimension(60, 120));
 		add(label);
 		
@@ -47,9 +46,17 @@ public class GhanttChartPanel extends JPanel{
 		SecondLabel.setHorizontalAlignment(JLabel.CENTER);
 		SecondLabel.setPreferredSize(new Dimension(20, 120));
 		add(SecondLabel);
-	
+
+		if(second == 8) {
+			GhanttchartScroll.setBounds(10, 120, 700, 140);
+			setPreferredSize(new Dimension(680 + 80, getHeight()));
+		}
+
+		if(second > 8) {
+			setPreferredSize(new Dimension(getWidth() + 80, getHeight()));
+		}
 		revalidate();
-		GhanttchartScroll.getHorizontalScrollBar().setValue(GhanttchartScroll.getHorizontalScrollBar().getMaximum());
+		GhanttchartScroll.getHorizontalScrollBar().setValue(getWidth());
+
 	}
-	
 }
