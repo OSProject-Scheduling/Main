@@ -32,6 +32,7 @@ public class InputPanel extends JPanel{
 	
 	JTextField QuanturmTimeTextField = new JTextField(10);
 	
+	
 	public String SetAlgorithm = "";
 	
 	int QuanturmTime;

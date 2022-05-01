@@ -17,7 +17,6 @@ public class MainFrame extends JFrame{
 	
 	InformationPanel informationpanel = new InformationPanel();
 	
-	JButton btn = new JButton("practice");
 	public MainFrame() {
 		Base();
 		GhanttChartpanel.ScrollSetting(GhanttChartScroll);
@@ -28,10 +27,8 @@ public class MainFrame extends JFrame{
 		GhanttChartScroll.setBounds(10, 120, 700, 150);
 		contentpane.add(GhanttChartScroll);
 		
-		btn.setSize(100, 100);
-		btn.setLocation(100, 500);
+
 		//btn.addActionListener(new practice());
-		contentpane.add(btn);
 		
 		contentpane.add(informationpanel);
 		
