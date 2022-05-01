@@ -12,7 +12,7 @@ public class HRRN extends Algorithm{
 	void schedulling() {
 		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {												// 현재 진행 중이던 프로세스가 끝나면
 			System.out.println(PresentProcess.Name + " " + "TT: " + PresentProcess.TurnaroundTime);	
-			PresentProcess.TurnaroundTime = (time + 1) - PresentProcess.ArrivalTime;										// 끝난 프로세스의 TT,WT,NTT 계산
+			PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;										// 끝난 프로세스의 TT,WT,NTT 계산
 			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
 			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
 			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, Integer.parseInt(PresentProcess.Name.substring(1)));

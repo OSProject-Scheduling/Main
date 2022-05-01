@@ -53,5 +53,5 @@ public class InformationPanel extends JPanel{
 		model.setValueAt(WT, Row-1, 3);
 		model.setValueAt(TT, Row-1, 4);
 		model.setValueAt(NTT, Row-1, 5);
-	}
+	}	
 }
