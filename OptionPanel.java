@@ -3,8 +3,8 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 public class OptionPanel extends JPanel{
-	InputPanel inputpanel = new InputPanel();
-	ActionPanel actionpanel;
+	AddPanel addpanel;
+	RunPanel runpanel;
 	InformationPanel informationpanel;
 	GhanttChartPanel ghanttchartpanel;
 	ReadyQueuePanel readyQueue;
@@ -14,16 +14,17 @@ public class OptionPanel extends JPanel{
 		this.ghanttchartpanel = ghanttchartpanel;
 		this.readyQueue = readyQueue;
 		Base();
-		actionpanel = new ActionPanel(manager);
-		add(inputpanel);
-		add(actionpanel);
+		addpanel = new AddPanel(manager);
+		runpanel = new RunPanel(manager);
+		add(addpanel);
+		add(runpanel);
 	}
 	
 	private void Base() {
 		setSize(260, 740);
 		setLocation(730, 10);
 		setBackground(Color.white);
-		manager = new ProjectManager(informationpanel, readyQueue, ghanttchartpanel, null, inputpanel);
+		manager = new ProjectManager(informationpanel, readyQueue, ghanttchartpanel);
 		setLayout(null);
 		
 	}
