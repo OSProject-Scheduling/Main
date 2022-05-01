@@ -14,7 +14,7 @@ public abstract class Algorithm {
 	protected int CoreWork = 1;
 	
 	public Algorithm(ProjectManager manager) {
-		this.AlgorithmList = manager.action.AlgorithmList;
+		this.AlgorithmList = manager.addPanel.AlgorithmList;
 		this.ghanttchartPanel = manager.GhanttChart;
 		this.manager = manager;
 		start();
