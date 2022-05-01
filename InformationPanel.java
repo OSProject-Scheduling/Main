@@ -50,8 +50,8 @@ public class InformationPanel extends JPanel{
 				});
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-		model.setValueAt(WT, Row-1, 3);
-		model.setValueAt(TT, Row-1, 4);
-		model.setValueAt(NTT, Row-1, 5);
+//		model.setValueAt(WT, Row-1, 3);
+//		model.setValueAt(TT, Row-1, 4);
+//		model.setValueAt(NTT, Row-1, 5);
 	}
 }
