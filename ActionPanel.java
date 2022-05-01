@@ -10,10 +10,7 @@ import javax.swing.JOptionPane;
 public class ActionPanel extends JPanel{
 	JButton AddButton = new JButton("Add");
 	JButton RunButton = new JButton("Run");
-	InputPanel inputpanel;
 	LinkedList<Process> AlgorithmList = new LinkedList<>();
-	InformationPanel informationpanel;
-	GhanttChartPanel ghanttchartpanel;
 	Process AddProcess;
 	ProjectManager manager;
 	public ActionPanel(ProjectManager manager) {
@@ -22,9 +19,6 @@ public class ActionPanel extends JPanel{
 //		AlgorithmList.add(new Process("P3", 3, 2));
 //		AlgorithmList.add(new Process("P4", 5, 5));
 //		AlgorithmList.add(new Process("P5", 6, 3));
-		this.inputpanel = manager.input;
-		this.informationpanel = manager.information;
-		this.ghanttchartpanel = manager.GhanttChart;
 		this.manager = manager;
 		manager.action = this;
 		Base();
@@ -54,16 +48,16 @@ public class ActionPanel extends JPanel{
 		add(RunButton);
 	}
 	
-	private class AddActionListener implements ActionListener{
+	private class AddActionListener  implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			if(inputpanel.AlgorithmSetting().ArrivalTime == -1) {
+			if(manager.input.AlgorithmSetting().ArrivalTime == -1) {
 				JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				AddProcess = inputpanel.AlgorithmSetting();
+				AddProcess = manager.input.AlgorithmSetting();
 				AlgorithmList.add(AddProcess);
-				informationpanel.AddAlgorithm(AddProcess);
-				inputpanel.Update();
+				manager.information.AddAlgorithm(AddProcess);
+				manager.input.Update();
 			}
 		}
 	}
@@ -74,13 +68,13 @@ public class ActionPanel extends JPanel{
 				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-					if(inputpanel.SetAlgorithm.equals(""))
-						inputpanel.SetAlgorithm = "FCFS";
-					if(inputpanel.SetAlgorithm == "FCFS") new FCFS(manager);
-					else if(inputpanel.SetAlgorithm == "RR") new RR(manager,manager.input.QuanturmTime);
-					else if(inputpanel.SetAlgorithm == "SPN") new SPN(manager);
-					else if(inputpanel.SetAlgorithm == "SRTN") new SRTN(manager);
-					else if(inputpanel.SetAlgorithm == "HRRN") new HRRN(manager);
+					if(manager.input.SetAlgorithm.equals(""))
+						manager.input.SetAlgorithm = "FCFS";
+					if(manager.input.SetAlgorithm == "FCFS") new FCFS(manager);
+					else if(manager.input.SetAlgorithm == "RR") new RR(manager,manager.input.QuanturmTime);
+					else if(manager.input.SetAlgorithm == "SPN") new SPN(manager);
+					else if(manager.input.SetAlgorithm == "SRTN") new SRTN(manager);
+					else if(manager.input.SetAlgorithm == "HRRN") new HRRN(manager);
 			}
 		}
 	}
