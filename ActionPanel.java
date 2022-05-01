@@ -14,11 +14,11 @@ public class ActionPanel extends JPanel{
 	Process AddProcess;
 	ProjectManager manager;
 	public ActionPanel(ProjectManager manager) {
-//		AlgorithmList.add(new Process("P1", 0, 3));
-//		AlgorithmList.add(new Process("P2", 1, 7));
-//		AlgorithmList.add(new Process("P3", 3, 2));
-//		AlgorithmList.add(new Process("P4", 5, 5));
-//		AlgorithmList.add(new Process("P5", 6, 3));
+		AlgorithmList.add(new Process("P1", 0, 3));
+		AlgorithmList.add(new Process("P2", 1, 7));
+		AlgorithmList.add(new Process("P3", 3, 2));
+		AlgorithmList.add(new Process("P4", 5, 5));
+		AlgorithmList.add(new Process("P5", 6, 3));
 		this.manager = manager;
 		manager.action = this;
 		Base();

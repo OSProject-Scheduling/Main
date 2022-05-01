@@ -28,6 +28,7 @@ public abstract class Algorithm {
 					schedulling();
 					if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty() && PresentProcess == null) timer.cancel(); 
 					time++; 																					// time변수를 증가시켜줘 초를 표현
+					
 				}
 			};
 			timer.schedule(task, 1000,1000); 																	// 1초마다 실행
