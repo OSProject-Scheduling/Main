@@ -5,7 +5,7 @@ public class FCFS extends Algorithm{
 		super(manager);
 		// TODO Auto-generated constructor stub
 	}
-	
+	// glglt
 	void schedulling() {
 		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
 	         PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;                               // TT 계산

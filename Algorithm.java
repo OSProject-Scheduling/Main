@@ -13,6 +13,7 @@ public abstract class Algorithm {
 	protected int time = 0;
 	protected int CoreWork = 1;
 	
+	
 	public Algorithm(ProjectManager manager) {
 		this.AlgorithmList = manager.action.AlgorithmList;
 		this.ghanttchartPanel = manager.GhanttChart;
