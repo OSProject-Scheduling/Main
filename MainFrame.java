@@ -24,7 +24,7 @@ public class MainFrame extends JFrame{
 		contentpane.add(new OptionPanel(informationpanel, GhanttChartpanel, ReadyQueuepanel));
 		ReadyQueueScroll.setBounds(10, 10, 700, 100);
 		contentpane.add(ReadyQueueScroll);
-		GhanttChartScroll.setBounds(10, 120, 700, 150);
+		GhanttChartScroll.setBounds(10, 120, 700, 123);
 		contentpane.add(GhanttChartScroll);
 		
 
