@@ -10,20 +10,20 @@ public class HRRN extends Algorithm{
 	}
 	
 	void schedulling() {
-		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {												// 현재 진행 중이던 프로세스가 끝나면
+		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {												// �쁽�옱 吏꾪뻾 以묒씠�뜕 �봽濡쒖꽭�뒪媛� �걹�굹硫�
 			System.out.println(PresentProcess.Name + " " + "TT: " + PresentProcess.TurnaroundTime);	
-			PresentProcess.TurnaroundTime = (time + 1) - PresentProcess.ArrivalTime;										// 끝난 프로세스의 TT,WT,NTT 계산
+			PresentProcess.TurnaroundTime = (time + 1) - PresentProcess.ArrivalTime;										// �걹�궃 �봽濡쒖꽭�뒪�쓽 TT,WT,NTT 怨꾩궛
 			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
 			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
 			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, Integer.parseInt(PresentProcess.Name.substring(1)));
 			PresentProcess = null;
-			for (int i = 0; i < ReadyQueue.size(); i++) {														//현재 ReadyQueue에 있는 프로세스들의 TT,WT,ResponseRatio 계산
+			for (int i = 0; i < ReadyQueue.size(); i++) {														//�쁽�옱 ReadyQueue�뿉 �엳�뒗 �봽濡쒖꽭�뒪�뱾�쓽 TT,WT,ResponseRatio 怨꾩궛
 				ReadyQueue.get(i).TurnaroundTime = time - ReadyQueue.get(i).ArrivalTime;
 				ReadyQueue.get(i).WaitingTime = ReadyQueue.get(i).TurnaroundTime/ReadyQueue.get(i).StaticBurstTime;
 				ReadyQueue.get(i).ResponseRatio = (ReadyQueue.get(i).WaitingTime + ReadyQueue.get(i).BurstTime) / ReadyQueue.get(i).BurstTime;
 				System.out.println(ReadyQueue.get(i).Name + " " + "WT: " + ReadyQueue.get(i).WaitingTime + " " + "RS: " + ReadyQueue.get(i).ResponseRatio + "TT: ");
 			}
-			for(int i = 1;i<ReadyQueue.size();i++) {															// ResponseRadio값을 기준으로 정렬
+			for(int i = 1;i<ReadyQueue.size();i++) {															// ResponseRadio媛믪쓣 湲곗��쑝濡� �젙�젹
 				for(int j = 0; j<ReadyQueue.size()-1; j++) {
 					if(ReadyQueue.get(j).ResponseRatio< ReadyQueue.get(j+1).ResponseRatio) {
 						Process temp = ReadyQueue.get(j);
@@ -35,10 +35,11 @@ public class HRRN extends Algorithm{
 			manager.ReadyQueue.create_form(ReadyQueue);
 		}
 		if(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
-			ReadyQueue.add(AlgorithmList.poll()); 	// AlgorithmList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
+			ReadyQueue.add(AlgorithmList.poll()); 	// AlgorithmList�뿉�꽌 ReadyQueue濡� �씠�룞(ArrivalTime�뿉 留욎쑝硫�)
 			manager.ReadyQueue.create_form(ReadyQueue);
+			System.out.print("김문웅 병신");
 		}
-		if(PresentProcess == null) {																				// 현재 FCFS가 있으며
+		if(PresentProcess == null) {																				// �쁽�옱 FCFS媛� �엳�쑝硫�
 			if(!ReadyQueue.isEmpty()) {																			
 				PresentProcess = ReadyQueue.poll();
 				manager.ReadyQueue.create_form(ReadyQueue);
