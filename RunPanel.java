@@ -106,7 +106,6 @@ public class RunPanel extends JPanel{
 	
 	private class RunActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
 			if(manager.addPanel.AlgorithmList.isEmpty()) {
 				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
