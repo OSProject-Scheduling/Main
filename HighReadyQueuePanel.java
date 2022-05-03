@@ -13,10 +13,17 @@ import javax.swing.JScrollPane;
 public class HighReadyQueuePanel extends JPanel{
 	
 	JScrollPane ReadyQueueScrollBar;
+	JLabel HighReadyQueueLabel;
 	int PrevProcessList;
 	
 	public HighReadyQueuePanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		HighReadyQueueLabel = new JLabel("<MiddleReadyQueue>");
+		HighReadyQueueLabel.setLocation(10,10);
+		HighReadyQueueLabel.setBackground(Color.WHITE);
+		HighReadyQueueLabel.setSize(100,20);
+		add(HighReadyQueueLabel);
+		HighReadyQueueLabel.setVisible(false);
 		
 	}
 	public void ScrollSetting(JScrollPane ReadyQueueScrollbar) {

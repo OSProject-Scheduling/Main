@@ -13,11 +13,12 @@ import javax.swing.JScrollPane;
 public class ReadyQueuePanel extends JPanel{
 	
 	JScrollPane ReadyQueueScrollBar;
+	JLabel ReadyQueueLabel;
 	int PrevProcessList;
 	
 	public ReadyQueuePanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		
+
 	}
 	public void ScrollSetting(JScrollPane ReadyQueueScrollbar) {
 		this.ReadyQueueScrollBar = ReadyQueueScrollbar;
