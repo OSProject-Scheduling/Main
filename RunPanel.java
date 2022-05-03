@@ -157,8 +157,7 @@ public class RunPanel extends JPanel{
 						}
 					}
 				}
-				if(manager.addPanel.SetAlgorithm.equals(""))
-					manager.addPanel.SetAlgorithm = "FCFS";
+				if(manager.addPanel.SetAlgorithm == null) manager.addPanel.SetAlgorithm = "FCFS";
 				if(manager.addPanel.SetAlgorithm == "FCFS") new FCFS(manager);
 				else if(manager.addPanel.SetAlgorithm == "RR") new RR(manager, QuanturmTime);
 				else if(manager.addPanel.SetAlgorithm == "SPN") new SPN(manager);

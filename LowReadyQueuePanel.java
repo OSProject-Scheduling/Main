@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 public class LowReadyQueuePanel extends JPanel{
 	
 	JScrollPane ReadyQueueScrollBar;
+	JLabel LowReadyQueueLabel;
 	int PrevProcessList;
 	
 	public LowReadyQueuePanel() {
@@ -28,14 +29,14 @@ public class LowReadyQueuePanel extends JPanel{
 		removeAll();
 		repaint();
 		if(ProcessList.size()>8) {
-			ReadyQueueScrollBar.setBounds(250,30,220, 100);
+			ReadyQueueScrollBar.setBounds(490,30,220,100);
 			setPreferredSize(new Dimension(621+80*(ProcessList.size()-8), getHeight()));
 			ReadyQueueScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		}
 		else {
 			ReadyQueueScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			ReadyQueueScrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-			ReadyQueueScrollBar.setBounds(250,30,220, 83);
+			ReadyQueueScrollBar.setBounds(490,30,220,83);
 		}
 		if (ProcessList.size() > 0) {
 			for (int i = 0; i < ProcessList.size(); i++) {

@@ -28,7 +28,11 @@ public class AddPanel extends JPanel{
 
 	LinkedList<Process> AlgorithmList = new LinkedList<>();
 	
-	LinkedList<MFQProcess> MFQAlgorithmList = new LinkedList<>();
+	LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();
+	
+	LinkedList<MFQProcess> MFQMiddleAlgorithmList = new LinkedList<>();
+	
+	LinkedList<MFQProcess> MFQLowAlorithmList = new LinkedList<>();
 	
 	BaseLabel AlgorithmLabel = new BaseLabel("Algorithm");
 	
@@ -80,6 +84,7 @@ public class AddPanel extends JPanel{
 		AlgorithmComboBox.setLocation(120, 15);
 		add(AlgorithmComboBox);
 		
+		
 		ProcessNameLabel.setLocation(10, 40);								// ProcessNameLabel adding
 		add(ProcessNameLabel);
 		
@@ -113,6 +118,7 @@ public class AddPanel extends JPanel{
 		PriorityReadyQueueComboBox.setFont(new Font("Dialog", Font.BOLD, 14));
 		PriorityReadyQueueComboBox.setSize(110,20);
 		PriorityReadyQueueComboBox.setLocation(120,135);
+		PriorityReadyQueueComboBox.setSelectedItem("Middle");
 		add(PriorityReadyQueueComboBox);
 		
 		PriorityReadyQueueLabel.setVisible(false);
@@ -136,20 +142,37 @@ public class AddPanel extends JPanel{
 				if(SetAlgorithm == "MFQ") {
 					PriorityReadyQueueComboBox.setVisible(true);
 					PriorityReadyQueueLabel.setVisible(true);
+					
+					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(true);
 					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(true);
+					
 					manager.lowReadyQueue.ReadyQueueScrollBar.setVisible(true);
+					manager.lowReadyQueue.LowReadyQueueLabel.setVisible(true);
+					
 					manager.MidReadyQueue.ReadyQueueScrollBar.setVisible(true);
+					manager.MidReadyQueue.MiddleReadyQueueLabel.setVisible(true);
+					
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(false);
+					manager.ReadyQueue.ReadyQueueLabel.setVisible(false);
+					
 					manager.information.model.addColumn("Priority");
 					manager.information.table.getColumn("Priority").setPreferredWidth(20);
 				}
 				else {
 					PriorityReadyQueueComboBox.setVisible(false);
 					PriorityReadyQueueLabel.setVisible(false);
+					
+					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(false);
 					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(false);
+					
 					manager.lowReadyQueue.ReadyQueueScrollBar.setVisible(false);
+					manager.lowReadyQueue.LowReadyQueueLabel.setVisible(false);
+					
 					manager.MidReadyQueue.ReadyQueueScrollBar.setVisible(false);
+					manager.MidReadyQueue.MiddleReadyQueueLabel.setVisible(false);
+					
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
+					manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
 					String[] TableHeader = {"Process Name", "Arrival time", "Burst time", 
 							"Waiting time", "Turnaround time", "Normalized TT"};
 					manager.information.model.setColumnIdentifiers(TableHeader);
@@ -214,6 +237,7 @@ public class AddPanel extends JPanel{
 		}
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
+		if(SetPriorityReadyQueue == null) SetPriorityReadyQueue = "Middle";
 		
 		return new MFQProcess(SetPriorityReadyQueue, ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
 	}
@@ -225,7 +249,10 @@ public class AddPanel extends JPanel{
 			}
 			else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {
 				AddMFQProcess = MFQAlgorithmSetting();
-				MFQAlgorithmList.add(AddMFQProcess);
+				if(AddMFQProcess.PriorityRedayQueue == "High") MFQHighAlgorithmList.add(AddMFQProcess);
+				else if(AddMFQProcess.PriorityRedayQueue == "Middle") MFQMiddleAlgorithmList.add(AddMFQProcess);
+				else MFQLowAlorithmList.add(AddMFQProcess);
+				
 				AlgorithmList.add((Process)AddMFQProcess);
 				manager.information.MFQAddAlgorithm(AddMFQProcess);
 				Row++;
@@ -248,6 +275,7 @@ public class AddPanel extends JPanel{
 		ProcessNameTextField.setText("");
 		ArrivalTimeTextField.setText("");
 		BurstTimeTextField.setText("");
+		PriorityReadyQueueComboBox.setSelectedItem("Middle");
 		
 	}
 }
