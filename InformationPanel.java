@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JPanel;
@@ -28,7 +29,8 @@ public class InformationPanel extends JPanel{
 	
 	private void Base() {
 		setSize(700, 500);
-		setLocation(10, 280);
+		setLocation(10, 310);
+		setBackground(Color.WHITE);
 		setLayout(null);
 	}
 	
@@ -60,8 +62,8 @@ public class InformationPanel extends JPanel{
 				});
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-		model.setValueAt(WT, Row-1, 3);
-		model.setValueAt(TT, Row-1, 4);
-		model.setValueAt(NTT, Row-1, 5);
+		model.setValueAt(WT, Row, 3);
+		model.setValueAt(TT, Row, 4);
+		model.setValueAt(NTT, Row, 5);
 	}
 }

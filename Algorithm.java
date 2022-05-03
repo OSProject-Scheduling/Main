@@ -6,7 +6,9 @@ public abstract class Algorithm {
 	abstract void schedulling();
 	
 	protected GhanttChartPanel ghanttchartPanel;
-	protected LinkedList<Process> AlgorithmList = new LinkedList<>();		
+	protected LinkedList<Process> AlgorithmList = new LinkedList<>();	
+	protected LinkedList<Process> HighReadyQueue = new LinkedList<>();
+	protected LinkedList<Process> MiddleReadyQueue = new LinkedList<>();
 	protected LinkedList<Process> ReadyQueue = new LinkedList<>();
 	protected Process PresentProcess = null;
 	protected ProjectManager manager;

@@ -149,7 +149,7 @@ public class RunPanel extends JPanel{
 			else {
 				for(int i =0; i<manager.addPanel.AlgorithmList.size(); i++) {
 					for(int j = 0; j<manager.addPanel.AlgorithmList.size()-1;j++) {
-						if(manager.addPanel.AlgorithmList.get(j).BurstTime>manager.addPanel.AlgorithmList.get(j+1).BurstTime) {
+						if(manager.addPanel.AlgorithmList.get(j).ArrivalTime>manager.addPanel.AlgorithmList.get(j+1).ArrivalTime) {
 							Process temp = manager.addPanel.AlgorithmList.get(j);
 							manager.addPanel.AlgorithmList.set(j, manager.addPanel.AlgorithmList.get(j+1));
 							manager.addPanel.AlgorithmList.set(j+1, temp);
