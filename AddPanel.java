@@ -18,59 +18,65 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
 public class AddPanel extends JPanel{
-	ProjectManager manager;
+	ProjectManager manager;	
 	
-	JButton AddButton = new JButton("Add");
+	JButton AddButton = new JButton("Add");						// AddButton
 	
-	Process AddProcess;
-	
-	MFQProcess AddMFQProcess;
+	Process AddProcess;											// FCFS, RR, SPN, SRTN, HRRN용 AddingProcess
+	MFQProcess AddMFQProcess;									// MFQ용 AddingProcess
 
-	LinkedList<Process> AlgorithmList = new LinkedList<>();
+	LinkedList<Process> AlgorithmList = new LinkedList<>();		// FCFS, RR, SPN, SRTN, HRRN용 process 리스트
 	
-	LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();
-	
+	LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();	// MFQ용 process 리스트
 	LinkedList<MFQProcess> MFQMiddleAlgorithmList = new LinkedList<>();
-	
 	LinkedList<MFQProcess> MFQLowAlorithmList = new LinkedList<>();
 	
-	BaseLabel AlgorithmLabel = new BaseLabel("Algorithm");
+	BaseLabel AlgorithmLabel = new BaseLabel("Algorithm");		// algorithm
 	
-	String[] algorithmArray = {"FCFS", "RR", "SPN", "SRTN", "HRRN", "MFQ"};
+	String[] algorithmArray = {"FCFS", "RR", "SPN", "SRTN", "HRRN", "MFQ"};	
 	JComboBox<String> AlgorithmComboBox = new JComboBox<String>(algorithmArray);
 	
-	BaseLabel ProcessNameLabel = new BaseLabel("Process Name");
-	
+	BaseLabel ProcessNameLabel = new BaseLabel("Process Name");	// processName
 	JTextField ProcessNameTextField = new JTextField(10);
 	
-	BaseLabel ArrivalTimeLabel = new BaseLabel("Arrival Time");
-	
+	BaseLabel ArrivalTimeLabel = new BaseLabel("Arrival Time");	// ArivalTime
 	JTextField ArrivalTimeTextField = new JTextField(10);
 	
-	BaseLabel BurstTimeLabel = new BaseLabel("Burst Time");
-	
+	BaseLabel BurstTimeLabel = new BaseLabel("Burst Time");		// BurstTime
 	JTextField BurstTimeTextField = new JTextField(10);
 	
-	BaseLabel PriorityReadyQueueLabel = new BaseLabel("PIReadyQueue");
-	
+	BaseLabel PriorityReadyQueueLabel = new BaseLabel("Priority");	// MFQ용 Priority
 	String [] ReadyQueueArray = {"High", "Middle", "Low"};
 	JComboBox<String> PriorityReadyQueueComboBox = new JComboBox<String>(ReadyQueueArray);
 	
-	int Row = 0;
+	int Row = 0;												// information table용 row
 
 	public String SetPriorityReadyQueue;
-	
 	public String SetAlgorithm = "";
 	
-	public AddPanel(ProjectManager manager) {
+	public AddPanel(ProjectManager manager) {					// 생성자
 		this.manager = manager;
 		manager.addPanel = this;
-		Base();
-		ComponentSetting();
+		Base();													// addpanel 기본 세팅
+		ComponentSetting();										// addpanel에 추가할 요소들 세팅
+		
+//		AlgorithmList.add(new Process("P1", 0, 15, 0));
+//		AlgorithmList.add(new Process("P2", 1, 1, 1));
+//		AlgorithmList.add(new Process("P3", 2, 1, 2));
+//		AlgorithmList.add(new Process("P4", 3, 1, 3));
+//		AlgorithmList.add(new Process("P5", 4, 1, 4));
+//		AlgorithmList.add(new Process("P6", 5, 1, 5));
+//		AlgorithmList.add(new Process("P7", 6, 1, 6));
+//		AlgorithmList.add(new Process("P8", 7, 1, 7));
+//		AlgorithmList.add(new Process("P9", 8, 1, 8));
+//		AlgorithmList.add(new Process("P10", 9, 1, 9));
+//		AlgorithmList.add(new Process("P11", 10, 1, 10));
+//		AlgorithmList.add(new Process("P12", 11, 1, 11));
+//		AlgorithmList.add(new Process("P13", 12, 1, 12));
 	}
-	private void Base(){
-		setSize(240, 270);
-		setLocation(10, 110);
+	private void Base(){		// addPanel 기본 세팅
+		setSize(240, 201);
+		setLocation(10, 10);
 		setBackground(Color.yellow);
 		setLayout(null);
 	}
@@ -83,7 +89,6 @@ public class AddPanel extends JPanel{
 		AlgorithmComboBox.setSize(110, 20);
 		AlgorithmComboBox.setLocation(120, 15);
 		add(AlgorithmComboBox);
-		
 		
 		ProcessNameLabel.setLocation(10, 40);								// ProcessNameLabel adding
 		add(ProcessNameLabel);
@@ -112,21 +117,19 @@ public class AddPanel extends JPanel{
 		BurstTimeTextField.addKeyListener(new TimeKeyListener());
 		add(BurstTimeTextField);
 		
-		PriorityReadyQueueLabel.setLocation(10,130);
+		PriorityReadyQueueLabel.setLocation(10,130);						// PriorityReadyQueueLabel adding
 		add(PriorityReadyQueueLabel);
 		
-		PriorityReadyQueueComboBox.setFont(new Font("Dialog", Font.BOLD, 14));
+		PriorityReadyQueueComboBox.setFont(new Font("Dialog", Font.BOLD, 14));	// PriorityReadyQueueComboBox adding
 		PriorityReadyQueueComboBox.setSize(110,20);
 		PriorityReadyQueueComboBox.setLocation(120,135);
 		PriorityReadyQueueComboBox.setSelectedItem("Middle");
 		add(PriorityReadyQueueComboBox);
 		
-		PriorityReadyQueueLabel.setVisible(false);
+		PriorityReadyQueueLabel.setVisible(false);							// 일단 안보이게, MFQ사용시 보이게
 		PriorityReadyQueueComboBox.setVisible(false);
 		
-		
-		AlgorithmComboBox.addActionListener(new ActionListener() {
-			
+		AlgorithmComboBox.addActionListener(new ActionListener() {			// MFQ선택시 보이게 할 요소, 미선택 시 안보이게 할 요소
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
@@ -140,12 +143,9 @@ public class AddPanel extends JPanel{
 					manager.runpanel.QuanturmTimeTextField.setText("");
 				}
 				if(SetAlgorithm == "MFQ") {
-					PriorityReadyQueueComboBox.setVisible(true);
-					PriorityReadyQueueLabel.setVisible(true);
-					
 					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(true);
 					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(true);
-					
+		
 					manager.lowReadyQueue.ReadyQueueScrollBar.setVisible(true);
 					manager.lowReadyQueue.LowReadyQueueLabel.setVisible(true);
 					
@@ -173,16 +173,11 @@ public class AddPanel extends JPanel{
 					
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
 					manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
-					String[] TableHeader = {"Process Name", "Arrival time", "Burst time", 
-							"Waiting time", "Turnaround time", "Normalized TT"};
-					manager.information.model.setColumnIdentifiers(TableHeader);
-
 				}
 			}
 		});
 		
-		PriorityReadyQueueComboBox.addActionListener(new ActionListener() {
-			
+		PriorityReadyQueueComboBox.addActionListener(new ActionListener() {		// 우선순위에 맞는 Queue에 저장
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SetPriorityReadyQueue = PriorityReadyQueueComboBox.getSelectedItem().toString();
@@ -190,11 +185,11 @@ public class AddPanel extends JPanel{
 			}
 		});
 		
-		AddButton.setSize(105, 20);
-		AddButton.setLocation(70, 240);
+		AddButton.setSize(220, 30);								// addButton adding
+		AddButton.setLocation(10, 170);
 		AddButton.setOpaque(true);
 		AddButton.setBackground(Color.green);
-		AddButton.addActionListener(new AddActionListener());
+		AddButton.addActionListener(new AddActionListener());	// add 클릭 시 저 리스너 실행(맨 아래)
 		add(AddButton);
 		
 	}
@@ -226,6 +221,7 @@ public class AddPanel extends JPanel{
 		}
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
+		if(SetPriorityReadyQueue == null) SetPriorityReadyQueue = "Middle";
 
 		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
 	}
@@ -237,18 +233,18 @@ public class AddPanel extends JPanel{
 		}
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
-		if(SetPriorityReadyQueue == null) SetPriorityReadyQueue = "Middle";
 		
 		return new MFQProcess(SetPriorityReadyQueue, ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
 	}
 	
-	private class AddActionListener  implements ActionListener{
+	private class AddActionListener  implements ActionListener{				// add 클릭 시 액션 리스너
 		public void actionPerformed(ActionEvent e) {
 			if(AlgorithmSetting().ArrivalTime == -1) {
 				JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {
 				AddMFQProcess = MFQAlgorithmSetting();
+				
 				if(AddMFQProcess.PriorityRedayQueue == "High") MFQHighAlgorithmList.add(AddMFQProcess);
 				else if(AddMFQProcess.PriorityRedayQueue == "Middle") MFQMiddleAlgorithmList.add(AddMFQProcess);
 				else MFQLowAlorithmList.add(AddMFQProcess);
@@ -276,6 +272,5 @@ public class AddPanel extends JPanel{
 		ArrivalTimeTextField.setText("");
 		BurstTimeTextField.setText("");
 		PriorityReadyQueueComboBox.setSelectedItem("Middle");
-		
 	}
 }
