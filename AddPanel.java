@@ -46,6 +46,20 @@ public class AddPanel extends JPanel{
 		manager.addPanel = this;
 		Base();
 		ComponentSetting();
+		
+		AlgorithmList.add(new Process("P1", 0, 15));
+		AlgorithmList.add(new Process("P2", 1, 1));
+		AlgorithmList.add(new Process("P3", 2, 1));
+		AlgorithmList.add(new Process("P4", 3, 1));
+		AlgorithmList.add(new Process("P5", 4, 1));
+		AlgorithmList.add(new Process("P6", 5, 1));
+		AlgorithmList.add(new Process("P7", 6, 1));
+		AlgorithmList.add(new Process("P8", 7, 1));
+		AlgorithmList.add(new Process("P9", 8, 1));
+		AlgorithmList.add(new Process("P10", 9, 1));
+		AlgorithmList.add(new Process("P11", 10, 1));
+		AlgorithmList.add(new Process("P12", 11, 1));
+		AlgorithmList.add(new Process("P13", 12, 1));
 	}
 	private void Base(){
 		setSize(240, 270);

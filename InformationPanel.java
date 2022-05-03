@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,8 +33,10 @@ public class InformationPanel extends JPanel{
 		table.setSize(600, 200);
 		table.setLocation(10, 20);
 		table.setRowHeight(25);
+		table.setBackground(Color.green);
 		
 		scrollpane.setBounds(2, 0, 695, 400);
+		scrollpane.setBackground(Color.yellow);
 		
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);	// ���̺� ��� ����
 		TableColumnModel tcmSchedule = table.getColumnModel();
@@ -50,8 +54,8 @@ public class InformationPanel extends JPanel{
 				});
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-		model.setValueAt(WT, Row-1, 3);
-		model.setValueAt(TT, Row-1, 4);
-		model.setValueAt(NTT, Row-1, 5);
+//		model.setValueAt(WT, Row-1, 3);
+//		model.setValueAt(TT, Row-1, 4);
+//		model.setValueAt(NTT, Row-1, 5);
 	}	
 }
