@@ -11,7 +11,7 @@ public class FCFS extends Algorithm{
 	         PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;                               // TT 계산
 	         PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;               // WT 계산
 	         PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;            // NTT 계산
-	         manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, Integer.parseInt(PresentProcess.Name.substring(1)));
+	         manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, PresentProcess.Row);
 	         PresentProcess = null;                     // bursttime이 0 이하가 되면 null로 변화
 	      }
 		if(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {

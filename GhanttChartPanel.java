@@ -41,7 +41,7 @@ public class GhanttChartPanel extends JPanel{
 		add(label);
 
 		if(second == 9) {
-			GhanttchartScroll.setBounds(10, 120, 700, 140);
+			GhanttchartScroll.setBounds(10, 150, 700, 140);
 		}
 
 		if(second >= 9) {

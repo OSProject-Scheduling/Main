@@ -14,7 +14,7 @@ public class SPN extends Algorithm{
 			PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;
 			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
 			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
-			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, Integer.parseInt(PresentProcess.Name.substring(1)));
+			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, PresentProcess.Row);
 			PresentProcess = null;	
 		}
 		if (!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
