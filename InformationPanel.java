@@ -1,20 +1,26 @@
+
+import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 public class InformationPanel extends JPanel{
-	String[] TableHeader = {"Process Name", "Arrival time(AT)", "Burst time(BT)", 
-			"Waiting time(WT)", "Turnaround time(TT)", "Normalized TT(NTT)"};
+	String[] TableHeader = {"Process Name", "Arrival time", "Burst time", // 행
+			"Waiting time", "Turnaround time", "Normalized TT"};
 
 	DefaultTableModel model = new DefaultTableModel(TableHeader, 0);
 	JTable table = new JTable(model);
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 	
 	JScrollPane scrollpane = new JScrollPane(table);
+	
 	
 	public InformationPanel() {
 		Base();
@@ -23,7 +29,8 @@ public class InformationPanel extends JPanel{
 	
 	private void Base() {
 		setSize(700, 500);
-		setLocation(10, 280);
+		setLocation(10, 310);
+		setBackground(Color.WHITE);
 		setLayout(null);
 	}
 	
@@ -31,10 +38,9 @@ public class InformationPanel extends JPanel{
 		table.setSize(600, 200);
 		table.setLocation(10, 20);
 		table.setRowHeight(25);
-		
 		scrollpane.setBounds(2, 0, 695, 400);
 		
-		dtcr.setHorizontalAlignment(SwingConstants.CENTER);	// ���̺� ��� ����
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);	// 가운데 정렬
 		TableColumnModel tcmSchedule = table.getColumnModel();
 		for(int i=0; i<table.getColumnCount(); i++) {
 			tcmSchedule.getColumn(i).setCellRenderer(dtcr);
@@ -49,9 +55,15 @@ public class InformationPanel extends JPanel{
 				Double.toString(FCFS.NormalizedTime)
 				});
 	}
+	public void MFQAddAlgorithm(MFQProcess Process) {
+		model.addRow(new Object[] {Process.Name, Double.toString(Process.ArrivalTime), Double.toString(Process.BurstTime),
+				Double.toString(Process.WaitingTime), Double.toString(Process.TurnaroundTime),
+				Double.toString(Process.NormalizedTime), Process.PriorityRedayQueue
+				});
+	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-		model.setValueAt(WT, Row-1, 3);
-		model.setValueAt(TT, Row-1, 4);
-		model.setValueAt(NTT, Row-1, 5);
-	}	
+		model.setValueAt(WT, Row, 3);
+		model.setValueAt(TT, Row, 4);
+		model.setValueAt(NTT, Row, 5);
+	}
 }

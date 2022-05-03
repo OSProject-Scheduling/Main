@@ -17,7 +17,7 @@ public class RR extends Algorithm{
 			PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;
 			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
 			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
-			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, Integer.parseInt(PresentProcess.Name.substring(1)));
+			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, PresentProcess.Row);
 			PresentProcess = null;							// bursttime이 0 이하가 되면 null로 변화
 			ForQuantum = 0;
 		}

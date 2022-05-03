@@ -11,13 +11,19 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class RunPanel extends JPanel{
-	int CoreCount =0;
-	
+	int PCoreCount = 0;
+	int ECoreCount = 0;
+	int Ppass = 0;
+	int Ppass1 = 0;
+	int Epass = 0;
+	int Epass1 = 0;
+	boolean isoverCount;
 	int QuanturmTime = 0;
 	JButton RunButton = new JButton("Run");
 	
@@ -48,8 +54,10 @@ public class RunPanel extends JPanel{
 	
 	private void ComponentSetting() {
 		
-		SpinnerNumberModel numbermodel = new SpinnerNumberModel(1,1,5,1);
-		PCore = new JSpinner(numbermodel);
+		SpinnerNumberModel Pnumbermodel = new SpinnerNumberModel(0,0,5,1);
+		SpinnerNumberModel Enumbermodel = new SpinnerNumberModel(0,0,5,1);
+
+		PCore = new JSpinner(Pnumbermodel);
 		PCoreLabel.setLocation(10,10);
 		add(PCoreLabel);
 		
@@ -57,23 +65,46 @@ public class RunPanel extends JPanel{
 		PCore.setLocation(120,15);
 		add(PCore);
 		
-		ECore = new JSpinner(numbermodel);
-		ECoreLabel.setLocation(10,10);
+		ECore = new JSpinner(Enumbermodel);
+		ECoreLabel.setLocation(10,40);
+		add(ECoreLabel);
 		
 		ECore.setSize(50,25);
+		ECore.setLocation(120, 45);
+		add(ECore);
 		
-		QuanturmTimeLabel.setLocation(10, 130);
-		add(QuanturmTimeLabel);
 		
 		PCore.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
+				PCoreCount = Integer.parseInt(PCore.getValue().toString());
+				if(PCoreCount + ECoreCount > 4) {
+				}
+				else if(PCoreCount + ECoreCount < 4){
+				}
 			}
 		});
+		
+		ECore.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				ECoreCount = Integer.parseInt(ECore.getValue().toString());
+				if(PCoreCount + ECoreCount > 4) {
+				}
+				else if(PCoreCount + ECoreCount < 4){
+
+				}
+			}
+		});
+		
+		QuanturmTimeLabel.setLocation(10, 70);
+		add(QuanturmTimeLabel);
+		
 		QuanturmTimeTextField.setHorizontalAlignment(JTextField.CENTER);
-		QuanturmTimeTextField.setLocation(120, 135);
-		QuanturmTimeTextField.setSize(110, 20);
+		QuanturmTimeTextField.setLocation(120, 75);
+		QuanturmTimeTextField.setSize(50, 20);
 		QuanturmTimeTextField.addKeyListener(new TimeKeyListener());
 		add(QuanturmTimeTextField);
 		
@@ -106,17 +137,33 @@ public class RunPanel extends JPanel{
 	
 	private class RunActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			if(manager.addPanel.SetAlgorithm == "RR") {
+				QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
+			}
 			if(manager.addPanel.AlgorithmList.isEmpty()) {
 				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
+			if(ECoreCount + PCoreCount == 0) {
+				JOptionPane.showMessageDialog(null,  "Add Processor", "Error", JOptionPane.INFORMATION_MESSAGE);
+			}
 			else {
-					if(manager.addPanel.SetAlgorithm.equals(""))
-						manager.addPanel.SetAlgorithm = "FCFS";
-					if(manager.addPanel.SetAlgorithm == "FCFS") new FCFS(manager);
-					else if(manager.addPanel.SetAlgorithm == "RR") new RR(manager, QuanturmTime);
-					else if(manager.addPanel.SetAlgorithm == "SPN") new SPN(manager);
-					else if(manager.addPanel.SetAlgorithm == "SRTN") new SRTN(manager);
-					else if(manager.addPanel.SetAlgorithm == "HRRN") new HRRN(manager);
+				for(int i =0; i<manager.addPanel.AlgorithmList.size(); i++) {
+					for(int j = 0; j<manager.addPanel.AlgorithmList.size()-1;j++) {
+						if(manager.addPanel.AlgorithmList.get(j).ArrivalTime>manager.addPanel.AlgorithmList.get(j+1).ArrivalTime) {
+							Process temp = manager.addPanel.AlgorithmList.get(j);
+							manager.addPanel.AlgorithmList.set(j, manager.addPanel.AlgorithmList.get(j+1));
+							manager.addPanel.AlgorithmList.set(j+1, temp);
+							
+						}
+					}
+				}
+				if(manager.addPanel.SetAlgorithm.equals(""))
+					manager.addPanel.SetAlgorithm = "FCFS";
+				if(manager.addPanel.SetAlgorithm == "FCFS") new FCFS(manager);
+				else if(manager.addPanel.SetAlgorithm == "RR") new RR(manager, QuanturmTime);
+				else if(manager.addPanel.SetAlgorithm == "SPN") new SPN(manager);
+				else if(manager.addPanel.SetAlgorithm == "SRTN") new SRTN(manager);
+				else if(manager.addPanel.SetAlgorithm == "HRRN") new HRRN(manager);
 			}
 		}
 	}

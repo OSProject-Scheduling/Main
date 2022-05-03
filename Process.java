@@ -7,11 +7,12 @@ public class Process {
 	double NormalizedTime = 0;
 	double StaticBurstTime;
 	double ResponseRatio = -1;
-	
-	public Process(String Name, int ArrivalTime, int StaticBurstTime) {
+	int Row;
+	public Process(String Name, int ArrivalTime, int StaticBurstTime, int Row) {
 		this.ArrivalTime = ArrivalTime;
 		this.StaticBurstTime = StaticBurstTime;
 		this.BurstTime = StaticBurstTime;
 		this.Name = Name;
+		this.Row = Row;
 	}
 }
