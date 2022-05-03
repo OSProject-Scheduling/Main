@@ -12,99 +12,103 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class RunPanel extends JPanel{
-	int PCoreCount = 0;
-	int ECoreCount = 0;
-	int Ppass = 0;
-	int Ppass1 = 0;
-	int Epass = 0;
-	int Epass1 = 0;
-	boolean isoverCount;
+
 	int QuanturmTime = 0;
-	JButton RunButton = new JButton("Run");
 	
 	ProjectManager manager;	
-	BaseLabel QuanturmTimeLabel = new BaseLabel("Quenturm");
 	
+	JButton RunButton = new JButton("Run");								// RunButton
+
+	BaseLabel QuanturmTimeLabel = new BaseLabel("Quenturm");			// Quanturm
 	JTextField QuanturmTimeTextField = new JTextField(10);
 	
-	BaseLabel PCoreLabel = new BaseLabel("P Core");
-	JSpinner PCore;
+	BaseLabel CoreLabel = new BaseLabel("Core");						// Core
 	
-	BaseLabel ECoreLabel = new BaseLabel("E Core");
-	JSpinner ECore;
+	JLabel PCoreLabel = new JLabel("P");						
+	JSpinner PCoreSpinner;
+	
+	JLabel ECoreLabel = new JLabel("E");
+	JSpinner ECoreSpinner;
 	
 	public RunPanel(ProjectManager manager) {
 		this.manager = manager;
 		manager.runpanel = this;
-		Base();
-		ComponentSetting();
+		Base();															// RunPanel 초기 설정
+		ComponentSetting();												// RunPanel에 있는 구성요소 설정
 	}
 	
 	private void Base(){
-		setSize(240, 270);
-		setLocation(10, 390);
+		setSize(240, 136);
+		setLocation(10, 201);
 		setBackground(Color.YELLOW);
 		setLayout(null);
 	}
 	
 	private void ComponentSetting() {
 		
-		SpinnerNumberModel Pnumbermodel = new SpinnerNumberModel(0,0,5,1);
-		SpinnerNumberModel Enumbermodel = new SpinnerNumberModel(0,0,5,1);
+		SpinnerNumberModel Pnumbermodel = new SpinnerNumberModel(0,0,4,1);			// Core Spinner
+		SpinnerNumberModel Enumbermodel = new SpinnerNumberModel(1,0,4,1);
 
-		PCore = new JSpinner(Pnumbermodel);
-		PCoreLabel.setLocation(10,10);
+		CoreLabel.setLocation(10, 30);												// Core Label adding
+		add(CoreLabel);
+											
+		PCoreLabel.setSize(10, 20);													// PCoreLabel
+		PCoreLabel.setLocation(105,35);					
 		add(PCoreLabel);
 		
-		PCore.setSize(50,25);
-		PCore.setLocation(120,15);
-		add(PCore);
-		
-		ECore = new JSpinner(Enumbermodel);
-		ECoreLabel.setLocation(10,40);
+		PCoreSpinner = new JSpinner(Pnumbermodel);									// PCoreSpinner
+		PCoreSpinner.setSize(40,25);
+		PCoreSpinner.setLocation(120,35);
+		add(PCoreSpinner);
+														
+		ECoreLabel.setSize(10, 20);													// ECoreLabel
+		ECoreLabel.setLocation(175,35);
 		add(ECoreLabel);
 		
-		ECore.setSize(50,25);
-		ECore.setLocation(120, 45);
-		add(ECore);
+		ECoreSpinner = new JSpinner(Enumbermodel);									// ECoreSpinner
+		ECoreSpinner.setSize(40,25);
+		ECoreSpinner.setLocation(190, 35);
+		add(ECoreSpinner);
 		
-		
-		PCore.addChangeListener(new ChangeListener() {
-			
+		PCoreSpinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				PCoreCount = Integer.parseInt(PCore.getValue().toString());
-				if(PCoreCount + ECoreCount > 4) {
+				System.out.println(Integer.parseInt(PCoreSpinner.getValue().toString()));
+				
+				if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) > 4) {
+					PCoreSpinner.setValue(Integer.parseInt(PCoreSpinner.getValue().toString())-1);
 				}
-				else if(PCoreCount + ECoreCount < 4){
+				else if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) < 1){
+					PCoreSpinner.setValue(Integer.parseInt(PCoreSpinner.getValue().toString())+1);
 				}
 			}
 		});
 		
-		ECore.addChangeListener(new ChangeListener() {
+		ECoreSpinner.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				ECoreCount = Integer.parseInt(ECore.getValue().toString());
-				if(PCoreCount + ECoreCount > 4) {
+				if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) > 4) {
+					ECoreSpinner.setValue(Integer.parseInt(ECoreSpinner.getValue().toString())-1);
 				}
-				else if(PCoreCount + ECoreCount < 4){
-
+				else if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) < 1){
+					ECoreSpinner.setValue(Integer.parseInt(ECoreSpinner.getValue().toString())+1);
 				}
 			}
 		});
 		
-		QuanturmTimeLabel.setLocation(10, 70);
+		QuanturmTimeLabel.setLocation(10, 65);								// Quanturm adding
 		add(QuanturmTimeLabel);
 		
 		QuanturmTimeTextField.setHorizontalAlignment(JTextField.CENTER);
-		QuanturmTimeTextField.setLocation(120, 75);
-		QuanturmTimeTextField.setSize(50, 20);
+		QuanturmTimeTextField.setLocation(120, 70);
+		QuanturmTimeTextField.setSize(110, 20);
 		QuanturmTimeTextField.addKeyListener(new TimeKeyListener());
 		add(QuanturmTimeTextField);
 		
@@ -112,15 +116,14 @@ public class RunPanel extends JPanel{
 		QuanturmTimeTextField.setVisible(false);
 		
 		
-		RunButton.setSize(105, 20);
-		RunButton.setLocation(70, 230);
+		RunButton.setSize(220, 30);											// RunButton adding
+		RunButton.setLocation(10, 105);
 		RunButton.setOpaque(true);
 		RunButton.setBackground(Color.green);
 		RunButton.addActionListener(new RunActionListener());
 		add(RunButton);
-		
-		
 	}
+	
 	private class TimeKeyListener extends KeyAdapter{
 		public void keyTyped(KeyEvent e) {				// 숫자 외에는 작성할 수 없도록 설정
 			JTextField t = (JTextField)e.getSource();
@@ -134,7 +137,6 @@ public class RunPanel extends JPanel{
 		}
 	}
 	
-	
 	private class RunActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(manager.addPanel.SetAlgorithm == "RR") {
@@ -143,9 +145,9 @@ public class RunPanel extends JPanel{
 			if(manager.addPanel.AlgorithmList.isEmpty()) {
 				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
-			if(ECoreCount + PCoreCount == 0) {
-				JOptionPane.showMessageDialog(null,  "Add Processor", "Error", JOptionPane.INFORMATION_MESSAGE);
-			}
+//			if(ECoreCount + PCoreCount == 0) {
+//				JOptionPane.showMessageDialog(null,  "Add Processor", "Error", JOptionPane.INFORMATION_MESSAGE);
+//			}
 			else {
 				for(int i =0; i<manager.addPanel.AlgorithmList.size(); i++) {
 					for(int j = 0; j<manager.addPanel.AlgorithmList.size()-1;j++) {
@@ -153,13 +155,10 @@ public class RunPanel extends JPanel{
 							Process temp = manager.addPanel.AlgorithmList.get(j);
 							manager.addPanel.AlgorithmList.set(j, manager.addPanel.AlgorithmList.get(j+1));
 							manager.addPanel.AlgorithmList.set(j+1, temp);
-							
 						}
 					}
 				}
-				if(manager.addPanel.SetAlgorithm.equals(""))
-					manager.addPanel.SetAlgorithm = "FCFS";
-				if(manager.addPanel.SetAlgorithm == "FCFS") new FCFS(manager);
+				if(manager.addPanel.SetAlgorithm == null) manager.addPanel.SetAlgorithm = "FCFS";
 				else if(manager.addPanel.SetAlgorithm == "RR") new RR(manager, QuanturmTime);
 				else if(manager.addPanel.SetAlgorithm == "SPN") new SPN(manager);
 				else if(manager.addPanel.SetAlgorithm == "SRTN") new SRTN(manager);

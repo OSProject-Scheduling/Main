@@ -5,10 +5,10 @@ public class ProjectManager {
 	HighReadyQueuePanel HighReadyQueue;
 	MiddleReadyQueuePanel MidReadyQueue;
 	LowReadyQueuePanel lowReadyQueue;
-	
 	GhanttChartPanel GhanttChart;
 	AddPanel addPanel;
 	RunPanel runpanel;
+	
 	public ProjectManager(InformationPanel information, ReadyQueuePanel ReadyQueue,
 			GhanttChartPanel GhanttChart, HighReadyQueuePanel HighReadyQueue, MiddleReadyQueuePanel MidReadyQueue,
 			LowReadyQueuePanel lowReadyQueue) {
