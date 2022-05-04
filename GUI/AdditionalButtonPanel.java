@@ -53,7 +53,7 @@ public class AdditionalButtonPanel extends JPanel{
 		ReStartButton.setBackground(Color.green);
 		ReStartButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
-				manager.algorithm.ReStart();
+				manager.algorithm.start();
 			}
 		});
 		add(ReStartButton);
