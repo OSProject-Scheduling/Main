@@ -43,7 +43,8 @@ public class ReadyQueuePanel extends JPanel{
 				JLabel label = new JLabel(ProcessList.get(i).Name);
 				label.setHorizontalAlignment(JLabel.CENTER);
 				label.setOpaque(true);
-				label.setBackground(Color.yellow);
+				label.setBackground(ChooseColor(ProcessList.get(i).Row));
+				label.setForeground(Color.WHITE);
 				label.setPreferredSize(new Dimension(60, 80));
 				space.setPreferredSize(new Dimension(20,80));
 				add(label);
@@ -59,5 +60,42 @@ public class ReadyQueuePanel extends JPanel{
 		}
 		
 		PrevProcessList = ProcessList.size();
+	}
+	public Color ChooseColor(int row) {
+		switch(row + 1){
+			case 1:
+				return Color.BLUE;
+			case 2:
+				return Color.RED;
+			case 3:
+				return Color.GRAY;
+			case 4:
+				return Color.GREEN;
+			case 5:
+				return Color.MAGENTA;
+			case 6:
+				return Color.ORANGE;
+			case 7:
+				return Color.PINK;
+			case 8:
+				return Color.YELLOW;
+			case 9:
+				return Color.CYAN;
+			case 10:
+				return Color.DARK_GRAY;
+			case 11:
+				return Color.WHITE;
+			case 12:
+				return Color.LIGHT_GRAY;
+			case 13:
+				Color color= new Color(100,100,100);
+				return color;
+			case 14:
+				Color color1 = new Color(210,100,140);
+				return color1;
+			default:
+				Color color2 = new Color(150,150,100);
+				return color2;
+		}
 	}
 }
