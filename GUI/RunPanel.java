@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -12,10 +13,15 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import Manager.ProjectManager;
+import Scheduling.*;
+import Scheduling.Process;
 
 public class RunPanel extends JPanel{
 
@@ -32,9 +38,11 @@ public class RunPanel extends JPanel{
 	
 	JLabel PCoreLabel = new JLabel("P");						
 	JSpinner PCoreSpinner;
+	JComponent PEditor;
 	
 	JLabel ECoreLabel = new JLabel("E");
 	JSpinner ECoreSpinner;
+	JComponent EEditor;
 	
 	public RunPanel(ProjectManager manager) {
 		this.manager = manager;
@@ -63,6 +71,9 @@ public class RunPanel extends JPanel{
 		add(PCoreLabel);
 		
 		PCoreSpinner = new JSpinner(Pnumbermodel);									// PCoreSpinner
+		PEditor = PCoreSpinner.getEditor();
+		JSpinner.DefaultEditor PspinnerEditor = (JSpinner.DefaultEditor)PEditor;		// 스피너 가운데 정렬
+		PspinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
 		PCoreSpinner.setSize(40,25);
 		PCoreSpinner.setLocation(120,35);
 		add(PCoreSpinner);
@@ -72,6 +83,9 @@ public class RunPanel extends JPanel{
 		add(ECoreLabel);
 		
 		ECoreSpinner = new JSpinner(Enumbermodel);									// ECoreSpinner
+		EEditor = ECoreSpinner.getEditor();
+		JSpinner.DefaultEditor EspinnerEditor = (JSpinner.DefaultEditor)EEditor;		// 스피너 가운데 정렬
+		EspinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
 		ECoreSpinner.setSize(40,25);
 		ECoreSpinner.setLocation(190, 35);
 		add(ECoreSpinner);
@@ -158,12 +172,12 @@ public class RunPanel extends JPanel{
 				}
 				if(manager.addPanel.SetAlgorithm == null) {
 					manager.addPanel.SetAlgorithm = "FCFS";
-					new FCFS(manager);
 				}
-				else if(manager.addPanel.SetAlgorithm == "RR") new RR(manager, QuanturmTime);
-				else if(manager.addPanel.SetAlgorithm == "SPN") new SPN(manager);
-				else if(manager.addPanel.SetAlgorithm == "SRTN") new SRTN(manager);
-				else if(manager.addPanel.SetAlgorithm == "HRRN") new HRRN(manager);
+				else if(manager.addPanel.SetAlgorithm == "FCFS") manager.algorithm = new FCFS(manager);
+				else if(manager.addPanel.SetAlgorithm == "RR") manager.algorithm = new RR(manager, QuanturmTime);
+				else if(manager.addPanel.SetAlgorithm == "SPN") manager.algorithm = new SPN(manager);
+				else if(manager.addPanel.SetAlgorithm == "SRTN") manager.algorithm = new SRTN(manager);
+				else if(manager.addPanel.SetAlgorithm == "HRRN") manager.algorithm = new HRRN(manager);
 			}
 		}
 	}

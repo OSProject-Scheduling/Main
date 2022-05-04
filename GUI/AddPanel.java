@@ -1,3 +1,4 @@
+package GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
+import Manager.ProjectManager;
+import Scheduling.MFQProcess;
+import Scheduling.Process;
+
 public class AddPanel extends JPanel{
 	ProjectManager manager;	
 	
@@ -25,11 +30,11 @@ public class AddPanel extends JPanel{
 	Process AddProcess;											// FCFS, RR, SPN, SRTN, HRRN용 AddingProcess
 	MFQProcess AddMFQProcess;									// MFQ용 AddingProcess
 
-	LinkedList<Process> AlgorithmList = new LinkedList<>();		// FCFS, RR, SPN, SRTN, HRRN용 process 리스트
+	public LinkedList<Process> AlgorithmList = new LinkedList<>();		// FCFS, RR, SPN, SRTN, HRRN용 process 리스트
 	
-	LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();	// MFQ용 process 리스트
-	LinkedList<MFQProcess> MFQMiddleAlgorithmList = new LinkedList<>();
-	LinkedList<MFQProcess> MFQLowAlorithmList = new LinkedList<>();
+	public LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();	// MFQ용 process 리스트
+	public LinkedList<MFQProcess> MFQMiddleAlgorithmList = new LinkedList<>();
+	public LinkedList<MFQProcess> MFQLowAlorithmList = new LinkedList<>();
 	
 	BaseLabel AlgorithmLabel = new BaseLabel("Algorithm");		// algorithm
 	

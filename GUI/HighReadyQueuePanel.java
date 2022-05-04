@@ -1,23 +1,29 @@
+package GUI;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.util.LinkedList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class LowReadyQueuePanel extends JPanel{
+import Scheduling.Process;
+
+public class HighReadyQueuePanel extends JPanel{
 	
 	JScrollPane ReadyQueueScrollBar;
-	JLabel LowReadyQueueLabel;
+	JLabel HighReadyQueueLabel;
 	int PrevProcessList;
 	
-	public LowReadyQueuePanel() {
+	public HighReadyQueuePanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		HighReadyQueueLabel = new JLabel("<MiddleReadyQueue>");
+		HighReadyQueueLabel.setLocation(10,10);
+		HighReadyQueueLabel.setBackground(Color.WHITE);
+		HighReadyQueueLabel.setSize(100,20);
+		add(HighReadyQueueLabel);
+		HighReadyQueueLabel.setVisible(false);
 		
 	}
 	public void ScrollSetting(JScrollPane ReadyQueueScrollbar) {
@@ -29,14 +35,14 @@ public class LowReadyQueuePanel extends JPanel{
 		removeAll();
 		repaint();
 		if(ProcessList.size()>8) {
-			ReadyQueueScrollBar.setBounds(490,30,220,100);
+			ReadyQueueScrollBar.setBounds(10,30,220, 100);
 			setPreferredSize(new Dimension(621+80*(ProcessList.size()-8), getHeight()));
 			ReadyQueueScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		}
 		else {
 			ReadyQueueScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			ReadyQueueScrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-			ReadyQueueScrollBar.setBounds(490,30,220,83);
+			ReadyQueueScrollBar.setBounds(10,30,220, 83);
 		}
 		if (ProcessList.size() > 0) {
 			for (int i = 0; i < ProcessList.size(); i++) {

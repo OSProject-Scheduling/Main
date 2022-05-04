@@ -1,6 +1,9 @@
+package Scheduling;
 import java.util.LinkedList;
 
 import javax.swing.JLabel;
+
+import Manager.ProjectManager;
 
 public class SRTN extends Algorithm{
 	Process tmpProcess;
