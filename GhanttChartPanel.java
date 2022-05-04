@@ -24,7 +24,7 @@ public class GhanttChartPanel extends JPanel{
 		this.GhanttchartScroll = GhanttchartScroll;
 	}
 	
-	public void adding(JLabel ProcessName) {				// 지워야 함
+	public void adding(JLabel ProcessName ,int row) {				// 지워야 함
 
 		JLabel SecondLabel = new JLabel(Integer.toString(second));
 		SecondLabel.setVerticalAlignment(JLabel.BOTTOM);
@@ -36,7 +36,8 @@ public class GhanttChartPanel extends JPanel{
 		JLabel label = new JLabel(ProcessName.getText());
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setOpaque(true);
-		label.setBackground(Color.yellow);
+		label.setBackground(ChooseColor(row));
+		label.setForeground(Color.white);
 		label.setPreferredSize(new Dimension(60, 120));
 		add(label);
 
@@ -50,5 +51,46 @@ public class GhanttChartPanel extends JPanel{
 		revalidate();
 		GhanttchartScroll.getHorizontalScrollBar().setValue(GhanttchartScroll.getHorizontalScrollBar().getMaximum());
 
+	}
+	
+	public Color ChooseColor(int row) {
+		switch(row + 1){
+			case 1:
+				return Color.BLUE;
+			case 2:
+				return Color.RED;
+			case 3:
+				return Color.GRAY;
+			case 4:
+				return Color.GREEN;
+			case 5:
+				return Color.MAGENTA;
+			case 6:
+				return Color.ORANGE;
+			case 7:
+				return Color.PINK;
+			case 8:
+				return Color.YELLOW;
+			case 9:
+				return Color.CYAN;
+			case 10:
+				return Color.DARK_GRAY;
+			case 11:
+				return Color.WHITE;
+			case 12:
+				return Color.LIGHT_GRAY;
+			case 13:
+				Color color= new Color(100,100,100);
+				return color;
+			case 14:
+				Color color1 = new Color(210,100,140);
+				return color1;
+			case 15:
+				Color color2 = new Color(150,150,100);
+				return color2;
+			default:
+				Color colorDefault = new Color(10,10,10);
+				return colorDefault;
+		}
 	}
 }

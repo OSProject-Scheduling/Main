@@ -52,7 +52,7 @@ public class AddPanel extends JPanel{
 	public int Row = 0;												// information table용 row
 
 	public String SetPriorityReadyQueue;
-	public String SetAlgorithm = "";
+	public String SetAlgorithm;
 	
 	public AddPanel(ProjectManager manager) {					// 생성자
 		this.manager = manager;
@@ -88,6 +88,7 @@ public class AddPanel extends JPanel{
 		AlgorithmComboBox.setFont(new Font("Dialog", Font.BOLD, 14));		// AlgorithmComboBox adding
 		AlgorithmComboBox.setSize(110, 20);
 		AlgorithmComboBox.setLocation(120, 15);
+		AlgorithmComboBox.setSelectedItem("FCFS");
 		add(AlgorithmComboBox);
 		
 		ProcessNameLabel.setLocation(10, 40);								// ProcessNameLabel adding
@@ -223,7 +224,7 @@ public class AddPanel extends JPanel{
 		}
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());	
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
-		if(SetPriorityReadyQueue == null) SetPriorityReadyQueue = "Middle";
+		if(SetAlgorithm == null) SetAlgorithm = "FCFS";
 
 		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);			// Process타입으로 리턴(Row 참고)
 	}
@@ -236,6 +237,7 @@ public class AddPanel extends JPanel{
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
 		
+		if(SetPriorityReadyQueue == null) SetPriorityReadyQueue = "Middle";
 		return new MFQProcess(SetPriorityReadyQueue, ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
 	}
 	
