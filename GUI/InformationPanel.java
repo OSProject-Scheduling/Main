@@ -14,7 +14,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import Manager.Renderer;
-import Scheduling.MFQProcess;
 import Scheduling.Process;
 
 public class InformationPanel extends JPanel{
@@ -67,21 +66,14 @@ public class InformationPanel extends JPanel{
 		
 			
 	}
-	public void MFQAddAlgorithm(MFQProcess Process) {
+	public void MFQAddAlgorithm(Process Process) {
 		model.addRow(new Object[] {Process.Name, Double.toString(Process.ArrivalTime), Double.toString(Process.BurstTime),
 				Double.toString(Process.WaitingTime), Double.toString(Process.TurnaroundTime),
-				Double.toString(Process.NormalizedTime), Process.PriorityRedayQueue
-				});
-		
-		
-
-			
-
+				Double.toString(Process.NormalizedTime), Process.Priority});
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-//		model.setValueAt(WT, Row, 3);
-//		model.setValueAt(TT, Row, 4);
-//		model.setValueAt(NTT, Row, 5);
+		model.setValueAt(WT, Row, 3);
+		model.setValueAt(TT, Row, 4);
+		model.setValueAt(NTT, Row, 5);
 	}
-
 }

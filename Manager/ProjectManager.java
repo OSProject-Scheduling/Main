@@ -2,6 +2,7 @@ package Manager;
 
 import GUI.*;
 import Scheduling.Algorithm;
+import Scheduling.MFQ;
 
 public class ProjectManager {
 	public InformationPanel information;
@@ -14,6 +15,7 @@ public class ProjectManager {
 	public RunPanel runpanel;
 	public MainFrame mainFrame;
 	public Algorithm algorithm;
+	public MFQ mfq;
 	
 	public ProjectManager(InformationPanel information, ReadyQueuePanel ReadyQueue,
 			GhanttChartPanel GhanttChart, HighReadyQueuePanel HighReadyQueue, MiddleReadyQueuePanel MidReadyQueue,
