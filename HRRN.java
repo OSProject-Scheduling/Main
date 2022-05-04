@@ -45,8 +45,8 @@ public class HRRN extends Algorithm{
 			}
 		}
 		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) return;
-		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "));			
-		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name));												
+		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "),-1);			
+		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row);												
 																											
 		if(!(PresentProcess == null)) { 
 			for(int i =0; i<ReadyQueue.size(); i++) {

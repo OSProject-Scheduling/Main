@@ -60,7 +60,7 @@ public class AddPanel extends JPanel{
 
 	public String SetPriorityReadyQueue;
 	
-	public String SetAlgorithm = "";
+	public String SetAlgorithm;
 	
 	public AddPanel(ProjectManager manager) {
 		this.manager = manager;
@@ -82,6 +82,7 @@ public class AddPanel extends JPanel{
 		AlgorithmComboBox.setFont(new Font("Dialog", Font.BOLD, 14));		// AlgorithmComboBox adding
 		AlgorithmComboBox.setSize(110, 20);
 		AlgorithmComboBox.setLocation(120, 15);
+		AlgorithmComboBox.setSelectedItem("FCFS");
 		add(AlgorithmComboBox);
 		
 		
@@ -226,7 +227,7 @@ public class AddPanel extends JPanel{
 		}
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
-
+		if(SetAlgorithm == null) SetAlgorithm = "FCFS";
 		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
 	}
 	
