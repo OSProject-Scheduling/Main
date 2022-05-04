@@ -145,9 +145,7 @@ public class RunPanel extends JPanel{
 			if(manager.addPanel.AlgorithmList.isEmpty()) {
 				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
-//			if(ECoreCount + PCoreCount == 0) {
-//				JOptionPane.showMessageDialog(null,  "Add Processor", "Error", JOptionPane.INFORMATION_MESSAGE);
-//			}
+
 			else {
 				for(int i =0; i<manager.addPanel.AlgorithmList.size(); i++) {
 					for(int j = 0; j<manager.addPanel.AlgorithmList.size()-1;j++) {
@@ -158,7 +156,10 @@ public class RunPanel extends JPanel{
 						}
 					}
 				}
-				if(manager.addPanel.SetAlgorithm == null) manager.addPanel.SetAlgorithm = "FCFS";
+				if(manager.addPanel.SetAlgorithm == null) {
+					manager.addPanel.SetAlgorithm = "FCFS";
+					new FCFS(manager);
+				}
 				else if(manager.addPanel.SetAlgorithm == "RR") new RR(manager, QuanturmTime);
 				else if(manager.addPanel.SetAlgorithm == "SPN") new SPN(manager);
 				else if(manager.addPanel.SetAlgorithm == "SRTN") new SRTN(manager);

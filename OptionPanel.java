@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 public class OptionPanel extends JPanel{
 	AddPanel addpanel;
 	RunPanel runpanel;
+	AdditionalButtonPanel additionalbuttonpanel;
 	InformationPanel informationpanel;
 	GhanttChartPanel ghanttchartpanel;
 	ReadyQueuePanel readyQueue;
@@ -26,9 +27,11 @@ public class OptionPanel extends JPanel{
 		Base();
 		addpanel = new AddPanel(manager);
 		runpanel = new RunPanel(manager);
+		additionalbuttonpanel = new AdditionalButtonPanel(manager);
 		
 		add(addpanel);
 		add(runpanel);
+		add(additionalbuttonpanel);
 	}
 	
 	private void Base() {
