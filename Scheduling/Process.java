@@ -12,7 +12,7 @@ public class Process {
 	public int Row;
 	public String Priority = "";
 	public int count = 0;
-	public Process(String Priority, String Name, int ArrivalTime, int StaticBurstTime/*, int Row*/) {
+	public Process(String Priority, String Name, int ArrivalTime, int StaticBurstTime, int Row) {
 		this.Priority = Priority;
 		this.ArrivalTime = ArrivalTime;
 		this.StaticBurstTime = StaticBurstTime;
