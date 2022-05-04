@@ -150,6 +150,9 @@ public class AddPanel extends JPanel{
 				}
 				
 				if(SetAlgorithm == "MFQ") {									// MFQ일 경우 다양한 요소 표시
+					PriorityReadyQueueComboBox.setVisible(true);
+					PriorityReadyQueueLabel.setVisible(true);
+					
 					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(true);
 					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(true);
 		
@@ -169,6 +172,9 @@ public class AddPanel extends JPanel{
 					PriorityReadyQueueComboBox.setVisible(false);
 					PriorityReadyQueueLabel.setVisible(false);
 					
+					PriorityReadyQueueComboBox.setVisible(false);
+					PriorityReadyQueueLabel.setVisible(false);
+					
 					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(false);
 					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(false);
 					
@@ -180,6 +186,11 @@ public class AddPanel extends JPanel{
 					
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
 					manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
+					
+					String[] TableHeader = {"Process Name", "Arrival time", "Burst time", 
+							"Waiting time", "Turnaround time", "Normalized TT"};
+					
+					manager.information.model.setColumnIdentifiers(TableHeader);
 				}
 			}
 		});
@@ -230,7 +241,6 @@ public class AddPanel extends JPanel{
 		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());	
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
 		if(SetAlgorithm == null) SetAlgorithm = "FCFS";
-
 		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);			// Process타입으로 리턴(Row 참고)
 	}
 	
@@ -260,11 +270,10 @@ public class AddPanel extends JPanel{
 				
 				AlgorithmList.add((Process)AddMFQProcess);					// MFQ용 Algorithmlist에 추가, Information에 추가
 				manager.information.MFQAddAlgorithm(AddMFQProcess);
-				Row++;
 				Update();
 			}
 			else {															// MFQ가 아닐 때
-				AddProcess = AlgorithmSetting();							
+				AddProcess = AlgorithmSetting();
 				AlgorithmList.add(AlgorithmSetting());						// AlgorithmList에 추가
 				manager.information.AddAlgorithm(AddProcess);				// Information에 추가
 				Row++;

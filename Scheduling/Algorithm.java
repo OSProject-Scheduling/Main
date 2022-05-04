@@ -46,7 +46,6 @@ public abstract class Algorithm {
 					schedulling();
 					if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty() && PresentProcess == null) timer.cancel(); 
 					time++; 																					// time변수를 증가시켜줘 초를 표현
-					System.out.println("멈춤?");
 				}
 			};
 			timer = new Timer();

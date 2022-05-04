@@ -62,12 +62,12 @@ public class AdditionalButtonPanel extends JPanel{
 		ReSetButton.setLocation(10, 50);
 		ReSetButton.setOpaque(true);
 		ReSetButton.setBackground(Color.green);
-		ReSetButton.addActionListener(new ActionListener() {		// ActionListener
-			public void actionPerformed(ActionEvent e) {
-				manager.algorithm.timer.cancel();
-				manager.mainFrame.setContentPane(new MainPanel(manager.mainFrame));
-			}
-		});
+		ReSetButton.addActionListener(new ActionListener() {      // ActionListener
+	         public void actionPerformed(ActionEvent e) {
+	            if(!(manager.algorithm == null)) manager.algorithm.timer.cancel();
+	            manager.mainFrame.setContentPane(new MainPanel(manager.mainFrame));
+	         }
+	      });
 		add(ReSetButton);
 	}
 }

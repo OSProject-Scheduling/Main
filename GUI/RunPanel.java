@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
@@ -34,6 +35,13 @@ public class RunPanel extends JPanel{
 	BaseLabel QuanturmTimeLabel = new BaseLabel("Quenturm");			// Quanturm
 	JTextField QuanturmTimeTextField = new JTextField(10);
 	
+	BaseLabel MaxQuanturmLabel = new BaseLabel("Max Quanturm");			// MFQ용 max Quanturm, Div
+	JTextField MaxQuanturmTextField = new JTextField(10);
+	
+	BaseLabel DivLabel = new BaseLabel("Div");
+	JTextField DivTextField = new JTextField(10);
+	
+	
 	BaseLabel CoreLabel = new BaseLabel("Core");						// Core
 	
 	JLabel PCoreLabel = new JLabel("P");						
@@ -44,6 +52,8 @@ public class RunPanel extends JPanel{
 	JSpinner ECoreSpinner;
 	JComponent EEditor;
 	
+	ArrayList<Integer> rowlist = new ArrayList<>(); 
+	
 	public RunPanel(ProjectManager manager) {
 		this.manager = manager;
 		manager.runpanel = this;
@@ -52,7 +62,7 @@ public class RunPanel extends JPanel{
 	}
 	
 	private void Base(){
-		setSize(240, 136);
+		setSize(240, 166);
 		setLocation(10, 201);
 		setBackground(Color.YELLOW);
 		setLayout(null);
@@ -129,9 +139,33 @@ public class RunPanel extends JPanel{
 		QuanturmTimeLabel.setVisible(false);
 		QuanturmTimeTextField.setVisible(false);
 		
+		DivLabel.setLocation(10, 65);										// Div adding(MFQ용)
+		add(DivLabel);
+		
+		DivTextField.setHorizontalAlignment(JTextField.CENTER);
+		DivTextField.setLocation(120, 70);
+		DivTextField.setSize(110, 20);
+		DivTextField.addKeyListener(new TimeKeyListener());
+		add(DivTextField);
+		
+		DivLabel.setVisible(false);
+		DivTextField.setVisible(false);
+		
+		MaxQuanturmLabel.setLocation(10, 95);								// Max Quanturm adding(MFQ용)
+		add(MaxQuanturmLabel);
+		
+		MaxQuanturmTextField.setHorizontalAlignment(JTextField.CENTER);
+		MaxQuanturmTextField.setLocation(120, 100);
+		MaxQuanturmTextField.setSize(110, 20);
+		MaxQuanturmTextField.addKeyListener(new TimeKeyListener());
+		add(MaxQuanturmTextField);
+		
+		MaxQuanturmLabel.setVisible(false);
+		MaxQuanturmTextField.setVisible(false);
+		
 		
 		RunButton.setSize(220, 30);											// RunButton adding
-		RunButton.setLocation(10, 105);
+		RunButton.setLocation(10, 135);
 		RunButton.setOpaque(true);
 		RunButton.setBackground(Color.green);
 		RunButton.addActionListener(new RunActionListener());
@@ -161,6 +195,17 @@ public class RunPanel extends JPanel{
 			}
 
 			else {
+				for(int i = 0; i<manager.addPanel.AlgorithmList.size();i++) {
+					rowlist.add(manager.addPanel.AlgorithmList.get(i).Row);
+				}
+				for(int i = 0; i<rowlist.size();i++) {
+					for(int j = 0; j<rowlist.size()-1;j++) {
+						int Row = rowlist.get(j+1);
+						rowlist.set(j, rowlist.get(j+1));
+						rowlist.set(j+1, Row);
+					}
+				}
+				
 				for(int i =0; i<manager.addPanel.AlgorithmList.size(); i++) {
 					for(int j = 0; j<manager.addPanel.AlgorithmList.size()-1;j++) {
 						if(manager.addPanel.AlgorithmList.get(j).ArrivalTime>manager.addPanel.AlgorithmList.get(j+1).ArrivalTime) {
@@ -170,6 +215,9 @@ public class RunPanel extends JPanel{
 						}
 					}
 				}
+				for(int i = 0; i<manager.addPanel.AlgorithmList.size();i++) {
+					manager.addPanel.AlgorithmList.get(i).Row = i;
+				}
 				if(manager.addPanel.SetAlgorithm == null) {
 					manager.addPanel.SetAlgorithm = "FCFS";
 				}
@@ -178,6 +226,8 @@ public class RunPanel extends JPanel{
 				else if(manager.addPanel.SetAlgorithm == "SPN") manager.algorithm = new SPN(manager);
 				else if(manager.addPanel.SetAlgorithm == "SRTN") manager.algorithm = new SRTN(manager);
 				else if(manager.addPanel.SetAlgorithm == "HRRN") manager.algorithm = new HRRN(manager);
+				else if(manager.addPanel.SetAlgorithm == "MFQ") manager.mfq = new MFQ(manager, 
+						Integer.parseInt(MaxQuanturmTextField.getText()), Integer.parseInt(DivTextField.getText()));
 			}
 		}
 	}
