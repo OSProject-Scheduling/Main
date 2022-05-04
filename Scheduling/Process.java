@@ -10,22 +10,14 @@ public class Process {
 	public double StaticBurstTime;
 	public double ResponseRatio = -1;
 	public int Row;
-	public String Priority;
-	
-	public Process(String Name, int ArrivalTime, int StaticBurstTime, int Row) {
-		this.ArrivalTime = ArrivalTime;
-		this.StaticBurstTime = StaticBurstTime;
-		this.BurstTime = StaticBurstTime;
-		this.Name = Name;
-		this.Row = Row;
-	}
-	
-	public Process(String Priority, String Name, int ArrivalTime, int StaticBurstTime, int Row) {
-		this.ArrivalTime = ArrivalTime;
-		this.StaticBurstTime = StaticBurstTime;
-		this.BurstTime = StaticBurstTime;
+	public String Priority = "";
+	public int count = 0;
+	public Process(String Priority, String Name, int ArrivalTime, int StaticBurstTime/*, int Row*/) {
 		this.Priority = Priority;
+		this.ArrivalTime = ArrivalTime;
+		this.StaticBurstTime = StaticBurstTime;
+		this.BurstTime = StaticBurstTime;
 		this.Name = Name;
-		this.Row = Row;
+		//this.Row = Row;
 	}
 }
