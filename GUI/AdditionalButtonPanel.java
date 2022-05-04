@@ -53,7 +53,7 @@ public class AdditionalButtonPanel extends JPanel{
 		ReStartButton.setBackground(Color.green);
 		ReStartButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
-				manager.algorithm.ReStart();
+				manager.algorithm.start();
 			}
 		});
 		add(ReStartButton);
@@ -64,7 +64,8 @@ public class AdditionalButtonPanel extends JPanel{
 		ReSetButton.setBackground(Color.green);
 		ReSetButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
-				manager.algorithm.timer.cancel();
+				if(!(manager.algorithm == null)) manager.algorithm.timer.cancel();
+				if(!(manager.mfq == null)) manager.mfq.timer.cancel();				// mfq 변경 해줘야함
 				manager.mainFrame.setContentPane(new MainPanel(manager.mainFrame));
 			}
 		});
