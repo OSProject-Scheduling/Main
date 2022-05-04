@@ -39,7 +39,7 @@ public abstract class Algorithm {
 		start();
 	}
 	
-	private void start() {																		// timer와 timertask를 사용해 카운트를 구현시켰습니다
+	public void start() {																		// timer와 timertask를 사용해 카운트를 구현시켰습니다
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
@@ -49,19 +49,8 @@ public abstract class Algorithm {
 					System.out.println("멈춤?");
 				}
 			};
+			timer = new Timer();
 			timer.schedule(task, 1000,1000); 																	// 1초마다 실행
-	}
-	
-	public void ReStart() {
-		TimerTask task = new TimerTask() {
-			@Override
-			public void run() {
-		
-			//todo
-			}
-		};	
-		timer = new Timer();
-		timer.schedule(task, 0, 1000);
 	}
 	
 	
