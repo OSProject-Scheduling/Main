@@ -29,7 +29,7 @@ public class AdditionalButtonPanel extends JPanel{
 	
 	private void Base(){
 		setSize(240, 200);
-		setLocation(10, 335);
+		setLocation(10, 365);
 		setBackground(Color.YELLOW);
 		setLayout(null);
 	}
@@ -42,7 +42,8 @@ public class AdditionalButtonPanel extends JPanel{
 		PauseButton.setBackground(Color.green);
 		PauseButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
-				manager.algorithm.timer.cancel();
+				if(!(manager.algorithm == null)) manager.algorithm.timer.cancel();
+				if(!(manager.mfq == null)) manager.mfq.timer.cancel();
 			}
 		});
 		add(PauseButton);
@@ -53,7 +54,8 @@ public class AdditionalButtonPanel extends JPanel{
 		ReStartButton.setBackground(Color.green);
 		ReStartButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
-				manager.algorithm.start();
+				if(!(manager.algorithm == null)) manager.algorithm.start();
+				if(!(manager.mfq == null)) manager.mfq.start();
 			}
 		});
 		add(ReStartButton);
