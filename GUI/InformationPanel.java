@@ -1,3 +1,4 @@
+package GUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -9,7 +10,12 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import Manager.Renderer;
+import Scheduling.MFQProcess;
+import Scheduling.Process;
 
 public class InformationPanel extends JPanel{
 	String[] TableHeader = {"Process Name", "Arrival time", "Burst time", // 행
@@ -19,9 +25,10 @@ public class InformationPanel extends JPanel{
 	JTable table = new JTable(model);
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 	
+	Renderer renderer = new Renderer();
 	JScrollPane scrollpane = new JScrollPane(table);
-	
-	
+
+	boolean isRun = false;
 	public InformationPanel() {
 		Base();
 		ComponentSetting();
@@ -54,16 +61,27 @@ public class InformationPanel extends JPanel{
 				Double.toString(FCFS.WaitingTime), Double.toString(FCFS.TurnaroundTime),
 				Double.toString(FCFS.NormalizedTime)
 				});
+			
+			TableColumn col = table.getColumnModel().getColumn(0);
+			col.setCellRenderer(new Renderer());
+		
+			
 	}
 	public void MFQAddAlgorithm(MFQProcess Process) {
 		model.addRow(new Object[] {Process.Name, Double.toString(Process.ArrivalTime), Double.toString(Process.BurstTime),
 				Double.toString(Process.WaitingTime), Double.toString(Process.TurnaroundTime),
 				Double.toString(Process.NormalizedTime), Process.PriorityRedayQueue
 				});
+		
+		
+
+			
+
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-		model.setValueAt(WT, Row, 3);
-		model.setValueAt(TT, Row, 4);
-		model.setValueAt(NTT, Row, 5);
+//		model.setValueAt(WT, Row, 3);
+//		model.setValueAt(TT, Row, 4);
+//		model.setValueAt(NTT, Row, 5);
 	}
+
 }
