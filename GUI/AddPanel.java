@@ -1,3 +1,4 @@
+package GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
+import Manager.ProjectManager;
+import Scheduling.MFQProcess;
+import Scheduling.Process;
+
 public class AddPanel extends JPanel{
 	ProjectManager manager;	
 	
@@ -25,11 +30,11 @@ public class AddPanel extends JPanel{
 	Process AddProcess;											// FCFS, RR, SPN, SRTN, HRRN용 AddingProcess
 	MFQProcess AddMFQProcess;									// MFQ용 AddingProcess
 
-	LinkedList<Process> AlgorithmList = new LinkedList<>();		// FCFS, RR, SPN, SRTN, HRRN용 process 리스트
+	public LinkedList<Process> AlgorithmList = new LinkedList<>();		// FCFS, RR, SPN, SRTN, HRRN용 process 리스트
 	
-	LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();	// MFQ용 process 리스트
-	LinkedList<MFQProcess> MFQMiddleAlgorithmList = new LinkedList<>();
-	LinkedList<MFQProcess> MFQLowAlorithmList = new LinkedList<>();
+	public LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();	// MFQ용 process 리스트
+	public LinkedList<MFQProcess> MFQMiddleAlgorithmList = new LinkedList<>();
+	public LinkedList<MFQProcess> MFQLowAlorithmList = new LinkedList<>();
 	
 	BaseLabel AlgorithmLabel = new BaseLabel("Algorithm");		// algorithm
 	
@@ -49,7 +54,7 @@ public class AddPanel extends JPanel{
 	String [] ReadyQueueArray = {"High", "Middle", "Low"};
 	JComboBox<String> PriorityReadyQueueComboBox = new JComboBox<String>(ReadyQueueArray);
 	
-	int Row = 0;												// information table용 row
+	public int Row = 0;												// information table용 row
 
 	public String SetPriorityReadyQueue;
 	public String SetAlgorithm;
@@ -134,7 +139,7 @@ public class AddPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
-				if(SetAlgorithm == "RR") {
+				if(SetAlgorithm == "RR") {									// RR일 경우 Quanturm 표시
 					manager.runpanel.QuanturmTimeLabel.setVisible(true);
 					manager.runpanel.QuanturmTimeTextField.setVisible(true);
 				}
@@ -143,7 +148,8 @@ public class AddPanel extends JPanel{
 					manager.runpanel.QuanturmTimeTextField.setVisible(false);
 					manager.runpanel.QuanturmTimeTextField.setText("");
 				}
-				if(SetAlgorithm == "MFQ") {
+				
+				if(SetAlgorithm == "MFQ") {									// MFQ일 경우 다양한 요소 표시
 					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(true);
 					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(true);
 		
@@ -215,16 +221,17 @@ public class AddPanel extends JPanel{
 		}
 	}
 	
+	/*현재 텍스트에 입력된 ProcessName, AT, BT Process타입으로 변환해주는 함수 */
 	public Process AlgorithmSetting() {
-		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// 입력칸에 빈칸인 경우 경고메세지 출력
+		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// 입력칸에 빈칸인 경우 경고메세지 출력 하기 위한 과정
 				|| BurstTimeTextField.getText().equals("")) {
 			return new Process("ERROR", -1, -1,-1);
 		}
-		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
+		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());	
 		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
 		if(SetAlgorithm == null) SetAlgorithm = "FCFS";
 
-		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
+		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);			// Process타입으로 리턴(Row 참고)
 	}
 	
 	public MFQProcess MFQAlgorithmSetting() {
@@ -241,34 +248,31 @@ public class AddPanel extends JPanel{
 	
 	private class AddActionListener  implements ActionListener{				// add 클릭 시 액션 리스너
 		public void actionPerformed(ActionEvent e) {
-			if(AlgorithmSetting().ArrivalTime == -1) {
+			if(AlgorithmSetting().ArrivalTime == -1) {						// 현재 입력된 값들이 빈칸인 경우 에러 메세지 출력
 				JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
-			else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {
+			else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {		// MFQ인 경우
 				AddMFQProcess = MFQAlgorithmSetting();
 				
 				if(AddMFQProcess.PriorityRedayQueue == "High") MFQHighAlgorithmList.add(AddMFQProcess);
 				else if(AddMFQProcess.PriorityRedayQueue == "Middle") MFQMiddleAlgorithmList.add(AddMFQProcess);
 				else MFQLowAlorithmList.add(AddMFQProcess);
 				
-				AlgorithmList.add((Process)AddMFQProcess);
+				AlgorithmList.add((Process)AddMFQProcess);					// MFQ용 Algorithmlist에 추가, Information에 추가
 				manager.information.MFQAddAlgorithm(AddMFQProcess);
 				Row++;
 				Update();
 			}
-			else {
-				AddProcess = AlgorithmSetting();
-				AlgorithmList.add(AddProcess);
-				manager.information.AddAlgorithm(AddProcess);
+			else {															// MFQ가 아닐 때
+				AddProcess = AlgorithmSetting();							
+				AlgorithmList.add(AlgorithmSetting());						// AlgorithmList에 추가
+				manager.information.AddAlgorithm(AddProcess);				// Information에 추가
 				Row++;
 				Update();
 			}
 		}
 	}
 
-
-
-	
 	public void Update() {
 		ProcessNameTextField.setText("");
 		ArrivalTimeTextField.setText("");

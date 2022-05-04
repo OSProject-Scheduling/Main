@@ -1,3 +1,4 @@
+package GUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -11,6 +12,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import Manager.Renderer;
+import Scheduling.MFQProcess;
+import Scheduling.Process;
 
 public class InformationPanel extends JPanel{
 	String[] TableHeader = {"Process Name", "Arrival time", "Burst time", // 행
@@ -74,9 +79,9 @@ public class InformationPanel extends JPanel{
 
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
-		model.setValueAt(WT, Row, 3);
-		model.setValueAt(TT, Row, 4);
-		model.setValueAt(NTT, Row, 5);
+//		model.setValueAt(WT, Row, 3);
+//		model.setValueAt(TT, Row, 4);
+//		model.setValueAt(NTT, Row, 5);
 	}
 
 }

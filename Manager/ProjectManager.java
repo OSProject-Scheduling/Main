@@ -1,13 +1,19 @@
+package Manager;
+
+import GUI.*;
+import Scheduling.Algorithm;
 
 public class ProjectManager {
-	InformationPanel information;
-	ReadyQueuePanel ReadyQueue;
-	HighReadyQueuePanel HighReadyQueue;
-	MiddleReadyQueuePanel MidReadyQueue;
-	LowReadyQueuePanel lowReadyQueue;
-	GhanttChartPanel GhanttChart;
-	AddPanel addPanel;
-	RunPanel runpanel;
+	public InformationPanel information;
+	public ReadyQueuePanel ReadyQueue;
+	public HighReadyQueuePanel HighReadyQueue;
+	public MiddleReadyQueuePanel MidReadyQueue;
+	public LowReadyQueuePanel lowReadyQueue;
+	public GhanttChartPanel GhanttChart;
+	public AddPanel addPanel;
+	public RunPanel runpanel;
+	public MainFrame mainFrame;
+	public Algorithm algorithm;
 	
 	public ProjectManager(InformationPanel information, ReadyQueuePanel ReadyQueue,
 			GhanttChartPanel GhanttChart, HighReadyQueuePanel HighReadyQueue, MiddleReadyQueuePanel MidReadyQueue,
