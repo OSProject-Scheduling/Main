@@ -2,11 +2,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.LinkedList;
 
-public abstract class Algorithm {
+public abstract class MFQAlgorithm {
 	abstract void schedulling();
 	
 	protected GhanttChartPanel ghanttchartPanel;
-	protected LinkedList<Process> AlgorithmList = new LinkedList<>();	
+		
 	protected LinkedList<Process> HighAlgorithmList = new LinkedList<>();
 	protected LinkedList<Process> MiddleAlgorithmList = new LinkedList<>();
 	protected LinkedList<Process> LowAlgorithmList = new LinkedList<>();
@@ -14,16 +14,16 @@ public abstract class Algorithm {
 	protected LinkedList<Process> HighReadyQueue = new LinkedList<>();
 	protected LinkedList<Process> MiddleReadyQueue = new LinkedList<>();
 	protected LinkedList<Process> LowReadyQueue = new LinkedList<>();
-	protected LinkedList<Process> ReadyQueue = new LinkedList<>();
+	
 	
 	protected Process PresentProcess = null;
-	//protected MFQProcess PresentProcessMFQ = null;
+	
 	protected ProjectManager manager;
 	protected int time = 0;
 	protected int CoreWork = 1;
 	
-	public Algorithm(ProjectManager manager) {
-		this.AlgorithmList = manager.addPanel.AlgorithmList;
+	public MFQAlgorithm(ProjectManager manager) {
+		
 		this.HighAlgorithmList = manager.addPanel.HighAlgorithmList;
 		this.MiddleAlgorithmList = manager.addPanel.MiddleAlgorithmList;
 		this.LowAlgorithmList = manager.addPanel.LowAlorithmList;

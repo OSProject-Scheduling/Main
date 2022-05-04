@@ -24,15 +24,15 @@ public class AddPanel extends JPanel{
 	
 	Process AddProcess;
 	
-	MFQProcess AddMFQProcess;
+	Process AddMFQProcess;
 
 	LinkedList<Process> AlgorithmList = new LinkedList<>();
 	
-	LinkedList<MFQProcess> MFQHighAlgorithmList = new LinkedList<>();
+	LinkedList<Process> HighAlgorithmList = new LinkedList<>();
 	
-	LinkedList<MFQProcess> MFQMiddleAlgorithmList = new LinkedList<>();
+	LinkedList<Process> MiddleAlgorithmList = new LinkedList<>();
 	
-	LinkedList<MFQProcess> MFQLowAlorithmList = new LinkedList<>();
+	LinkedList<Process> LowAlorithmList = new LinkedList<>();
 	
 	BaseLabel AlgorithmLabel = new BaseLabel("Algorithm");
 	
@@ -149,8 +149,8 @@ public class AddPanel extends JPanel{
 					manager.lowReadyQueue.ReadyQueueScrollBar.setVisible(true);
 					manager.lowReadyQueue.LowReadyQueueLabel.setVisible(true);
 					
-					manager.MidReadyQueue.ReadyQueueScrollBar.setVisible(true);
-					manager.MidReadyQueue.MiddleReadyQueueLabel.setVisible(true);
+					manager.MiddleReadyQueue.ReadyQueueScrollBar.setVisible(true);
+					manager.MiddleReadyQueue.MiddleReadyQueueLabel.setVisible(true);
 					
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(false);
 					manager.ReadyQueue.ReadyQueueLabel.setVisible(false);
@@ -168,8 +168,8 @@ public class AddPanel extends JPanel{
 					manager.lowReadyQueue.ReadyQueueScrollBar.setVisible(false);
 					manager.lowReadyQueue.LowReadyQueueLabel.setVisible(false);
 					
-					manager.MidReadyQueue.ReadyQueueScrollBar.setVisible(false);
-					manager.MidReadyQueue.MiddleReadyQueueLabel.setVisible(false);
+					manager.MiddleReadyQueue.ReadyQueueScrollBar.setVisible(false);
+					manager.MiddleReadyQueue.MiddleReadyQueueLabel.setVisible(false);
 					
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
 					manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
@@ -230,31 +230,19 @@ public class AddPanel extends JPanel{
 		return new Process(ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
 	}
 	
-	public MFQProcess MFQAlgorithmSetting() {
-		if(ProcessNameTextField.getText().equals("") || ArrivalTimeTextField.getText().equals("")	// 입력칸에 빈칸인 경우 경고메세지 출력
-				|| BurstTimeTextField.getText().equals("")) {
-			return new MFQProcess("ERROR","ERROR", -1, -1,-1);
-		}
-		int ArrivalTime = Integer.parseInt(ArrivalTimeTextField.getText());
-		int BurstTime = Integer.parseInt(BurstTimeTextField.getText());
-		if(SetPriorityReadyQueue == null) SetPriorityReadyQueue = "Middle";
-		
-		return new MFQProcess(SetPriorityReadyQueue, ProcessNameTextField.getText(), ArrivalTime, BurstTime, Row);
-	}
-	
 	private class AddActionListener  implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(AlgorithmSetting().ArrivalTime == -1) {
 				JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {
-				AddMFQProcess = MFQAlgorithmSetting();
-				if(AddMFQProcess.PriorityRedayQueue == "High") MFQHighAlgorithmList.add(AddMFQProcess);
-				else if(AddMFQProcess.PriorityRedayQueue == "Middle") MFQMiddleAlgorithmList.add(AddMFQProcess);
-				else MFQLowAlorithmList.add(AddMFQProcess);
+				AddProcess = AlgorithmSetting();
+				if(AddProcess.Priority == "High") HighAlgorithmList.add(AddMFQProcess);
+				else if(AddProcess.Priority == "Middle") MiddleAlgorithmList.add(AddMFQProcess);
+				else LowAlorithmList.add(AddMFQProcess);
 				
 				AlgorithmList.add((Process)AddMFQProcess);
-				manager.information.MFQAddAlgorithm(AddMFQProcess);
+				manager.information.AddAlgorithm(AddMFQProcess);
 				Row++;
 				Update();
 			}

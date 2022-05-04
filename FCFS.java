@@ -1,5 +1,4 @@
 import javax.swing.JLabel;
-// 김문웅 병신
 public class FCFS extends Algorithm{
 	public FCFS(ProjectManager manager) {
 		super(manager);
