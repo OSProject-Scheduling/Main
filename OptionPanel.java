@@ -12,6 +12,7 @@ public class OptionPanel extends JPanel{
 	HighReadyQueuePanel highreadyQueue;
 	MiddleReadyQueuePanel midreadyQueue;
 	LowReadyQueuePanel lowreadyQueue;
+	
 	public OptionPanel(InformationPanel informationpanel, GhanttChartPanel ghanttchartpanel, 
 			ReadyQueuePanel readyQueue, HighReadyQueuePanel highreadyQueue, MiddleReadyQueuePanel midreadyQueue,
 			LowReadyQueuePanel lowreadyQueue) {
@@ -21,9 +22,11 @@ public class OptionPanel extends JPanel{
 		this.highreadyQueue = highreadyQueue;
 		this.midreadyQueue = midreadyQueue;
 		this.lowreadyQueue = lowreadyQueue;
+		
 		Base();
 		addpanel = new AddPanel(manager);
 		runpanel = new RunPanel(manager);
+		
 		add(addpanel);
 		add(runpanel);
 	}
