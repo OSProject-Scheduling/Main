@@ -18,8 +18,21 @@ public class MainPanel extends JPanel{
 	LowReadyQueuePanel LowReadyQueuePanel = new LowReadyQueuePanel();					// LowReadyQueue
 	JScrollPane LowReadyQueueScroll = new JScrollPane(LowReadyQueuePanel);
 	
-	GhanttChartPanel GhanttChartpanel = new GhanttChartPanel();							// GhanttChart
-	JScrollPane GhanttChartScroll = new JScrollPane(GhanttChartpanel);
+	JLabel CoreLabel_1 = new JLabel();
+	GhanttChartPanel GhanttChartpanel_1 = new GhanttChartPanel();							// GhanttChart
+	JScrollPane GhanttChartScroll_1 = new JScrollPane(GhanttChartpanel_1);
+	
+	JLabel CoreLabel_2 = new JLabel();
+	GhanttChartPanel GhanttChartpanel_2 = new GhanttChartPanel();							// GhanttChart
+	JScrollPane GhanttChartScroll_2 = new JScrollPane(GhanttChartpanel_2);
+	
+	JLabel CoreLabel_3 = new JLabel();
+	GhanttChartPanel GhanttChartpanel_3 = new GhanttChartPanel();							// GhanttChart
+	JScrollPane GhanttChartScroll_3 = new JScrollPane(GhanttChartpanel_3);
+	
+	JLabel CoreLabel_4 = new JLabel();
+	GhanttChartPanel GhanttChartpanel_4 = new GhanttChartPanel();							// GhanttChart
+	JScrollPane GhanttChartScroll_4 = new JScrollPane(GhanttChartpanel_4);
 	
 	InformationPanel informationpanel = new InformationPanel();							// Information Table
 	
@@ -27,13 +40,18 @@ public class MainPanel extends JPanel{
 	
 	public MainPanel(MainFrame mainframe) {
 		Base();																			// 기본 설정(MainFrame 설정)
-		GhanttChartpanel.ScrollSetting(GhanttChartScroll);
+		GhanttChartpanel_1.ScrollSetting(GhanttChartScroll_1);
+		GhanttChartpanel_2.ScrollSetting(GhanttChartScroll_2);
+		GhanttChartpanel_3.ScrollSetting(GhanttChartScroll_3);
+		GhanttChartpanel_4.ScrollSetting(GhanttChartScroll_4);
 		ReadyQueuepanel.ScrollSetting(ReadyQueueScroll);
 		HighReadyQueuepanel.ScrollSetting(HighReadyQueueScroll);
 		MiddleReadyQueuePanel.ScrollSetting(MiddleReadyQueueScroll);
 		LowReadyQueuePanel.ScrollSetting(LowReadyQueueScroll);
 		
-		optionpanel = new OptionPanel(informationpanel, GhanttChartpanel, ReadyQueuepanel, HighReadyQueuepanel, 
+		optionpanel = new OptionPanel(informationpanel, GhanttChartpanel_1,GhanttChartpanel_2,
+				GhanttChartpanel_3,GhanttChartpanel_4,CoreLabel_1, CoreLabel_2, CoreLabel_3, CoreLabel_4,
+				ReadyQueuepanel, HighReadyQueuepanel, 
 				MiddleReadyQueuePanel, LowReadyQueuePanel, mainframe);
 		add(optionpanel);
 		
@@ -49,9 +67,20 @@ public class MainPanel extends JPanel{
 		LowReadyQueueScroll.setBounds(490,30,220,83);
 		add(LowReadyQueueScroll);
 		
-		GhanttChartScroll.setBounds(10, 150, 700, 123);
-		add(GhanttChartScroll);
+		GhanttChartScroll_1.setBounds(10, 350, 700, 113);
+		add(GhanttChartScroll_1);
 		
+		GhanttChartScroll_2.setBounds(10, 320, 700, 113);
+		add(GhanttChartScroll_2);
+		GhanttChartScroll_2.setVisible(false);
+		
+		GhanttChartScroll_3.setBounds(10, 470, 700, 113);
+		add(GhanttChartScroll_3);
+		GhanttChartScroll_3.setVisible(false);
+		
+		GhanttChartScroll_4.setBounds(10, 620, 700, 113);
+		add(GhanttChartScroll_4);
+		GhanttChartScroll_4.setVisible(false);
 		ComponentSetting();																		// 구성요소 설정
 	}
 	
@@ -100,8 +129,36 @@ public class MainPanel extends JPanel{
 		GhanttChartLabel.setSize(100,20);
 		add(GhanttChartLabel);
 		
+		CoreLabel_1.setBackground(Color.WHITE);
+		CoreLabel_1.setSize(100, 20);
+		CoreLabel_1.setLocation(10, 330);
+		CoreLabel_1.setText("<P Core>");
+		add(CoreLabel_1);
+		
+		CoreLabel_2.setBackground(Color.WHITE);
+		CoreLabel_2.setSize(100, 20);
+		CoreLabel_2.setLocation(10, 330);
+		CoreLabel_2.setText("<P Core>");
+		add(CoreLabel_2);
+		CoreLabel_2.setVisible(false);
+		
+		CoreLabel_3.setBackground(Color.WHITE);
+		CoreLabel_3.setSize(100, 20);
+		CoreLabel_3.setLocation(10, 330);
+		CoreLabel_3.setText("<P Core>");
+		add(CoreLabel_3);
+		CoreLabel_3.setVisible(false);
+		
+		CoreLabel_4.setBackground(Color.WHITE);
+		CoreLabel_4.setSize(100, 20);
+		CoreLabel_4.setLocation(10, 330);
+		CoreLabel_4.setText("<P Core>");
+		add(CoreLabel_4);
+		CoreLabel_4.setVisible(false);
+		
+		
 		JLabel Table = new JLabel("<Table>");
-		Table.setLocation(1400,290);
+		Table.setLocation(1350,290);
 		Table.setBackground(Color.WHITE);
 		Table.setSize(100,20);
 		add(Table);

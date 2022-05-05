@@ -46,7 +46,7 @@ public class HRRN extends Algorithm{
 			}
 		}
 		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
-			manager.GhanttChart.addLastSecond();
+			manager.GhanttChart_1.addLastSecond();
 			return;
 		}
 		GUIELEC();

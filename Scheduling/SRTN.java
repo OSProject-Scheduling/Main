@@ -52,7 +52,7 @@ public class SRTN extends Algorithm{
 			}
 		}
 		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
-			manager.GhanttChart.addLastSecond();
+			manager.GhanttChart_1.addLastSecond();
 			return;
 		}
 		GUIELEC();																			// GhanttChart 표시
