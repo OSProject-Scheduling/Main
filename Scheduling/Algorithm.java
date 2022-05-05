@@ -10,7 +10,7 @@ import Manager.ProjectManager;
 import java.util.LinkedList;
 
 public abstract class Algorithm {
-	abstract void schedulling();
+	abstract void schedulling();	
 	protected GhanttChartPanel ghanttchartPanel;
 	
 	protected LinkedList<Process> AlgorithmList;	
@@ -59,7 +59,7 @@ public abstract class Algorithm {
 		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
 	         PresentProcess.TurnaroundTime = (time - PresentProcess.ArrivalTime) * CoreWork;                               // TT 계산
 	         PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;               // WT 계산
-	         PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;            // NTT 계산
+	         PresentProcess.NormalizedTime = Math.round(((PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime)*100)) / 100.0;            // NTT 계산
 	         manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, PresentProcess.Row);
 	         PresentProcess = null;                     					// bursttime이 0 이하가 되면 null로 변화
 	      }

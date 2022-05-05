@@ -7,6 +7,7 @@ public class Renderer extends DefaultTableCellRenderer{
 	int row;
 	String name;
 	boolean isRun;
+	Color color;
 	public Renderer() {
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
@@ -17,42 +18,54 @@ public class Renderer extends DefaultTableCellRenderer{
 		c.setForeground(Color.WHITE);
 		this.row++;
 		return c;
+		
 	}
 	public Color ChooseColor(int row) {
 		switch(row + 1){
 			case 1:
-				return Color.BLUE;
+				color = new Color(51,51,153);
+				return color;
 			case 2:
-				return Color.RED;
+				color = new Color(153,51,51);
+				return color;
 			case 3:
-				return Color.GRAY;
+				color = new Color(102,102,102);
+				return color;
 			case 4:
-				return Color.GREEN;
+				color = new Color(0,152,0);
+				return color;
 			case 5:
-				return Color.MAGENTA;
+				color = new Color(102,0,102);
+				return color;
 			case 6:
-				return Color.ORANGE;
+				color = new Color(204,51,0);
+				return color;
 			case 7:
-				return Color.PINK;
+				color = new Color(153,0,153);
+				return color;
 			case 8:
-				return Color.YELLOW;
+				color = new Color(204,153,0);
+				return color;
 			case 9:
-				return Color.CYAN;
+				color=  new Color(0,153,153);
+				return color;
 			case 10:
-				return Color.DARK_GRAY;
+				color = new Color(51,51,51);
+				return color;
 			case 11:
-				return Color.WHITE;
+				color = new Color(102,51,102);
+				return color;
 			case 12:
 				return Color.LIGHT_GRAY;
 			case 13:
-				Color color= new Color(100,100,100);
+				color= new Color(51,0,51);
 				return color;
 			case 14:
-				Color color1 = new Color(210,100,140);
-				return color1;
+				color = new Color(51,0,102);
+				return color;
 			default:
-				Color color2 = new Color(150,150,100);
-				return color2;
+				color = new Color(153,51,0);
+				return color;
 		}
 	}
 }

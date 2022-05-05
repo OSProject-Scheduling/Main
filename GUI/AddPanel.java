@@ -53,7 +53,7 @@ public class AddPanel extends JPanel{
 	JComboBox<String> PriorityReadyQueueComboBox = new JComboBox<String>(ReadyQueueArray);
 	
 	public int Row = 0;												// information table용 row
-
+	
 	public String Priority;
 	public String SetAlgorithm;
 	
@@ -210,6 +210,7 @@ public class AddPanel extends JPanel{
 					
 					manager.information.model.addColumn("Priority");
 					manager.information.table.getColumn("Priority").setPreferredWidth(20);
+					manager.information.CenterSetting();
 				}
 				else {													// MFQ아닐 경우 반대로
 					PriorityReadyQueueComboBox.setVisible(false);

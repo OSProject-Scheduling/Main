@@ -35,6 +35,10 @@ public class SRTN extends Algorithm{
 				pass = 1;
 			}
 		}
+		if(PresentProcess.BurstTime > ReadyQueue.get(0).BurstTime) {
+			ReadyQueue.add(PresentProcess);
+			PresentProcess = ReadyQueue.poll();
+		}
 		if(PresentProcess != null && !ReadyQueue.isEmpty())														// 현재 FCFS가 있으며, Ready큐에 하나라도 있다면
 		{
 			if(PresentProcess.BurstTime > ReadyQueue.get(0).BurstTime) 											// 현재 진행중인 것과 Ready큐에 있는 BurstTime이 가장 짦은 것과 비교
