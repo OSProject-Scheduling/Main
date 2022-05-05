@@ -66,6 +66,7 @@ public class AddPanel extends JPanel{
 //		AlgorithmList.add(new Process("P1", 0, 15, 0));
 //		AlgorithmList.add(new Process("P2", 1, 1, 1));
 //		AlgorithmList.add(new Process("P3", 2, 1, 2));
+//		
 //		AlgorithmList.add(new Process("P4", 3, 1, 3));
 //		AlgorithmList.add(new Process("P5", 4, 1, 4));
 //		AlgorithmList.add(new Process("P6", 5, 1, 5));
@@ -78,8 +79,8 @@ public class AddPanel extends JPanel{
 //		AlgorithmList.add(new Process("P13", 12, 1, 12));
 		
 		/*너네구나*/
-//		Process p1 = new Process("High","p1",0,20, 0);
-//		Process p2 = new Process("High","p2",1,6, 1);
+//		Process p1 = new Process("High","p1",1,20, 0);
+//		Process p2 = new Process("High","p2",2,6, 1);
 //		Process p3 = new Process("High","p3",4,8, 2);
 //		
 //		Process p4 = new Process("Middle","p4",3,3, 3);
@@ -89,7 +90,7 @@ public class AddPanel extends JPanel{
 //		Process p7 = new Process("Low","p7",3,1, 6);
 //		Process p8 = new Process("Low","p8",5,4, 7);
 //		Process p9 = new Process("Low","p9",6,5, 8);
-//		
+		
 //		MFQHighAlgorithmList.add(p1);
 //		MFQHighAlgorithmList.add(p2);
 //		MFQHighAlgorithmList.add(p3);

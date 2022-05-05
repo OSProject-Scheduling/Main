@@ -9,19 +9,14 @@ public class SRTN extends Algorithm{
 	Process tmpProcess;
 	int pass = 1;
 
-	public SRTN(ProjectManager manager) {
-		super(manager);
+	public SRTN(ProjectManager manager, int PCoreCount, int ECoreCount) {
+		super(manager, PCoreCount, ECoreCount);
 		// TODO Auto-generated constructor stub
 	}
 	
 	void schedulling() {
-		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {		// 현재 진행 중인 프로세스가 일을 끝냈으면
-			PresentProcess.TurnaroundTime = (time + 1) - PresentProcess.ArrivalTime;							// TT 계산
-			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;		// WT 계산
-			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;	// NTT 계산
-			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, PresentProcess.Row);
-			PresentProcess = null;
-		}
+		CalculateTime();
+		
 		if(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
 			ReadyQueue.add(AlgorithmList.poll()); 	// AlgorithmList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
 			manager.ReadyQueue.create_form(ReadyQueue);
@@ -57,11 +52,10 @@ public class SRTN extends Algorithm{
 			}
 		}
 		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
-			manager.GhanttChart.addLastSecond(CoreWork);
+			manager.GhanttChart.addLastSecond();
 			return;
 		}
-		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "),-1, CoreWork);			
-		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row, CoreWork);												// GhanttChart 표시
+		GUIELEC();																			// GhanttChart 표시
 		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork; // 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기
 	}
 }

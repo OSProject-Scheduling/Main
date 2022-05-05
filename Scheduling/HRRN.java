@@ -7,8 +7,8 @@ import Manager.ProjectManager;
 
 public class HRRN extends Algorithm{
 
-	public HRRN(ProjectManager manager) {
-		super(manager);
+	public HRRN(ProjectManager manager, int PCoreCount, int ECoreCount) {
+		super(manager, PCoreCount, ECoreCount);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -46,17 +46,17 @@ public class HRRN extends Algorithm{
 			}
 		}
 		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
-			manager.GhanttChart.addLastSecond(CoreWork);
+			manager.GhanttChart.addLastSecond();
 			return;
 		}
-		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "),-1, CoreWork);			
-		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row, CoreWork);												
-																											
+		GUIELEC();
+						
 		if(!(PresentProcess == null)) { 
 			for(int i =0; i<ReadyQueue.size(); i++) {
 				ReadyQueue.get(i).TurnaroundTime+=1;
 			}
 			PresentProcess.BurstTime -= CoreWork;
-		}											
+		}										
+		
 	}
 }
