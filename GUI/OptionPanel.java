@@ -39,7 +39,7 @@ public class OptionPanel extends JPanel{
 	}
 	
 	private void Base() {
-		setSize(520, 370);
+		setSize(520, 310);
 		setLocation(730, 10);
 		setBackground(Color.RED);
 		manager = new ProjectManager(informationpanel, readyQueue, ghanttchartpanel, highreadyQueue, midreadyQueue, lowreadyQueue);

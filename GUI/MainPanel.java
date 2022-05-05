@@ -101,7 +101,7 @@ public class MainPanel extends JPanel{
 		add(GhanttChartLabel);
 		
 		JLabel Table = new JLabel("<Table>");
-		Table.setLocation(10,290);
+		Table.setLocation(1400,290);
 		Table.setBackground(Color.WHITE);
 		Table.setSize(100,20);
 		add(Table);
