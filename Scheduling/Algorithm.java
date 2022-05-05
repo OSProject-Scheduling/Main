@@ -29,7 +29,7 @@ public abstract class Algorithm {
 	
 	public Algorithm(ProjectManager manager, int PCoreCount, int ECoreCount) {
 		this.AlgorithmList = manager.addPanel.AlgorithmList;
-		this.ghanttchartPanel = manager.GhanttChart;
+		this.ghanttchartPanel = manager.GhanttChart_1;
 		this.manager = manager;
 		
 		this.PCoreCount = PCoreCount;

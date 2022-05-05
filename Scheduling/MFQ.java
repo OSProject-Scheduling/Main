@@ -47,7 +47,7 @@ public class MFQ {
 		this.HighAlgorithmList = manager.addPanel.MFQHighAlgorithmList;
 		this.MiddleAlgorithmList = manager.addPanel.MFQMiddleAlgorithmList;
 		this.LowAlgorithmList = manager.addPanel.MFQLowAlorithmList;
-		ghanttchartPanel = manager.GhanttChart;
+		ghanttchartPanel = manager.GhanttChart_1;
 		
 		this.PCoreCount = PCoreCount;
         this.ECoreCount = ECoreCount;
@@ -202,7 +202,7 @@ public class MFQ {
 		if (PresentProcess == null && (HighAlgorithmList.isEmpty() && HighReadyQueue.isEmpty())
 				&& (MiddleAlgorithmList.isEmpty() && MiddleReadyQueue.isEmpty())
 				&& (LowAlgorithmList.isEmpty() && LowReadyQueue.isEmpty())) {
-			manager.GhanttChart.addLastSecond();
+			manager.GhanttChart_1.addLastSecond();
 			return;
 		}
 		if(PresentProcess==null) {
