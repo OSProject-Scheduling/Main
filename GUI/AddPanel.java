@@ -78,41 +78,41 @@ public class AddPanel extends JPanel{
 //		AlgorithmList.add(new Process("P13", 12, 1, 12));
 		
 		/*너네구나*/
-		Process p1 = new Process("High","p1",0,15, 0);
-		Process p2 = new Process("High","p2",1,6, 1);
-		Process p3 = new Process("High","p3",4,7, 2);
-		
-		Process p4 = new Process("Middle","p4",3,5, 3);
-		Process p5 = new Process("Middle","p5",6,3, 4);
-		Process p6 = new Process("Middle","p6",5,7, 5);
-		
-		Process p7 = new Process("Low","p7",3,3, 6);
-		Process p8 = new Process("Low","p8",5,4, 7);
-		Process p9 = new Process("Low","p9",6,5, 8);
-		
-		MFQHighAlgorithmList.add(p1);
-		MFQHighAlgorithmList.add(p2);
-		MFQHighAlgorithmList.add(p3);
-		
-		MFQMiddleAlgorithmList.add(p4);
-		MFQMiddleAlgorithmList.add(p5);
-		MFQMiddleAlgorithmList.add(p6);
-		
-		MFQLowAlorithmList.add(p7);
-		MFQLowAlorithmList.add(p8);
-		MFQLowAlorithmList.add(p9);
-		
-		manager.information.AddAlgorithm(p1);
-		manager.information.AddAlgorithm(p2);
-		manager.information.AddAlgorithm(p3);
-		
-		manager.information.AddAlgorithm(p4);
-		manager.information.AddAlgorithm(p5);
-		manager.information.AddAlgorithm(p6);
-		
-		manager.information.AddAlgorithm(p7);
-		manager.information.AddAlgorithm(p8);
-		manager.information.AddAlgorithm(p9);
+//		Process p1 = new Process("High","p1",0,20, 0);
+//		Process p2 = new Process("High","p2",1,6, 1);
+//		Process p3 = new Process("High","p3",4,8, 2);
+//		
+//		Process p4 = new Process("Middle","p4",3,3, 3);
+//		Process p5 = new Process("Middle","p5",5,1, 4);
+//		Process p6 = new Process("Middle","p6",6,7, 5);
+//		
+//		Process p7 = new Process("Low","p7",3,1, 6);
+//		Process p8 = new Process("Low","p8",5,4, 7);
+//		Process p9 = new Process("Low","p9",6,5, 8);
+//		
+//		MFQHighAlgorithmList.add(p1);
+//		MFQHighAlgorithmList.add(p2);
+//		MFQHighAlgorithmList.add(p3);
+//		
+//		MFQMiddleAlgorithmList.add(p4);
+//		MFQMiddleAlgorithmList.add(p5);
+//		MFQMiddleAlgorithmList.add(p6);
+//		
+//		MFQLowAlorithmList.add(p7);
+//		MFQLowAlorithmList.add(p8);
+//		MFQLowAlorithmList.add(p9);
+//		
+//		manager.information.AddAlgorithm(p1);
+//		manager.information.AddAlgorithm(p2);
+//		manager.information.AddAlgorithm(p3);
+//		
+//		manager.information.AddAlgorithm(p4);
+//		manager.information.AddAlgorithm(p5);
+//		manager.information.AddAlgorithm(p6);
+//		
+//		manager.information.AddAlgorithm(p7);
+//		manager.information.AddAlgorithm(p8);
+//		manager.information.AddAlgorithm(p9);
 		/*너네구나*/
 	}
 	private void Base(){		// addPanel 기본 세팅
@@ -304,27 +304,29 @@ public class AddPanel extends JPanel{
 	
 	private class AddActionListener  implements ActionListener{				// add 클릭 시 액션 리스너
 		public void actionPerformed(ActionEvent e) {
-			if(AlgorithmSetting().ArrivalTime == -1) {						// 현재 입력된 값들이 빈칸인 경우 에러 메세지 출력
-				JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {		// MFQ인 경우
-				AddProcess = MFQAlgorithmSetting();
-				
-				if(AddProcess.Priority.equals("High")) MFQHighAlgorithmList.add(AddProcess);
-				else if(AddProcess.Priority == "Middle") MFQMiddleAlgorithmList.add(AddProcess);
-				else MFQLowAlorithmList.add(AddProcess);
-				
-				AlgorithmList.add((Process)AddProcess);					// MFQ용 Algorithmlist에 추가, Information에 추가
-				manager.information.MFQAddAlgorithm(AddProcess);
-				Row++;
-				Update();
-			}
-			else {															// MFQ가 아닐 때
-				AddProcess = AlgorithmSetting();							
-				AlgorithmList.add(AlgorithmSetting());						// AlgorithmList에 추가
-				manager.information.AddAlgorithm(AddProcess);				// Information에 추가
-				Row++;
-				Update();
+			if((manager.algorithm == null) && (manager.mfq == null)) {	// 현재 실행 중인 알고리즘이 없을 때
+				if(AlgorithmSetting().ArrivalTime == -1) {						// 현재 입력된 값들이 빈칸인 경우 에러 메세지 출력
+					JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {		// MFQ인 경우
+					AddProcess = MFQAlgorithmSetting();
+					
+					if(AddProcess.Priority.equals("High")) MFQHighAlgorithmList.add(AddProcess);
+					else if(AddProcess.Priority == "Middle") MFQMiddleAlgorithmList.add(AddProcess);
+					else MFQLowAlorithmList.add(AddProcess);
+					
+					AlgorithmList.add((Process)AddProcess);					// MFQ용 Algorithmlist에 추가, Information에 추가
+					manager.information.MFQAddAlgorithm(AddProcess);
+					Row++;
+					Update();
+				}
+				else {															// MFQ가 아닐 때
+					AddProcess = AlgorithmSetting();							
+					AlgorithmList.add(AlgorithmSetting());						// AlgorithmList에 추가
+					manager.information.AddAlgorithm(AddProcess);				// Information에 추가
+					Row++;
+					Update();
+				}
 			}
 		}
 	}
@@ -334,5 +336,13 @@ public class AddPanel extends JPanel{
 		ArrivalTimeTextField.setText("");
 		BurstTimeTextField.setText("");
 		PriorityReadyQueueComboBox.setSelectedItem("Middle");
+	}
+	
+	public void RunningState() {
+		AlgorithmComboBox.disable();
+		ProcessNameTextField.setEditable(false);
+		ArrivalTimeTextField.setEditable(false);
+		BurstTimeTextField.setEditable(false);
+		PriorityReadyQueueComboBox.disable();
 	}
 }

@@ -17,7 +17,7 @@ public abstract class Algorithm {
 	protected Process PresentProcess = null;
 	protected ProjectManager manager;
 	protected int time = 0;
-	protected int CoreWork = 2;
+	protected int CoreWork;
 	
 	public Timer timer = new Timer();					// 타이머 중지를 위한 public 설정
 	
@@ -35,9 +35,8 @@ public abstract class Algorithm {
 					schedulling();
 					if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty() && PresentProcess == null) {
 						timer.cancel(); 
-						manager.algorithm = null;
 					}
-					time++; // 코어 고려 안되었음																					// time변수를 증가시켜줘 초를 표현
+					time += CoreWork; // 코어 고려 안되었음																					// time변수를 증가시켜줘 초를 표현
 				}
 			};
 			timer = new Timer();
@@ -45,8 +44,7 @@ public abstract class Algorithm {
 	}
 	
 	
-	protected void Core() { // 예정
-		// -> CoreWork 이거 변경해주는거 
-		// 상황에 맞게 CoreWork 변경
+	public void Core(int PCoreCount, int ECoreCount) { // 예정
+		CoreWork = PCoreCount*2 + ECoreCount;
 	}
 }

@@ -183,14 +183,30 @@ public class RunPanel extends JPanel{
 	
 	private class RunActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			if(manager.addPanel.SetAlgorithm == "RR") {
-				QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
-			}
-//			if(manager.addPanel.AlgorithmList.isEmpty()) {
-//				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
-//			}
-
-			else {
+			if((manager.algorithm == null) && (manager.mfq == null)) {
+				if(manager.addPanel.AlgorithmList.isEmpty() && manager.addPanel.MFQHighAlgorithmList.isEmpty() &&
+						manager.addPanel.MFQMiddleAlgorithmList.isEmpty() && manager.addPanel.MFQLowAlorithmList.isEmpty()) {
+					JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				if(manager.addPanel.SetAlgorithm == "RR") {
+					if(QuanturmTimeTextField.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,  "Need Quanturm time", "Error", JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+					else QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
+				}
+				if(manager.addPanel.SetAlgorithm == "MFQ") {
+					if(DivTextField.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,  "Need Div", "Error", JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+					if(MaxQuanturmTextField.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,  "Need Max Quanturm time", "Error", JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+				}
+				
 				for(int i =0; i<manager.addPanel.AlgorithmList.size(); i++) {
 					for(int j = 0; j<manager.addPanel.AlgorithmList.size()-1;j++) {
 						if(manager.addPanel.AlgorithmList.get(j).ArrivalTime>manager.addPanel.AlgorithmList.get(j+1).ArrivalTime) {
@@ -210,8 +226,24 @@ public class RunPanel extends JPanel{
 				else if(manager.addPanel.SetAlgorithm == "HRRN") manager.algorithm = new HRRN(manager);
 				else if(manager.addPanel.SetAlgorithm == "MFQ") manager.mfq = new MFQ(manager, 
 						Integer.parseInt(MaxQuanturmTextField.getText()), Integer.parseInt(DivTextField.getText()));
+				if(!(manager.algorithm==null)) manager.algorithm.Core(Integer.parseInt(PCoreSpinner.getValue().toString()), 	// Core처리
+						Integer.parseInt(ECoreSpinner.getValue().toString()));
+				else if(!(manager.mfq==null)) manager.mfq.Core(Integer.parseInt(PCoreSpinner.getValue().toString()),
+						Integer.parseInt(ECoreSpinner.getValue().toString()));
+					
+				manager.addPanel.RunningState();
+				RunningState();
+				
 			}
 		}
+	}
+	
+	private void RunningState() {
+		PCoreSpinner.disable();
+		ECoreSpinner.disable();
+		DivTextField.setEditable(false);
+		MaxQuanturmTextField.setEditable(false);
+		QuanturmTimeTextField.setEditable(false);
 	}
 
 }
