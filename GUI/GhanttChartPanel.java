@@ -26,7 +26,6 @@ public class GhanttChartPanel extends JPanel{
 	}
 	
 	public void adding(JLabel ProcessName ,int row) {				// 지워야 함
-
 		JLabel SecondLabel = new JLabel(Integer.toString(second));
 		SecondLabel.setVerticalAlignment(JLabel.BOTTOM);
 		SecondLabel.setHorizontalAlignment(JLabel.CENTER);
