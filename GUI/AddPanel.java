@@ -76,6 +76,44 @@ public class AddPanel extends JPanel{
 //		AlgorithmList.add(new Process("P11", 10, 1, 10));
 //		AlgorithmList.add(new Process("P12", 11, 1, 11));
 //		AlgorithmList.add(new Process("P13", 12, 1, 12));
+		
+		/*너네구나*/
+		Process p1 = new Process("High","p1",0,15, 0);
+		Process p2 = new Process("High","p2",1,6, 1);
+		Process p3 = new Process("High","p3",4,7, 2);
+		
+		Process p4 = new Process("Middle","p4",3,5, 3);
+		Process p5 = new Process("Middle","p5",6,3, 4);
+		Process p6 = new Process("Middle","p6",5,7, 5);
+		
+		Process p7 = new Process("Low","p7",3,3, 6);
+		Process p8 = new Process("Low","p8",5,4, 7);
+		Process p9 = new Process("Low","p9",6,5, 8);
+		
+		MFQHighAlgorithmList.add(p1);
+		MFQHighAlgorithmList.add(p2);
+		MFQHighAlgorithmList.add(p3);
+		
+		MFQMiddleAlgorithmList.add(p4);
+		MFQMiddleAlgorithmList.add(p5);
+		MFQMiddleAlgorithmList.add(p6);
+		
+		MFQLowAlorithmList.add(p7);
+		MFQLowAlorithmList.add(p8);
+		MFQLowAlorithmList.add(p9);
+		
+		manager.information.AddAlgorithm(p1);
+		manager.information.AddAlgorithm(p2);
+		manager.information.AddAlgorithm(p3);
+		
+		manager.information.AddAlgorithm(p4);
+		manager.information.AddAlgorithm(p5);
+		manager.information.AddAlgorithm(p6);
+		
+		manager.information.AddAlgorithm(p7);
+		manager.information.AddAlgorithm(p8);
+		manager.information.AddAlgorithm(p9);
+		/*너네구나*/
 	}
 	private void Base(){		// addPanel 기본 세팅
 		setSize(240, 201);

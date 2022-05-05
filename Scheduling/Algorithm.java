@@ -17,7 +17,7 @@ public abstract class Algorithm {
 	protected Process PresentProcess = null;
 	protected ProjectManager manager;
 	protected int time = 0;
-	protected int CoreWork = 1;
+	protected int CoreWork = 2;
 	
 	public Timer timer = new Timer();					// 타이머 중지를 위한 public 설정
 	
@@ -37,7 +37,7 @@ public abstract class Algorithm {
 						timer.cancel(); 
 						manager.algorithm = null;
 					}
-					time++; 																					// time변수를 증가시켜줘 초를 표현
+					time++; // 코어 고려 안되었음																					// time변수를 증가시켜줘 초를 표현
 				}
 			};
 			timer = new Timer();
