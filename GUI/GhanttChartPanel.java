@@ -25,7 +25,7 @@ public class GhanttChartPanel extends JPanel{
 		this.GhanttchartScroll = GhanttchartScroll;
 	}
 	
-	public void adding(JLabel ProcessName ,int row) {				// 지워야 함
+	public void adding(JLabel ProcessName ,int row, int time) {				// 지워야 함
 
 		JLabel SecondLabel = new JLabel(Integer.toString(second));
 		SecondLabel.setVerticalAlignment(JLabel.BOTTOM);
@@ -33,7 +33,7 @@ public class GhanttChartPanel extends JPanel{
 		SecondLabel.setPreferredSize(new Dimension(20, 120));
 		add(SecondLabel);
 		
-		second++;
+		second += time;
 		JLabel label = new JLabel(ProcessName.getText());
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setOpaque(true);
@@ -41,17 +41,29 @@ public class GhanttChartPanel extends JPanel{
 		label.setForeground(Color.white);
 		label.setPreferredSize(new Dimension(60, 120));
 		add(label);
-
-		if(second == 9) {
+		
+		ForScrollBar(time);
+	}
+	
+	public void addLastSecond(int time) {
+		JLabel SecondLabel = new JLabel(Integer.toString(second));
+		SecondLabel.setVerticalAlignment(JLabel.BOTTOM);
+		SecondLabel.setHorizontalAlignment(JLabel.CENTER);
+		SecondLabel.setPreferredSize(new Dimension(20, 120));
+		add(SecondLabel);
+		ForScrollBar(time);
+	}
+	
+	private void ForScrollBar(int time) {
+		if(second == 9*time) {
 			GhanttchartScroll.setBounds(10, 150, 700, 140);
 		}
 
-		if(second >= 9) {
-			setPreferredSize(new Dimension(722 + (80*(second-8) ), 120));
+		if(second >= 9*time) {
+			setPreferredSize(new Dimension(722 + (80*(second/time-8) ), 120));
 		}
 		revalidate();
 		GhanttchartScroll.getHorizontalScrollBar().setValue(GhanttchartScroll.getHorizontalScrollBar().getMaximum());
-
 	}
 	
 	public Color ChooseColor(int row) {

@@ -14,7 +14,6 @@ public class HRRN extends Algorithm{
 	
 	void schedulling() {
 		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {												// 현재 진행 중이던 프로세스가 끝나면
-			System.out.println(PresentProcess.Name + " " + "TT: " + PresentProcess.TurnaroundTime);	
 			PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;										// 끝난 프로세스의 TT,WT,NTT 계산
 			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
 			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
@@ -24,7 +23,6 @@ public class HRRN extends Algorithm{
 				ReadyQueue.get(i).TurnaroundTime = time - ReadyQueue.get(i).ArrivalTime;
 				ReadyQueue.get(i).WaitingTime = ReadyQueue.get(i).TurnaroundTime/ReadyQueue.get(i).StaticBurstTime;
 				ReadyQueue.get(i).ResponseRatio = (ReadyQueue.get(i).WaitingTime + ReadyQueue.get(i).BurstTime) / ReadyQueue.get(i).BurstTime;
-				System.out.println(ReadyQueue.get(i).Name + " " + "WT: " + ReadyQueue.get(i).WaitingTime + " " + "RS: " + ReadyQueue.get(i).ResponseRatio + "TT: ");
 			}
 			for(int i = 1;i<ReadyQueue.size();i++) {															// ResponseRadio값을 기준으로 정렬
 				for(int j = 0; j<ReadyQueue.size()-1; j++) {
@@ -47,9 +45,12 @@ public class HRRN extends Algorithm{
 				manager.ReadyQueue.create_form(ReadyQueue);
 			}
 		}
-		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) return;
-		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "),-1);			
-		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row);												
+		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
+			manager.GhanttChart.addLastSecond(CoreWork);
+			return;
+		}
+		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "),-1, CoreWork);			
+		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row, CoreWork);												
 																											
 		if(!(PresentProcess == null)) { 
 			for(int i =0; i<ReadyQueue.size(); i++) {

@@ -34,8 +34,8 @@ public class InformationPanel extends JPanel{
 	}
 	
 	private void Base() {
-		setSize(700, 500);
-		setLocation(10, 310);
+		setSize(700, 540);
+		setLocation(10, 320);
 		setBackground(Color.WHITE);
 		setLayout(null);
 	}
