@@ -34,10 +34,13 @@ public class MFQ {
 	Process PresentProcess = null;
 	int time = 0;
 	int CoreWork;
+	int PCoreCount;
+	int ECoreCount;
+	double elec = 0;
 
 	public Timer timer = new Timer(); // 타이머 중지를 위한 public 설정
 
-	public MFQ(ProjectManager manager, int MaxQuantum, int Div) {
+	public MFQ(ProjectManager manager, int MaxQuantum, int Div, int PCoreCount, int ECoreCount) {
 		this.manager = manager;
 		this.MaxQuantum = MaxQuantum;
 		this.Div = Div;
@@ -45,6 +48,11 @@ public class MFQ {
 		this.MiddleAlgorithmList = manager.addPanel.MFQMiddleAlgorithmList;
 		this.LowAlgorithmList = manager.addPanel.MFQLowAlorithmList;
 		ghanttchartPanel = manager.GhanttChart;
+		
+		this.PCoreCount = PCoreCount;
+        this.ECoreCount = ECoreCount;
+        
+        CoreWork = PCoreCount*2 + ECoreCount;
 		
 		start();
 	}
@@ -58,7 +66,7 @@ public class MFQ {
 						&& (MiddleAlgorithmList.isEmpty() && MiddleReadyQueue.isEmpty())
 						&& (LowAlgorithmList.isEmpty() && LowReadyQueue.isEmpty()))
 					timer.cancel(); // MFQ용 종료 조건 선언 해야함
-				time+=CoreWork; // time변수를 증가시켜줘 초를 표현
+				time++; // time변수를 증가시켜줘 초를 표현
 			}
 		};
 		timer = new Timer();
@@ -194,16 +202,19 @@ public class MFQ {
 		if (PresentProcess == null && (HighAlgorithmList.isEmpty() && HighReadyQueue.isEmpty())
 				&& (MiddleAlgorithmList.isEmpty() && MiddleReadyQueue.isEmpty())
 				&& (LowAlgorithmList.isEmpty() && LowReadyQueue.isEmpty())) {
-			manager.GhanttChart.addLastSecond(CoreWork);
+			manager.GhanttChart.addLastSecond();
 			return;
 		}
-		if(PresentProcess == null) ghanttchartPanel.adding(new JLabel("    "), -1, CoreWork);         
-	    else ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row, CoreWork);
+		if(PresentProcess==null) {
+			ghanttchartPanel.adding(new JLabel("    "),-1);			
+			elec += ((PCoreCount + ECoreCount)*0.1);
+		}
+		else {
+			ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row);	
+			elec += PCoreCount*3 + ECoreCount; // 8
+		}										
+		System.out.println(elec);// GhanttChart 표시
 		
 		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork;
-	}
-
-	public void Core(int PCoreCount, int ECoreCount) { // 예정
-		CoreWork = PCoreCount*2 + ECoreCount;
 	}
 }

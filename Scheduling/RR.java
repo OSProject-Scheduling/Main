@@ -10,8 +10,8 @@ public class RR extends Algorithm{
 
 	int Quantum;
 	int ForQuantum = 0;
-	public RR(ProjectManager manager, int Quanturm) {
-		super(manager);
+	public RR(ProjectManager manager, int Quanturm, int PCoreCount, int ECoreCount) {
+		super(manager, PCoreCount, ECoreCount);
 		this.Quantum = Quanturm;
 		// TODO Auto-generated constructor stub
 	}
@@ -43,15 +43,12 @@ public class RR extends Algorithm{
 			}
 		}
 		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
-			manager.GhanttChart.addLastSecond(CoreWork);
+			manager.GhanttChart.addLastSecond();
 			return;
 		}
-		if(PresentProcess==null) ghanttchartPanel.adding(new JLabel("    "), -1, CoreWork);			
-		else ghanttchartPanel.adding(new JLabel(PresentProcess.Name), PresentProcess.Row, CoreWork);												// GhanttChart 표시
+		GUIELEC();									
 		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork;											// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기	
-	
 		
-	
 	}
 }
 
