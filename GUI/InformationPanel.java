@@ -39,7 +39,7 @@ public class InformationPanel extends JPanel{
 	
 	private void Base() {
 		setSize(700, 540);
-		setLocation(10, 320);
+		setLocation(730, 320);
 		setBackground(Color.WHITE);
 		setLayout(null);
 	}
@@ -94,9 +94,6 @@ public class InformationPanel extends JPanel{
 			}
 			TableColumn col = table.getColumnModel().getColumn(0);
 			col.setCellRenderer(new Renderer());
-			
-
-			
 	}
 	public void MFQAddAlgorithm(Process Process) {
 		model.addRow(new Object[] {Process.Name, Double.toString(Process.ArrivalTime), Double.toString(Process.BurstTime),

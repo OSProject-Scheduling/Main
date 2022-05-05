@@ -58,7 +58,7 @@ public class MainPanel extends JPanel{
 	
 	private void Base() {					// Frame창 기본 설정
 		setLayout(null);
-		setSize(1014, 797);
+		setSize(1514, 797);
 		setBackground(Color.white);
 	}
 	
@@ -101,7 +101,7 @@ public class MainPanel extends JPanel{
 		add(GhanttChartLabel);
 		
 		JLabel Table = new JLabel("<Table>");
-		Table.setLocation(10,290);
+		Table.setLocation(1400,290);
 		Table.setBackground(Color.WHITE);
 		Table.setSize(100,20);
 		add(Table);
