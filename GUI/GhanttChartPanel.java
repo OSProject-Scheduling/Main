@@ -29,7 +29,7 @@ public class GhanttChartPanel extends JPanel{
 		JLabel SecondLabel = new JLabel(Integer.toString(second));
 		SecondLabel.setVerticalAlignment(JLabel.BOTTOM);
 		SecondLabel.setHorizontalAlignment(JLabel.CENTER);
-		SecondLabel.setPreferredSize(new Dimension(20, 120));
+		SecondLabel.setPreferredSize(new Dimension(20, 110));
 		add(SecondLabel);
 		
 		second++;
@@ -38,7 +38,7 @@ public class GhanttChartPanel extends JPanel{
 		label.setOpaque(true);
 		label.setBackground(ChooseColor(row));
 		label.setForeground(Color.white);
-		label.setPreferredSize(new Dimension(60, 120));
+		label.setPreferredSize(new Dimension(60, 110));
 		add(label);
 		
 		ForScrollBar();
@@ -48,18 +48,18 @@ public class GhanttChartPanel extends JPanel{
 		JLabel SecondLabel = new JLabel(Integer.toString(second));
 		SecondLabel.setVerticalAlignment(JLabel.BOTTOM);
 		SecondLabel.setHorizontalAlignment(JLabel.CENTER);
-		SecondLabel.setPreferredSize(new Dimension(20, 120));
+		SecondLabel.setPreferredSize(new Dimension(20, 110));
 		add(SecondLabel);
 		ForScrollBar();
 	}
 	
 	private void ForScrollBar() {
 		if(second == 9) {
-			GhanttchartScroll.setBounds(10, 150, 700, 140);
+			GhanttchartScroll.setSize(700, 130);
 		}
 
 		if(second >= 9) {
-			setPreferredSize(new Dimension(722 + (80*(second-8) ), 120));
+			setPreferredSize(new Dimension(722 + (80*(second-8) ), 110));
 		}
 		revalidate();
 		GhanttchartScroll.getHorizontalScrollBar().setValue(GhanttchartScroll.getHorizontalScrollBar().getMaximum());

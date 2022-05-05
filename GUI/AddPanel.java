@@ -90,7 +90,7 @@ public class AddPanel extends JPanel{
 //		Process p7 = new Process("Low","p7",3,1, 6);
 //		Process p8 = new Process("Low","p8",5,4, 7);
 //		Process p9 = new Process("Low","p9",6,5, 8);
-		
+//		
 //		MFQHighAlgorithmList.add(p1);
 //		MFQHighAlgorithmList.add(p2);
 //		MFQHighAlgorithmList.add(p3);
