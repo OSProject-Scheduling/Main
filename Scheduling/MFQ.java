@@ -27,10 +27,10 @@ public class MFQ {
 
 	protected Process PresentProcess = null;
 	protected int time = 0;
-	protected int CoreWork = 1;
+	protected int CoreWork = 2;
 
 	public Timer timer = new Timer(); // 타이머 중지를 위한 public 설정
-
+	
 	public MFQ() {
 		HighAlgorithmList.add(new Process("High","p1",0,15));
 		HighAlgorithmList.add(new Process("High","p2",1,6));
@@ -63,13 +63,14 @@ public class MFQ {
 		timer = new Timer();
 		timer.schedule(task, 1000, 1000); // 1초마다 실행
 	}
-
+	//응답률 : ReadyQueue.get(i).ResponseRatio = (ReadyQueue.get(i).WaitingTime + ReadyQueue.get(i).BurstTime) / ReadyQueue.get(i).BurstTime;
 	void schedulling() { // MFQ용 스케쥴링
 		System.out.print("ready Q : ");
 		for (int i =0; i < HighReadyQueue.size(); i++) {
 			System.out.print(HighReadyQueue.get(i).Name);
 		}
 		System.out.println();
+		
 		//High
 		if(!(HighAlgorithmList.isEmpty()) || !(HighReadyQueue.isEmpty())){			
 			if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
@@ -210,7 +211,17 @@ public class MFQ {
 				}
 			}
 		}
-		
+		for (int i = 0 ; i < MiddleReadyQueue.size(); i++) {
+			MiddleReadyQueue.get(i).TurnaroundTime = time - MiddleReadyQueue.get(i).ArrivalTime;
+			MiddleReadyQueue.get(i).WaitingTime = MiddleReadyQueue.get(i).TurnaroundTime/MiddleReadyQueue.get(i).StaticBurstTime;
+			MiddleReadyQueue.get(i).ResponseRatio = (MiddleReadyQueue.get(i).WaitingTime + MiddleReadyQueue.get(i).BurstTime) / MiddleReadyQueue.get(i).BurstTime;
+			
+		}
+		for (int i = 0 ; i < LowReadyQueue.size(); i++) {
+			LowReadyQueue.get(i).TurnaroundTime = time - MiddleReadyQueue.get(i).ArrivalTime;
+			LowReadyQueue.get(i).WaitingTime = LowReadyQueue.get(i).TurnaroundTime/LowReadyQueue.get(i).StaticBurstTime;
+			LowReadyQueue.get(i).ResponseRatio = (LowReadyQueue.get(i).WaitingTime + LowReadyQueue.get(i).BurstTime) / LowReadyQueue.get(i).BurstTime;
+		}
 		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork;
 		System.out.print(time);
 		if(!(PresentProcess == null)) System.out.println(" " + PresentProcess.Name);

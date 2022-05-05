@@ -1,5 +1,10 @@
+
 import java.util.Timer;
 import java.util.TimerTask;
+
+import GUI.GhanttChartPanel;
+import Manager.ProjectManager;
+
 import java.util.LinkedList;
 
 public abstract class MFQAlgorithm {
@@ -22,14 +27,13 @@ public abstract class MFQAlgorithm {
 	protected int time = 0;
 	protected int CoreWork = 1;
 	
-	public MFQAlgorithm(ProjectManager manager) {
-		
-		this.HighAlgorithmList = manager.addPanel.HighAlgorithmList;
-		this.MiddleAlgorithmList = manager.addPanel.MiddleAlgorithmList;
-		this.LowAlgorithmList = manager.addPanel.LowAlorithmList;
+	public MFQAlgorithm(/*ProjectManager manager*/) {
+		/*this.HighAlgorithmList = manager.addPanel.HighAlgorithmList;
+		this.MiddleAlgorithmList = manager.addPanel.MidAlgorithmList;
+		this.LowAlgorithmList = manager.addPanel.lowAlorithmList;
 		
 		this.ghanttchartPanel = manager.GhanttChart;
-		this.manager = manager;
+		this.manager = manager;*/
 		start();
 	}
 	
@@ -39,7 +43,8 @@ public abstract class MFQAlgorithm {
 			@Override
 			public void run() {
 					schedulling();
-					if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty() && PresentProcess == null) timer.cancel();
+					if((HighAlgorithmList.isEmpty() && HighReadyQueue.isEmpty())&&(MiddleAlgorithmList.isEmpty() && MiddleReadyQueue.isEmpty())
+							&&(LowAlgorithmList.isEmpty() && LowReadyQueue.isEmpty()) && PresentProcess == null) timer.cancel();
 					time++; 																					// time변수를 증가시켜줘 초를 표현
 					
 				}
