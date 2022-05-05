@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
@@ -41,7 +40,6 @@ public class RunPanel extends JPanel{
 	BaseLabel DivLabel = new BaseLabel("Div");
 	JTextField DivTextField = new JTextField(10);
 	
-	
 	BaseLabel CoreLabel = new BaseLabel("Core");						// Core
 	
 	JLabel PCoreLabel = new JLabel("P");						
@@ -51,8 +49,6 @@ public class RunPanel extends JPanel{
 	JLabel ECoreLabel = new JLabel("E");
 	JSpinner ECoreSpinner;
 	JComponent EEditor;
-	
-	ArrayList<Integer> rowlist = new ArrayList<>(); 
 	
 	public RunPanel(ProjectManager manager) {
 		this.manager = manager;
@@ -103,8 +99,6 @@ public class RunPanel extends JPanel{
 		PCoreSpinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				System.out.println(Integer.parseInt(PCoreSpinner.getValue().toString()));
-				
 				if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) > 4) {
 					PCoreSpinner.setValue(Integer.parseInt(PCoreSpinner.getValue().toString())-1);
 				}
@@ -187,22 +181,29 @@ public class RunPanel extends JPanel{
 	
 	private class RunActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			if(manager.addPanel.SetAlgorithm == "RR") {
-				QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
-			}
-			if(manager.addPanel.AlgorithmList.isEmpty()) {
-				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
-			}
-
-			else {
-				for(int i = 0; i<manager.addPanel.AlgorithmList.size();i++) {
-					rowlist.add(manager.addPanel.AlgorithmList.get(i).Row);
+			int PCoreCount = Integer.parseInt(PCoreSpinner.getValue().toString());
+			int ECoreCount = Integer.parseInt(ECoreSpinner.getValue().toString());
+			if((manager.algorithm == null) && (manager.mfq == null)) {
+				if(manager.addPanel.AlgorithmList.isEmpty() && manager.addPanel.MFQHighAlgorithmList.isEmpty() &&
+						manager.addPanel.MFQMiddleAlgorithmList.isEmpty() && manager.addPanel.MFQLowAlorithmList.isEmpty()) {
+					JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
+					return;
 				}
-				for(int i = 0; i<rowlist.size();i++) {
-					for(int j = 0; j<rowlist.size()-1;j++) {
-						int Row = rowlist.get(j+1);
-						rowlist.set(j, rowlist.get(j+1));
-						rowlist.set(j+1, Row);
+				if(manager.addPanel.SetAlgorithm == "RR") {
+					if(QuanturmTimeTextField.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,  "Need Quanturm time", "Error", JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+					else QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
+				}
+				if(manager.addPanel.SetAlgorithm == "MFQ") {
+					if(DivTextField.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,  "Need Div", "Error", JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+					if(MaxQuanturmTextField.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,  "Need Max Quanturm time", "Error", JOptionPane.INFORMATION_MESSAGE);
+						return;
 					}
 				}
 				
@@ -215,21 +216,30 @@ public class RunPanel extends JPanel{
 						}
 					}
 				}
-				for(int i = 0; i<manager.addPanel.AlgorithmList.size();i++) {
-					manager.addPanel.AlgorithmList.get(i).Row = i;
-				}
 				if(manager.addPanel.SetAlgorithm == null) {
 					manager.addPanel.SetAlgorithm = "FCFS";
 				}
-				else if(manager.addPanel.SetAlgorithm == "FCFS") manager.algorithm = new FCFS(manager);
-				else if(manager.addPanel.SetAlgorithm == "RR") manager.algorithm = new RR(manager, QuanturmTime);
-				else if(manager.addPanel.SetAlgorithm == "SPN") manager.algorithm = new SPN(manager);
-				else if(manager.addPanel.SetAlgorithm == "SRTN") manager.algorithm = new SRTN(manager);
-				else if(manager.addPanel.SetAlgorithm == "HRRN") manager.algorithm = new HRRN(manager);
+				else if(manager.addPanel.SetAlgorithm == "FCFS") manager.algorithm = new FCFS(manager, PCoreCount, ECoreCount);
+				else if(manager.addPanel.SetAlgorithm == "RR") manager.algorithm = new RR(manager, QuanturmTime, PCoreCount, ECoreCount);
+				else if(manager.addPanel.SetAlgorithm == "SPN") manager.algorithm = new SPN(manager, PCoreCount, ECoreCount);
+				else if(manager.addPanel.SetAlgorithm == "SRTN") manager.algorithm = new SRTN(manager, PCoreCount, ECoreCount);
+				else if(manager.addPanel.SetAlgorithm == "HRRN") manager.algorithm = new HRRN(manager, PCoreCount, ECoreCount);
 				else if(manager.addPanel.SetAlgorithm == "MFQ") manager.mfq = new MFQ(manager, 
-						Integer.parseInt(MaxQuanturmTextField.getText()), Integer.parseInt(DivTextField.getText()));
+						Integer.parseInt(MaxQuanturmTextField.getText()), Integer.parseInt(DivTextField.getText()), PCoreCount, ECoreCount);
+					
+				manager.addPanel.RunningState();
+				RunningState();
+				
 			}
 		}
+	}
+	
+	private void RunningState() {
+		PCoreSpinner.disable();
+		ECoreSpinner.disable();
+		DivTextField.setEditable(false);
+		MaxQuanturmTextField.setEditable(false);
+		QuanturmTimeTextField.setEditable(false);
 	}
 
 }
