@@ -28,15 +28,15 @@ public class AdditionalButtonPanel extends JPanel{
 	}
 	
 	private void Base(){
-		setSize(240, 200);
-		setLocation(10, 365);
+		setSize(500, 90);
+		setLocation(10, 215);
 		setBackground(Color.YELLOW);
 		setLayout(null);
 	}
 	
 	private void ComponentSetting() {
 		
-		PauseButton.setSize(100, 30);								// PauseButton adding
+		PauseButton.setSize(220, 30);								// PauseButton adding
 		PauseButton.setLocation(10, 10);
 		PauseButton.setOpaque(true);
 		PauseButton.setBackground(Color.green);
@@ -48,8 +48,8 @@ public class AdditionalButtonPanel extends JPanel{
 		});
 		add(PauseButton);
 		
-		ReStartButton.setSize(100, 30);								// RestartButton adding
-		ReStartButton.setLocation(130, 10);
+		ReStartButton.setSize(220, 30);								// RestartButton adding
+		ReStartButton.setLocation(270, 10);
 		ReStartButton.setOpaque(true);
 		ReStartButton.setBackground(Color.green);
 		ReStartButton.addActionListener(new ActionListener() {		// ActionListener
@@ -60,7 +60,7 @@ public class AdditionalButtonPanel extends JPanel{
 		});
 		add(ReStartButton);
 		
-		ReSetButton.setSize(220, 30);								// ResetButton adding
+		ReSetButton.setSize(480, 30);								// ResetButton adding
 		ReSetButton.setLocation(10, 50);
 		ReSetButton.setOpaque(true);
 		ReSetButton.setBackground(Color.green);

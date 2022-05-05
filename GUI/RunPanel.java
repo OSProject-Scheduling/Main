@@ -58,8 +58,8 @@ public class RunPanel extends JPanel{
 	}
 	
 	private void Base(){
-		setSize(240, 166);
-		setLocation(10, 201);
+		setSize(240, 201);
+		setLocation(270, 10);
 		setBackground(Color.YELLOW);
 		setLayout(null);
 	}
@@ -118,6 +118,7 @@ public class RunPanel extends JPanel{
 				else if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) < 1){
 					ECoreSpinner.setValue(Integer.parseInt(ECoreSpinner.getValue().toString())+1);
 				}
+				manager.GhanttChart.GhanttchartScroll.setLocation(10, 200);
 			}
 		});
 		
@@ -159,7 +160,7 @@ public class RunPanel extends JPanel{
 		
 		
 		RunButton.setSize(220, 30);											// RunButton adding
-		RunButton.setLocation(10, 135);
+		RunButton.setLocation(10, 170);
 		RunButton.setOpaque(true);
 		RunButton.setBackground(Color.green);
 		RunButton.addActionListener(new RunActionListener());

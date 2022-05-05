@@ -58,7 +58,7 @@ public class MainPanel extends JPanel{
 	
 	private void Base() {					// Frame창 기본 설정
 		setLayout(null);
-		setSize(1014, 797);
+		setSize(1514, 797);
 		setBackground(Color.white);
 	}
 	
