@@ -37,7 +37,7 @@ public abstract class Algorithm {
 						timer.cancel(); 
 						manager.algorithm = null;
 					}
-					time++; 																					// time변수를 증가시켜줘 초를 표현
+					time++; // 코어 고려 안되었음																					// time변수를 증가시켜줘 초를 표현
 				}
 			};
 			timer = new Timer();
