@@ -186,9 +186,9 @@ public class RunPanel extends JPanel{
 			if(manager.addPanel.SetAlgorithm == "RR") {
 				QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
 			}
-			if(manager.addPanel.AlgorithmList.isEmpty()) {
-				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
-			}
+//			if(manager.addPanel.AlgorithmList.isEmpty()) {
+//				JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
+//			}
 
 			else {
 				for(int i =0; i<manager.addPanel.AlgorithmList.size(); i++) {
