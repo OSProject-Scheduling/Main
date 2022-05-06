@@ -1,14 +1,8 @@
 package GUI;
+
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Scrollbar;
-
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,6 +14,7 @@ public class GhanttChartPanel extends JPanel{
 	
 	public GhanttChartPanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		setBackground(Color.WHITE);
 	}
 	
 	public void ScrollSetting(JScrollPane GhanttchartScroll) {
@@ -110,8 +105,11 @@ public class GhanttChartPanel extends JPanel{
 			case 14:
 				color = new Color(51,0,102);
 				return color;
+			case 15:
+				color = new Color(0,102,153);
+				return color;
 			default:
-				color = new Color(153,51,0);
+				color = new Color(0,0,0);
 				return color;
 		}
 	}

@@ -1,11 +1,7 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,11 +9,9 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import Manager.ProjectManager;
 import Manager.Renderer;
 import Scheduling.Process;
 
@@ -50,7 +44,8 @@ public class InformationPanel extends JPanel{
 	
 	private void Base() {
 		setSize(700, 540);
-		setLocation(730, 320);
+		setLocation(730, 332);
+		scrollpane.getViewport().setBackground(Color.WHITE);
 		setBackground(Color.WHITE);
 		setLayout(null);
 	}
@@ -70,6 +65,7 @@ public class InformationPanel extends JPanel{
 		for(int i=0; i<table.getColumnCount(); i++) {
 			tcmSchedule.getColumn(i).setCellRenderer(dtcr);
 		}
+		
 	}
 	
 	public void AddAlgorithm(Process FCFS) {

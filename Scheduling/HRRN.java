@@ -1,7 +1,4 @@
 package Scheduling;
-import java.util.LinkedList;
-
-import javax.swing.JLabel;
 
 import Manager.ProjectManager;
 
@@ -14,7 +11,7 @@ public class HRRN extends Algorithm{
 	
 	void schedulling() {
 		CalculateTime(); // 프로세스 종료 후 시간 계산
-		
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
 		/*--------------------------종료 조건---------------------------*/
 		if(Terminate()) return;			
 		/*------------------------Ready Queue------------------------*/
@@ -55,7 +52,7 @@ public class HRRN extends Algorithm{
 		manager.ReadyQueue.create_form(ReadyQueue);
 		
 		//GUIELEC();
-
+		for(int i=0; i<ReadyQueue.size(); i++) ReadyQueue.get(i).WaitingTime++;		// WT 계산
 		GUISetting();
 		
 		for(int i=0; i<CoreCount; i++) {
@@ -67,6 +64,5 @@ public class HRRN extends Algorithm{
 		    		elec += 3;
 		    }
 		}
-		manager.mainPanel.Elec.setText("총 전력: " + elec);
 	}
 }

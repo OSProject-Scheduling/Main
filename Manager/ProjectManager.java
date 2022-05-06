@@ -4,7 +4,7 @@ import javax.swing.JLabel;
 
 import GUI.*;
 import Scheduling.Algorithm;
-import Scheduling.MFQ;
+import Scheduling.MDRQ;
 
 public class ProjectManager {
 	public InformationPanel information;
@@ -19,7 +19,7 @@ public class ProjectManager {
 	public MainFrame mainFrame;
 	public MainPanel mainPanel;
 	public Algorithm algorithm;
-	public MFQ mfq;
+	public MDRQ mfq;
 	public JLabel coreLabel_1;
 	public JLabel coreLabel_2;
 	public JLabel coreLabel_3;

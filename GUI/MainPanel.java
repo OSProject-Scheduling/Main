@@ -4,6 +4,8 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class MainPanel extends JPanel{
 	ReadyQueuePanel ReadyQueuepanel = new ReadyQueuePanel();							// ReadyQueue
@@ -45,7 +47,7 @@ public class MainPanel extends JPanel{
 		
 		optionpanel = new OptionPanel(informationpanel, GhanttChartpanel_1,GhanttChartpanel_2,
 				GhanttChartpanel_3,GhanttChartpanel_4,CoreLabel_1, CoreLabel_2, CoreLabel_3, CoreLabel_4,
-				ReadyQueuepanel, MFQreadyQueue,  this);
+				ReadyQueuepanel, MFQreadyQueue,  this, mainframe);
 		add(optionpanel);
 		
 		ReadyQueueScroll.setBounds(10, 30, 700, 83);
@@ -67,6 +69,12 @@ public class MainPanel extends JPanel{
 		GhanttChartScroll_4.setBounds(10, 620, 700, 113);
 		add(GhanttChartScroll_4);
 		GhanttChartScroll_4.setVisible(false);
+		
+		GhanttChartScroll_1.getViewport().addChangeListener(new ListenAdditionsScrolled(GhanttChartScroll_1));
+		GhanttChartScroll_2.getViewport().addChangeListener(new ListenAdditionsScrolled(GhanttChartScroll_2));
+		GhanttChartScroll_3.getViewport().addChangeListener(new ListenAdditionsScrolled(GhanttChartScroll_3));
+		GhanttChartScroll_4.getViewport().addChangeListener(new ListenAdditionsScrolled(GhanttChartScroll_4));
+
 		
 		ComponentSetting();																		// 구성요소 설정
 	}
@@ -121,7 +129,7 @@ public class MainPanel extends JPanel{
 		
 		
 		JLabel Table = new JLabel("<Table>");
-		Table.setLocation(1350,290);
+		Table.setLocation(730,310);
 		Table.setBackground(Color.WHITE);
 		Table.setSize(100,20);
 		add(Table);
@@ -133,5 +141,18 @@ public class MainPanel extends JPanel{
 		add(Elec);
 		
 		add(informationpanel);
+	}
+	
+	private class ListenAdditionsScrolled implements ChangeListener{
+		JScrollPane ghanttChartScroll;
+		public ListenAdditionsScrolled(JScrollPane ghanttChartScroll) {
+			this.ghanttChartScroll = ghanttChartScroll;
+		}
+	    public void stateChanged(ChangeEvent e){
+	    	GhanttChartScroll_1.getHorizontalScrollBar().setValue(ghanttChartScroll.getHorizontalScrollBar().getValue());
+	    	GhanttChartScroll_2.getHorizontalScrollBar().setValue(ghanttChartScroll.getHorizontalScrollBar().getValue());
+	    	GhanttChartScroll_3.getHorizontalScrollBar().setValue(ghanttChartScroll.getHorizontalScrollBar().getValue());
+	    	GhanttChartScroll_4.getHorizontalScrollBar().setValue(ghanttChartScroll.getHorizontalScrollBar().getValue());
+	    }
 	}
 }

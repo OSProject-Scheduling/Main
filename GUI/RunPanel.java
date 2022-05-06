@@ -1,18 +1,15 @@
 package GUI;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.LinkedList;
 
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -60,7 +57,7 @@ public class RunPanel extends JPanel{
 	private void Base(){
 		setSize(240, 201);
 		setLocation(270, 10);
-		setBackground(Color.YELLOW);
+		setBackground(Color.WHITE);
 		setLayout(null);
 	}
 	
@@ -163,7 +160,7 @@ public class RunPanel extends JPanel{
 		RunButton.setSize(220, 30);											// RunButton adding
 		RunButton.setLocation(10, 170);
 		RunButton.setOpaque(true);
-		RunButton.setBackground(Color.green);
+		RunButton.setBackground(Color.white);
 		RunButton.addActionListener(new RunActionListener());
 		add(RunButton);
 	}
@@ -189,8 +186,8 @@ public class RunPanel extends JPanel{
 				manager.coreLabel_2.setText("<E Core>");
 			}
 			else if(PCoreCount==1) {
-				manager.coreLabel_1.setText("<E Core>");
-				manager.coreLabel_2.setText("<P Core>");
+				manager.coreLabel_1.setText("<P Core>");
+				manager.coreLabel_2.setText("<E Core>");
 			}
 			else {
 				manager.coreLabel_1.setText("<P Core>");
@@ -214,14 +211,14 @@ public class RunPanel extends JPanel{
 				manager.coreLabel_3.setText("<E Core>");
 			}
 			else if(PCoreCount==1) {
-				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_1.setText("<P Core>");
 				manager.coreLabel_2.setText("<E Core>");
-				manager.coreLabel_3.setText("<P Core>");
+				manager.coreLabel_3.setText("<E Core>");
 			}
 			else if(PCoreCount==2) {
-				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_1.setText("<P Core>");
 				manager.coreLabel_2.setText("<P Core>");
-				manager.coreLabel_3.setText("<P Core>");
+				manager.coreLabel_3.setText("<E Core>");
 			}
 			else {
 				manager.coreLabel_1.setText("<P Core>");
@@ -249,22 +246,22 @@ public class RunPanel extends JPanel{
 				manager.coreLabel_4.setText("<E Core>");
 			}
 			else if(PCoreCount==1) {
-				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_1.setText("<P Core>");
 				manager.coreLabel_2.setText("<E Core>");
 				manager.coreLabel_3.setText("<E Core>");
-				manager.coreLabel_4.setText("<P Core>");
+				manager.coreLabel_4.setText("<E Core>");
 			}
 			else if(PCoreCount==2) {
-				manager.coreLabel_1.setText("<E Core>");
-				manager.coreLabel_2.setText("<E Core>");
-				manager.coreLabel_3.setText("<P Core>");
-				manager.coreLabel_4.setText("<P Core>");
+				manager.coreLabel_1.setText("<P Core>");
+				manager.coreLabel_2.setText("<P Core>");
+				manager.coreLabel_3.setText("<E Core>");
+				manager.coreLabel_4.setText("<E Core>");
 			}
 			else if(PCoreCount==3) {
-				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_1.setText("<P Core>");
 				manager.coreLabel_2.setText("<P Core>");
 				manager.coreLabel_3.setText("<P Core>");
-				manager.coreLabel_4.setText("<P Core>");
+				manager.coreLabel_4.setText("<E Core>");
 			}
 			else {
 				manager.coreLabel_1.setText("<P Core>");
@@ -347,7 +344,7 @@ public class RunPanel extends JPanel{
 				else if(manager.addPanel.SetAlgorithm == "SPN") manager.algorithm = new SPN(manager, PCoreCount, ECoreCount);
 				else if(manager.addPanel.SetAlgorithm == "SRTN") manager.algorithm = new SRTN(manager, PCoreCount, ECoreCount);
 				else if(manager.addPanel.SetAlgorithm == "HRRN") manager.algorithm = new HRRN(manager, PCoreCount, ECoreCount);
-				else if(manager.addPanel.SetAlgorithm == "MFQ") manager.mfq = new MFQ(manager, 
+				else if(manager.addPanel.SetAlgorithm == "MFQ") manager.mfq = new MDRQ(manager, 
 						Integer.parseInt(MaxQuanturmTextField.getText()), Integer.parseInt(DivTextField.getText()), PCoreCount, ECoreCount);
 					
 				manager.addPanel.RunningState();
@@ -363,6 +360,7 @@ public class RunPanel extends JPanel{
 		DivTextField.setEditable(false);
 		MaxQuanturmTextField.setEditable(false);
 		QuanturmTimeTextField.setEditable(false);
+		manager.addPanel.LockAddButton = true;
 	}
 
 }

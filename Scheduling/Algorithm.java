@@ -45,8 +45,8 @@ public abstract class Algorithm {
         if(CoreCount>=3) this.ghanttchartPanel[2] = manager.GhanttChart_3;
         if(CoreCount==4) this.ghanttchartPanel[3] = manager.GhanttChart_4;
         
-        for(int i=0; i<PCoreCount; i++) CoreWork[CoreCount-i-1] = 2;							// CoreWork
-        for(int i=0; i<ECoreCount; i++) CoreWork[i] = 1;
+        for(int i=0; i<PCoreCount; i++) CoreWork[i] = 2;							// CoreWork
+        for(int i=0; i<ECoreCount; i++) CoreWork[CoreCount-i-1] = 1;
 		
 		start();
 	}
@@ -58,7 +58,7 @@ public abstract class Algorithm {
 					schedulling();
 					if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty()) {			// 종료 조건
 						boolean Quit = true;
-						for(int i=0; i<PCoreCount + ECoreCount; i++) {
+						for(int i=0; i<CoreCount; i++) {
 							if(PresentProcess[i] != null) {
 								Quit = false;
 							}
@@ -75,10 +75,9 @@ public abstract class Algorithm {
 	}
 	
 	protected void CalculateTime() {				// TT / WT / NTT 계산
-		for(int i=0; i<PCoreCount + ECoreCount; i++) {
+		for(int i=0; i<CoreCount; i++) {
 			if(!(PresentProcess[i] == null) && PresentProcess[i].BurstTime <= 0) {
-		         PresentProcess[i].TurnaroundTime = time - PresentProcess[i].ArrivalTime;                               // TT 계산
-		         PresentProcess[i].WaitingTime = PresentProcess[i].TurnaroundTime - PresentProcess[i].StaticBurstTime;               // WT 계산
+		         PresentProcess[i].TurnaroundTime = time - PresentProcess[i].ArrivalTime;                               // TT 계산             // WT 계산
 		         PresentProcess[i].NormalizedTime = Math.round((PresentProcess[i].TurnaroundTime / PresentProcess[i].StaticBurstTime)*100)/100.0;            // NTT 계산
 		         manager.information.ChangeInformation(PresentProcess[i].TurnaroundTime, PresentProcess[i].WaitingTime, PresentProcess[i].NormalizedTime, PresentProcess[i].Row);
 		         PresentProcess[i] = null;                     							// bursttime이 0 이하가 되면 null로 변화
@@ -87,36 +86,28 @@ public abstract class Algorithm {
 		}
 	}
 	
-	protected Boolean Terminate() {            // 종료 조건
-	      if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty()) {         
-	         boolean Quit = true;
-	         for(int i=0; i<PCoreCount + ECoreCount; i++) {
-	            if(PresentProcess[i] != null) {
-	               Quit = false;
-	            }
-	         }
-	         if(Quit == true) {
-	            for(int i=0; i<CoreCount; i++) {
-	               ghanttchartPanel[i].addLastSecond();
-	            }
-	            return true;
-	         }
-	      }
-	      return false;
-	   }
+	protected Boolean Terminate() { // 종료 조건
+		if (AlgorithmList.isEmpty() && ReadyQueue.isEmpty()) {
+			boolean Quit = true;
+			for (int i = 0; i < PCoreCount + ECoreCount; i++) {
+				if (PresentProcess[i] != null) {
+					Quit = false;
+				}
+			}
+			if (Quit == true) {
+				for (int i = 0; i < CoreCount; i++) {
+					ghanttchartPanel[i].addLastSecond();
+				}
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	protected void GUISetting() {
 		for(int i=0; i<CoreCount; i++) {
 			if(PresentProcess[i]==null) ghanttchartPanel[i].adding(new JLabel("    "), -1);
 			else ghanttchartPanel[i].adding(new JLabel(PresentProcess[i].Name), PresentProcess[i].Row);
 		}
-	}
-//	if(PresentProcess==null) {
-//		ghanttchartPanel_1.adding(new JLabel("    "),-1);			
-//		elec += ((PCoreCount + ECoreCount)*0.1);
-//	}
-//	else {
-//		ghanttchartPanel_1.adding(new JLabel(PresentProcess.Name), PresentProcess.Row);	
-//		elec += PCoreCount*3 + ECoreCount; // 8
-//	}  
+	} 
 }
