@@ -16,10 +16,7 @@ public class HRRN extends Algorithm{
 		CalculateTime(); // 프로세스 종료 후 시간 계산
 		
 		/*--------------------------종료 조건---------------------------*/
-		if(PresentProcess == null && PresentProcess2 == null && PresentProcess3 == null && PresentProcess4 == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
-			manager.GhanttChart.addLastSecond();
-			return;
-		}
+		Terminate();
 			
 		/*------------------------Ready Queue------------------------*/
 		while(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
@@ -45,74 +42,31 @@ public class HRRN extends Algorithm{
 		manager.ReadyQueue.create_form(ReadyQueue);
 
 		/*------------------------HRRN 알고리즘------------------------*/
-		if(PresentProcess == null) {							// 현재 실행 중인 프로세스가 없고
-			if(!ReadyQueue.isEmpty()) {							// 레디큐가 비어있지 않으면						
-				PresentProcess = ReadyQueue.poll();				// 현재 프로세스 추가
-				manager.ReadyQueue.create_form(ReadyQueue);
-			}
-			else {
-				elec += 0.1;
+		
+		for(int i=0; i<CoreCount; i++) {
+			if(PresentProcess[i] == null) {							// 현재 실행 중인 프로세스가 없고
+				if(!ReadyQueue.isEmpty()) {							// 레디큐가 비어있지 않으면						
+					PresentProcess[i] = ReadyQueue.poll();				// 현재 프로세스 추가
+				}
+				else {
+					elec += 0.1;
+				}
 			}
 		}
+		manager.ReadyQueue.create_form(ReadyQueue);
 		
-		if((PCoreCount + ECoreCount >= 2) && PresentProcess2 == null) { // 코어가 2개 이상이고, 코어 2에서 현재 실행중인 프로세스가 없을 때
-			if(!ReadyQueue.isEmpty()) { 								// ReadyQueue가 비어있지 않으면
-				PresentProcess2 = ReadyQueue.poll(); 					// ReadyQueue의 첫 프로세스를 실행
-				manager.ReadyQueue.create_form(ReadyQueue);
-			}
-			else {														// 레디큐가 비어있으면 대기전력 0.1+
-				elec += 0.1;
-			}
-	    }
-		
-		if((PCoreCount + ECoreCount >= 3) && PresentProcess3 == null) { // 코어가 3개 이상이고, 코어 3에서 현재 실행중인 프로세스가 없을 때
-			if(!ReadyQueue.isEmpty()) { 								// ReadyQueue가 비어있지 않으면
-				PresentProcess3 = ReadyQueue.poll(); 					// ReadyQueue의 첫 프로세스를 실행
-				manager.ReadyQueue.create_form(ReadyQueue);
-			}
-			else {														// 레디큐가 비어있으면 대기전력 0.1+
-				elec += 0.1;
-			}
-	    }
-		
-		if((PCoreCount + ECoreCount >= 4) && PresentProcess4 == null) { // 코어가 4개 이상이고, 코어 4에서 현재 실행중인 프로세스가 없을 때
-			if(!ReadyQueue.isEmpty()) { 								// ReadyQueue가 비어있지 않으면
-				PresentProcess4 = ReadyQueue.poll(); 					// ReadyQueue의 첫 프로세스를 실행
-				manager.ReadyQueue.create_form(ReadyQueue);
-			}
-			else {														// 레디큐가 비어있으면 대기전력 0.1+
-				elec += 0.1;
-			}
-	    }
 		//GUIELEC();
+
+		GUISetting();
 		
-		if(!(PresentProcess == null)) {
-	    	PresentProcess.BurstTime -= CoreWork1;	// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
-	    	if(CoreWork1 == 1)						// e코어이면 전력+1
-	    		elec += 1;
-	    	else									// p코어이면 전력+3
-	    		elec += 3;
-	    }
-	    if(!(PresentProcess2 == null)) {
-	    	PresentProcess2.BurstTime -= CoreWork2;
-	    	if(CoreWork2 == 1)
-	    		elec += 1;
-	    	else
-	    		elec += 3;
-	    }
-	    if(!(PresentProcess3 == null)) {
-	    	PresentProcess3.BurstTime -= CoreWork3;
-	    	if(CoreWork3 == 1)
-	    		elec += 1;
-	    	else
-	    		elec += 3;
-	    }
-	    if(!(PresentProcess4 == null)) {
-	    	PresentProcess4.BurstTime -= CoreWork4;
-	    	if(CoreWork4 == 1)
-	    		elec += 1;
-	    	else
-	    		elec += 3;
-	    }
+		for(int i=0; i<CoreCount; i++) {
+			if(!(PresentProcess[i] == null)) {
+		    	PresentProcess[i].BurstTime -= CoreWork[i];	// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
+		    	if(CoreWork[i] == 1)						// e코어이면 전력+1
+		    		elec += 1;
+		    	else									// p코어이면 전력+3
+		    		elec += 3;
+		    }
+		}
 	}
 }
