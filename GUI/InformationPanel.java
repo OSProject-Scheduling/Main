@@ -83,10 +83,10 @@ public class InformationPanel extends JPanel{
 					((DefaultTableModel)table.getModel()).removeRow(i);
 				}
 			}
-
+			
 			if(list.size()>1) {
-				for(int i =0; i<list.size(); i++) {
-					for(int j = 0; j<list.size()-1;j++) {
+				for(int i =1; i<list.size(); i++) {
+					for(int j = 0; j<list.size()-i;j++) {
 						if(Double.parseDouble(list.get(j)[1].toString())>Double.parseDouble(list.get(j+1)[1].toString())) {
 							Object[] temp = list.get(j);
 							list.set(j, list.get(j+1));

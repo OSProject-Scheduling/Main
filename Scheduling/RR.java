@@ -23,12 +23,12 @@ public class RR extends Algorithm{
 	void schedulling() {
 		CalculateTime(); 								// 프로세스 종료 후 시간 계산
 
-		// 종료조건
+		/*--------------------------종료 조건---------------------------*/
 		if(PresentProcess == null && PresentProcess2 == null && PresentProcess3 == null && PresentProcess4 == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
 			// 현재 실행중인 프로세스가 없고, 레디큐와 알고리즘 리스트 모두 비어있으면 종료
 			System.out.println(time);
 			System.out.println("종료");
-			manager.GhanttChart_1.addLastSecond();
+			manager.GhanttChart.addLastSecond();
 			return;
 		}
 		
@@ -87,12 +87,18 @@ public class RR extends Algorithm{
 				PresentProcess = ReadyQueue.poll();
 				manager.ReadyQueue.create_form(ReadyQueue);
 			}
+			else {															// 레디큐가 비어있으면 대기전력 0.1+
+				elec += 0.1;												
+			}
 		}
 		
 		if((PCoreCount + ECoreCount >= 2) && PresentProcess2 == null) {		// 코어가 2개 이상이고, 현재 실행 중인 프로세스가 없을 때
 			if(!ReadyQueue.isEmpty()) {										// ReadyQueue가 비어있지 않으면 맨 앞 프로세스 실행
 				PresentProcess2 = ReadyQueue.poll();
 				manager.ReadyQueue.create_form(ReadyQueue);
+			}
+			else {															// 레디큐가 비어있으면 대기전력 0.1+
+				elec += 0.1;
 			}
 		}
 		
@@ -101,6 +107,9 @@ public class RR extends Algorithm{
 				PresentProcess3 = ReadyQueue.poll();
 				manager.ReadyQueue.create_form(ReadyQueue);
 			}
+			else {															// 레디큐가 비어있으면 대기전력 0.1+
+				elec += 0.1;
+			}
 		}
 		
 		if((PCoreCount + ECoreCount >= 4) && PresentProcess4 == null) {		// 코어가 4개 이상이고, 현재 실행 중인 프로세스가 없을 때
@@ -108,46 +117,39 @@ public class RR extends Algorithm{
 				PresentProcess4 = ReadyQueue.poll();
 				manager.ReadyQueue.create_form(ReadyQueue);
 			}
+			else {															// 레디큐가 비어있으면 대기전력 0.1+
+				elec += 0.1;
+			}
 		}
-		
-		if(PresentProcess==null) {
-			ghanttchartPanel_1.adding(new JLabel("    "),-1);			
-			elec += ((PCoreCount + ECoreCount)*0.1);
-		}
-		else {
-			ghanttchartPanel_1.adding(new JLabel(PresentProcess.Name), PresentProcess.Row);	
-			elec += PCoreCount*3 + ECoreCount; // 8
-		}  
-		if(PresentProcess2==null) {
-			ghanttchartPanel_2.adding(new JLabel("    "),-1);			
-			elec += ((PCoreCount + ECoreCount)*0.1);
-		}
-		else {
-			ghanttchartPanel_2.adding(new JLabel(PresentProcess2.Name), PresentProcess2.Row);	
-			elec += PCoreCount*3 + ECoreCount; // 8
-		}  
-		if(PresentProcess3==null) {
-			ghanttchartPanel_3.adding(new JLabel("    "),-1);			
-			elec += ((PCoreCount + ECoreCount)*0.1);
-		}
-		else {
-			ghanttchartPanel_3.adding(new JLabel(PresentProcess3.Name), PresentProcess3.Row);	
-			elec += PCoreCount*3 + ECoreCount; // 8
-		}  
-		if(PresentProcess4==null) {
-			ghanttchartPanel_4.adding(new JLabel("    "),-1);			
-			elec += ((PCoreCount + ECoreCount)*0.1);
-		}
-		else {
-			ghanttchartPanel_4.adding(new JLabel(PresentProcess4.Name), PresentProcess4.Row);	
-			elec += PCoreCount*3 + ECoreCount; // 8
-		}  
-		
 									
-		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork1;	// 현재 RR이 비어있지 않으면 Bursttime에서 처리량 빼주기										// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기	
-		if(!(PresentProcess2 == null)) PresentProcess2.BurstTime -= CoreWork2;
-	    if(!(PresentProcess3 == null)) PresentProcess3.BurstTime -= CoreWork3;
-	    if(!(PresentProcess4 == null)) PresentProcess4.BurstTime -= CoreWork4;
+		if(!(PresentProcess == null)) {
+	    	PresentProcess.BurstTime -= CoreWork1;	// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
+	    	if(CoreWork1 == 1)						// e코어이면 전력+1
+	    		elec += 1;
+	    	else									// p코어이면 전력+3
+	    		elec += 3;
+	    }
+	    if(!(PresentProcess2 == null)) {
+	    	PresentProcess2.BurstTime -= CoreWork2;
+	    	if(CoreWork2 == 1)
+	    		elec += 1;
+	    	else
+	    		elec += 3;
+	    }
+	    if(!(PresentProcess3 == null)) {
+	    	PresentProcess3.BurstTime -= CoreWork3;
+	    	if(CoreWork3 == 1)
+	    		elec += 1;
+	    	else
+	    		elec += 3;
+	    }
+	    if(!(PresentProcess4 == null)) {
+	    	PresentProcess4.BurstTime -= CoreWork4;
+	    	if(CoreWork4 == 1)
+	    		elec += 1;
+	    	else
+	    		elec += 3;
+	    }
 	}
 }
 

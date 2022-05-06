@@ -17,6 +17,7 @@ public class ProjectManager {
 	public AddPanel addPanel;
 	public RunPanel runpanel;
 	public MainFrame mainFrame;
+	public MainPanel mainPanel;
 	public Algorithm algorithm;
 	public MFQ mfq;
 	public JLabel coreLabel_1;

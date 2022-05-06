@@ -64,4 +64,5 @@ public class MFQReadyQueue extends JPanel{
 		LowReadyQueueLabel.setSize(120,20);
 		add(LowReadyQueueLabel);
 	}
+	
 }

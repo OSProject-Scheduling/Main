@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.Dimension;
 
 
@@ -54,6 +56,10 @@ public class AddPanel extends JPanel{
 	JComboBox<String> PriorityReadyQueueComboBox = new JComboBox<String>(ReadyQueueArray);
 	
 	public int Row = 0;												// information table용 row
+	
+	boolean isMFQChange = false;
+	boolean isCheck = false;
+	boolean isLockAlgorithm = false;
 	
 	public String Priority;
 	public String SetAlgorithm;
@@ -149,7 +155,7 @@ public class AddPanel extends JPanel{
 		AlgorithmComboBox.setFont(new Font("Dialog", Font.BOLD, 14));		// AlgorithmComboBox adding
 		AlgorithmComboBox.setSize(110, 20);
 		AlgorithmComboBox.setLocation(120, 15);
-		AlgorithmComboBox.setSelectedItem("FCFS");
+		 AlgorithmComboBox.setSelectedIndex(0);
 		add(AlgorithmComboBox);
 		
 		ProcessNameLabel.setLocation(10, 40);								// ProcessNameLabel adding
@@ -190,66 +196,73 @@ public class AddPanel extends JPanel{
 		
 		PriorityReadyQueueLabel.setVisible(false);							// 일단 안보이게, MFQ사용시 보이게
 		PriorityReadyQueueComboBox.setVisible(false);
-		
-		AlgorithmComboBox.addActionListener(new ActionListener() {			// MFQ선택시 보이게 할 요소, 미선택 시 안보이게 할 요소
+		AlgorithmComboBox.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
-				if(SetAlgorithm == "RR") {									// RR일 경우 Quanturm 표시
-					manager.runpanel.QuanturmTimeLabel.setVisible(true);
-					manager.runpanel.QuanturmTimeTextField.setVisible(true);
+				if(isLockAlgorithm) {
+					AlgorithmComboBox.setSelectedItem(SetAlgorithm);
 				}
 				else {
-					manager.runpanel.QuanturmTimeLabel.setVisible(false);
-					manager.runpanel.QuanturmTimeTextField.setVisible(false);
-				}
-				
-				if(SetAlgorithm == "MFQ") {									// MFQ일 경우 다양한 요소 표시
-					PriorityReadyQueueComboBox.setVisible(true);			// ADD부분 우선순위 추가
-					PriorityReadyQueueLabel.setVisible(true);
-					
-					manager.MFQreadyQueue.setVisible(true);
-					
-					manager.runpanel.DivLabel.setVisible(true);
-					manager.runpanel.DivTextField.setVisible(true);
-					
-					manager.runpanel.MaxQuanturmLabel.setVisible(true);
-					manager.runpanel.MaxQuanturmTextField.setVisible(true);
-					
-					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(false);		// 기존 Readyquueue 안보이게
-					manager.ReadyQueue.ReadyQueueLabel.setVisible(false);
-					
-					System.out.println(manager.information.table.getColumnCount());
-					if(manager.information.table.getColumnCount() == 6) {
-						if(manager.information.model.getColumnCount()==6) manager.information.model.addColumn("Priority");
+					SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
+					if (SetAlgorithm == "RR") { // RR일 경우 Quanturm 표시
+						manager.runpanel.QuanturmTimeLabel.setVisible(true);
+						manager.runpanel.QuanturmTimeTextField.setVisible(true);
+					} 
+					else {
+						manager.runpanel.QuanturmTimeLabel.setVisible(false);
+						manager.runpanel.QuanturmTimeTextField.setVisible(false);
+					}
+
+					if (SetAlgorithm == "MFQ") { // MFQ일 경우 다양한 요소 표시
+						isMFQChange = true;
+						PriorityReadyQueueComboBox.setVisible(true); // ADD부분 우선순위 추가
+						PriorityReadyQueueLabel.setVisible(true);
+
+						manager.MFQreadyQueue.setVisible(true);
+
+						manager.runpanel.DivLabel.setVisible(true);
+						manager.runpanel.DivTextField.setVisible(true);
+
+						manager.runpanel.MaxQuanturmLabel.setVisible(true);
+						manager.runpanel.MaxQuanturmTextField.setVisible(true);
+
+						manager.ReadyQueue.ReadyQueueScrollBar.setVisible(false); // 기존 Readyquueue 안보이게
+						manager.ReadyQueue.ReadyQueueLabel.setVisible(false);
+
+						manager.information.model.addColumn("Priority");
 						manager.information.table.getColumn("Priority").setPreferredWidth(20);
 						manager.information.CenterSetting();
-					}
-				}
-				else {													// MFQ아닐 경우 반대로
-					PriorityReadyQueueComboBox.setVisible(false);
-					PriorityReadyQueueLabel.setVisible(false);
-					
-					manager.MFQreadyQueue.setVisible(false);
-					
-					manager.runpanel.DivLabel.setVisible(false);
-					manager.runpanel.DivTextField.setVisible(false);
-					
-					manager.runpanel.MaxQuanturmLabel.setVisible(false);
-					manager.runpanel.MaxQuanturmTextField.setVisible(false);
-					
-					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
-					manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
-					
-					System.out.println(manager.information.model.getColumnCount());
-					if(manager.information.table.getColumnCount() == 7) {
-						TableColumn tcol = manager.information.table.getColumnModel().getColumn(6);
-						manager.information.table.removeColumn(tcol);
+					} else { // MFQ아닐 경우 반대로
+						System.out.print("콤보박스 실행");
+						isCheck = true;
+						PriorityReadyQueueComboBox.setVisible(false);
+						PriorityReadyQueueLabel.setVisible(false);
+
+						manager.MFQreadyQueue.setVisible(false);
+
+						manager.runpanel.DivLabel.setVisible(false);
+						manager.runpanel.DivTextField.setVisible(false);
+
+						manager.runpanel.MaxQuanturmLabel.setVisible(false);
+						manager.runpanel.MaxQuanturmTextField.setVisible(false);
+
+						manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
+						manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
+						if (isMFQChange) {
+							String[] TableHeader = { "Process Name", "Arrival time", "Burst time", // 우선순위 표시
+									"Waiting time", "Turnaround time", "Normalized TT" };
+
+							manager.information.model.setColumnIdentifiers(TableHeader);
+							manager.information.CenterSetting();
+							isMFQChange = false;
+						}
+
 					}
 				}
 			}
+				
 		});
-		
 		PriorityReadyQueueComboBox.addActionListener(new ActionListener() {		// 우선순위에 맞는 Queue에 저장
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -314,29 +327,61 @@ public class AddPanel extends JPanel{
 	
 	private class AddActionListener  implements ActionListener{				// add 클릭 시 액션 리스너
 		public void actionPerformed(ActionEvent e) {
-			if((manager.algorithm == null) && (manager.mfq == null)) {	// 현재 실행 중인 알고리즘이 없을 때
-				if(AlgorithmSetting().ArrivalTime == -1) {						// 현재 입력된 값들이 빈칸인 경우 에러 메세지 출력
-					JOptionPane.showMessageDialog(null,  "Fill in the blanks.", "Error", JOptionPane.INFORMATION_MESSAGE);
+			if (Row <= 14) {
+				isLockAlgorithm = true;
+				if (!isCheck) {
+					if (!isMFQChange) {
+						PriorityReadyQueueComboBox.setVisible(false);
+						PriorityReadyQueueLabel.setVisible(false);
+
+						manager.MFQreadyQueue.setVisible(false);
+
+						manager.runpanel.DivLabel.setVisible(false);
+						manager.runpanel.DivTextField.setVisible(false);
+
+						manager.runpanel.MaxQuanturmLabel.setVisible(false);
+						manager.runpanel.MaxQuanturmTextField.setVisible(false);
+
+						manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
+						manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
+
+						String[] TableHeader = { "Process Name", "Arrival time", "Burst time", // 우선순위 표시
+								"Waiting time", "Turnaround time", "Normalized TT" };
+
+						manager.information.model.setColumnIdentifiers(TableHeader);
+						manager.information.CenterSetting();
+						isMFQChange = false;
+					}
 				}
-				else if(AlgorithmComboBox.getSelectedItem().toString() == "MFQ") {		// MFQ인 경우
-					AddProcess = MFQAlgorithmSetting();
-					
-					if(AddProcess.Priority.equals("High")) MFQHighAlgorithmList.add(AddProcess);
-					else if(AddProcess.Priority == "Middle") MFQMiddleAlgorithmList.add(AddProcess);
-					else MFQLowAlorithmList.add(AddProcess);
-					
-					AlgorithmList.add((Process)AddProcess);					// MFQ용 Algorithmlist에 추가, Information에 추가
-					manager.information.MFQAddAlgorithm(AddProcess);
-					Row++;
-					Update();
+				if ((manager.algorithm == null) && (manager.mfq == null)) { // 현재 실행 중인 알고리즘이 없을 때
+					if (AlgorithmSetting().ArrivalTime == -1) { // 현재 입력된 값들이 빈칸인 경우 에러 메세지 출력
+						JOptionPane.showMessageDialog(null, "Fill in the blanks.", "Error",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else if (AlgorithmComboBox.getSelectedItem().toString() == "MFQ") { // MFQ인 경우
+						AddProcess = MFQAlgorithmSetting();
+
+						if (AddProcess.Priority.equals("High"))
+							MFQHighAlgorithmList.add(AddProcess);
+						else if (AddProcess.Priority == "Middle")
+							MFQMiddleAlgorithmList.add(AddProcess);
+						else
+							MFQLowAlorithmList.add(AddProcess);
+
+						AlgorithmList.add((Process) AddProcess); // MFQ용 Algorithmlist에 추가, Information에 추가
+						manager.information.MFQAddAlgorithm(AddProcess);
+						Row++;
+						Update();
+					} else { // MFQ가 아닐 때
+						AddProcess = AlgorithmSetting();
+						AlgorithmList.add(AlgorithmSetting()); // AlgorithmList에 추가
+						manager.information.AddAlgorithm(AddProcess); // Information에 추가
+						Row++;
+						Update();
+					}
 				}
-				else {															// MFQ가 아닐 때
-					AddProcess = AlgorithmSetting();							
-					AlgorithmList.add(AlgorithmSetting());						// AlgorithmList에 추가
-					manager.information.AddAlgorithm(AddProcess);				// Information에 추가
-					Row++;
-					Update();
-				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Unable to add", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
