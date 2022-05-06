@@ -11,7 +11,7 @@ public class FCFS extends Algorithm{
 	void schedulling() {
 		CalculateTime(); 	
 		
-		if(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
+		while(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
 			ReadyQueue.add(AlgorithmList.poll());   						 // AlgorithmList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
 			manager.ReadyQueue.create_form(ReadyQueue);
 		}

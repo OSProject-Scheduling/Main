@@ -75,7 +75,7 @@ public class MFQ {
 
 	void schedulling() { // MFQ용 스케쥴링
 		//High
-		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
+		while(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
 			PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;
 			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
 			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
@@ -83,17 +83,17 @@ public class MFQ {
 			PresentProcess = null;							// bursttime이 0 이하가 되면 null로 변화
 			ForQuantum = 0;
 		}
-		if(!HighAlgorithmList.isEmpty() && time == HighAlgorithmList.peekFirst().ArrivalTime) {
+		while(!HighAlgorithmList.isEmpty() && time == HighAlgorithmList.peekFirst().ArrivalTime) {
 			HighReadyQueue.add(HighAlgorithmList.poll()); 	// FCFSList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
-			manager.HighReadyQueue.create_form(HighReadyQueue); // HighQueue GUI부분(HighQueue에 add되거나 poll되는 순간에 이거 사용해야함
+			manager.MFQreadyQueue.HighReadyQueue.create_form(HighReadyQueue); // HighQueue GUI부분(HighQueue에 add되거나 poll되는 순간에 이거 사용해야함
 		}
-		if(!MiddleAlgorithmList.isEmpty() && time == MiddleAlgorithmList.peekFirst().ArrivalTime) {
+		while(!MiddleAlgorithmList.isEmpty() && time == MiddleAlgorithmList.peekFirst().ArrivalTime) {
 			MiddleReadyQueue.add(MiddleAlgorithmList.poll()); 	// FCFSList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
-			manager.MidReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
+			manager.MFQreadyQueue.MiddleReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
 		}
-		if(!LowAlgorithmList.isEmpty() && time == LowAlgorithmList.peekFirst().ArrivalTime) {
+		while(!LowAlgorithmList.isEmpty() && time == LowAlgorithmList.peekFirst().ArrivalTime) {
 			LowReadyQueue.add(LowAlgorithmList.poll()); 	// FCFSList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
-			manager.lowReadyQueue.create_form(LowReadyQueue); // lowQueue GUI부분(lowQueue에 add되거나 poll되는 순간에 이거 사용해야함
+			manager.MFQreadyQueue.LowReadyQueue.create_form(LowReadyQueue); // lowQueue GUI부분(lowQueue에 add되거나 poll되는 순간에 이거 사용해야함
 		}
 		//High
 		if(!(HighAlgorithmList.isEmpty()) || !(HighReadyQueue.isEmpty())){			
@@ -107,7 +107,7 @@ public class MFQ {
 			if(PresentProcess == null) {																				// 현재 FCFS가 비어있을때
 				if(!HighReadyQueue.isEmpty()) {																			// ReadyQueue가 비어있지 않으면 현재 FCFS로 poll
 					PresentProcess = HighReadyQueue.poll();
-					manager.HighReadyQueue.create_form(HighReadyQueue);    // HighQueue GUI부분(HighQueue에 add되거나 poll되는 순간에 이거 사용해야함
+					manager.MFQreadyQueue.HighReadyQueue.create_form(HighReadyQueue);    // HighQueue GUI부분(HighQueue에 add되거나 poll되는 순간에 이거 사용해야함
 					PresentProcess.count++;
 					remain = (int)(PresentProcess.StaticBurstTime % Div);
 					if (PresentProcess.StaticBurstTime < Div)	Quantum = 1;
@@ -132,7 +132,7 @@ public class MFQ {
 			if(PresentProcess == null) {																				// 현재 FCFS가 비어있을때
 				if(!MiddleReadyQueue.isEmpty()) {																			// ReadyQueue가 비어있지 않으면 현재 FCFS로 poll
 					PresentProcess = MiddleReadyQueue.poll();
-					manager.MidReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
+					manager.MFQreadyQueue.MiddleReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
 					PresentProcess.count++;
 					if (PresentProcess.StaticBurstTime < Div)	Quantum = 1;
 					else {
@@ -156,7 +156,7 @@ public class MFQ {
 			if(PresentProcess == null) {																				// 현재 FCFS가 비어있을때
 				if(!LowReadyQueue.isEmpty()) {																			// ReadyQueue가 비어있지 않으면 현재 FCFS로 poll
 					PresentProcess = LowReadyQueue.poll();		// 오류?? mid로 되어있음
-					manager.lowReadyQueue.create_form(LowReadyQueue); // lowQueue GUI부분(lowQueue에 add되거나 poll되는 순간에 이거 사용해야함
+					manager.MFQreadyQueue.LowReadyQueue.create_form(LowReadyQueue); // lowQueue GUI부분(lowQueue에 add되거나 poll되는 순간에 이거 사용해야함
 					PresentProcess.count++;
 					if (PresentProcess.StaticBurstTime < Div)	Quantum = 1;
 					else {
@@ -178,8 +178,8 @@ public class MFQ {
 				MiddleReadyQueue.get(i).Priority = "High";
 				HighReadyQueue.add(MiddleReadyQueue.get(i));
 				MiddleReadyQueue.remove(i);
-				manager.HighReadyQueue.create_form(HighReadyQueue); // HighQueue GUI부분(HighQueue에 add되거나 poll되는 순간에 이거 사용해야함
-				manager.MidReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
+				manager.MFQreadyQueue.HighReadyQueue.create_form(HighReadyQueue); // HighQueue GUI부분(HighQueue에 add되거나 poll되는 순간에 이거 사용해야함
+				manager.MFQreadyQueue.MiddleReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
 			}
 		}
 
@@ -193,8 +193,8 @@ public class MFQ {
 				LowReadyQueue.get(i).Priority = "Middle";
 				MiddleReadyQueue.add(LowReadyQueue.get(i));
 				LowReadyQueue.remove(i);
-				manager.MidReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
-				manager.lowReadyQueue.create_form(LowReadyQueue); // lowQueue GUI부분(lowQueue에 add되거나 poll되는 순간에 이거 사용해야함
+				manager.MFQreadyQueue.MiddleReadyQueue.create_form(MiddleReadyQueue); // MiddleQueue GUI부분(MiddleQueue에 add되거나 poll되는 순간에 이거 사용해야함
+				manager.MFQreadyQueue.LowReadyQueue.create_form(LowReadyQueue); // lowQueue GUI부분(lowQueue에 add되거나 poll되는 순간에 이거 사용해야함
 
 			}
 		}

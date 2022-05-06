@@ -9,9 +9,7 @@ import Scheduling.MFQ;
 public class ProjectManager {
 	public InformationPanel information;
 	public ReadyQueuePanel ReadyQueue;
-	public HighReadyQueuePanel HighReadyQueue;
-	public MiddleReadyQueuePanel MidReadyQueue;
-	public LowReadyQueuePanel lowReadyQueue;
+	public MFQReadyQueue MFQreadyQueue;
 	public GhanttChartPanel GhanttChart_1;
 	public GhanttChartPanel GhanttChart_2;
 	public GhanttChartPanel GhanttChart_3;
@@ -28,16 +26,13 @@ public class ProjectManager {
 	
 	public ProjectManager(InformationPanel information, ReadyQueuePanel ReadyQueue,
 			GhanttChartPanel GhanttChart_1,GhanttChartPanel GhanttChart_2,GhanttChartPanel GhanttChart_3,
-			GhanttChartPanel GhanttChart_4,HighReadyQueuePanel HighReadyQueue, MiddleReadyQueuePanel MidReadyQueue,
-			LowReadyQueuePanel lowReadyQueue) {
+			GhanttChartPanel GhanttChart_4,MFQReadyQueue MFQreadyQueue) {
 		this.information = information;
 		this.ReadyQueue = ReadyQueue;
 		this.GhanttChart_1 = GhanttChart_1;
 		this.GhanttChart_2 = GhanttChart_2;
 		this.GhanttChart_3 = GhanttChart_3;
 		this.GhanttChart_4 = GhanttChart_4;
-		this.HighReadyQueue = HighReadyQueue;
-		this.MidReadyQueue = MidReadyQueue;
-		this.lowReadyQueue = lowReadyQueue;
+		this.MFQreadyQueue = MFQreadyQueue;
 	}
 }
