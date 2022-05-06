@@ -16,8 +16,7 @@ public class HRRN extends Algorithm{
 		CalculateTime(); // 프로세스 종료 후 시간 계산
 		
 		/*--------------------------종료 조건---------------------------*/
-		Terminate();
-			
+		if(Terminate()) return;			
 		/*------------------------Ready Queue------------------------*/
 		while(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
 			//프로세스 리스트가 있고, 프로세스 리스트의 첫 프로세스 AR이 time과 같으면 (프로세스들은 AR기준으로 정렬되어 있음)
@@ -68,5 +67,6 @@ public class HRRN extends Algorithm{
 		    		elec += 3;
 		    }
 		}
+		manager.mainPanel.Elec.setText("총 전력: " + elec);
 	}
 }

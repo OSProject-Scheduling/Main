@@ -63,7 +63,9 @@ public abstract class Algorithm {
 								Quit = false;
 							}
 						}
-						if(Quit == true) timer.cancel();
+						if(Quit == true) {
+							timer.cancel();
+						}
 					}
 					time++; // 코어 고려 안되었음										// time변수를 증가시켜줘 초를 표현
 				}
@@ -77,7 +79,7 @@ public abstract class Algorithm {
 			if(!(PresentProcess[i] == null) && PresentProcess[i].BurstTime <= 0) {
 		         PresentProcess[i].TurnaroundTime = time - PresentProcess[i].ArrivalTime;                               // TT 계산
 		         PresentProcess[i].WaitingTime = PresentProcess[i].TurnaroundTime - PresentProcess[i].StaticBurstTime;               // WT 계산
-		         PresentProcess[i].NormalizedTime = PresentProcess[i].TurnaroundTime / PresentProcess[i].StaticBurstTime;            // NTT 계산
+		         PresentProcess[i].NormalizedTime = Math.round((PresentProcess[i].TurnaroundTime / PresentProcess[i].StaticBurstTime)*100)/100.0;            // NTT 계산
 		         manager.information.ChangeInformation(PresentProcess[i].TurnaroundTime, PresentProcess[i].WaitingTime, PresentProcess[i].NormalizedTime, PresentProcess[i].Row);
 		         PresentProcess[i] = null;                     							// bursttime이 0 이하가 되면 null로 변화
 		         
@@ -85,22 +87,23 @@ public abstract class Algorithm {
 		}
 	}
 	
-	protected void Terminate() {				// 종료 조건
-		if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty()) {			
-			boolean Quit = true;
-			for(int i=0; i<PCoreCount + ECoreCount; i++) {
-				if(PresentProcess[i] != null) {
-					Quit = false;
-				}
-			}
-			if(Quit == true) {
-				for(int i=0; i<CoreCount; i++) {
-					ghanttchartPanel[i].addLastSecond();
-				}
-				return;
-			}
-		}
-	}
+	protected Boolean Terminate() {            // 종료 조건
+	      if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty()) {         
+	         boolean Quit = true;
+	         for(int i=0; i<PCoreCount + ECoreCount; i++) {
+	            if(PresentProcess[i] != null) {
+	               Quit = false;
+	            }
+	         }
+	         if(Quit == true) {
+	            for(int i=0; i<CoreCount; i++) {
+	               ghanttchartPanel[i].addLastSecond();
+	            }
+	            return true;
+	         }
+	      }
+	      return false;
+	   }
 	
 	protected void GUISetting() {
 		for(int i=0; i<CoreCount; i++) {

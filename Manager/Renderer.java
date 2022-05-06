@@ -10,12 +10,14 @@ public class Renderer extends DefaultTableCellRenderer{
 	Color color;
 	public Renderer() {
 		this.setHorizontalAlignment(SwingConstants.CENTER);
+		System.out.print("as");
 	}
 	@Override 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		c.setBackground(ChooseColor(row));
 		c.setForeground(Color.WHITE);
+		System.out.print("ddla");
 		this.row++;
 		return c;
 	}

@@ -22,7 +22,7 @@ public class OptionPanel extends JPanel{
 	public OptionPanel(InformationPanel informationpanel, GhanttChartPanel ghanttchartpanel_1, GhanttChartPanel ghanttchartpanel_2,
 			GhanttChartPanel ghanttchartpanel_3,GhanttChartPanel ghanttchartpanel_4, JLabel CoreLabel_1, JLabel CoreLabel_2,
 			JLabel CoreLabel_3, JLabel CoreLabel_4,
-			ReadyQueuePanel readyQueue, MFQReadyQueue MFQreadyQueue, MainFrame mainframe) {
+			ReadyQueuePanel readyQueue, MFQReadyQueue MFQreadyQueue, MainPanel mainPanel) {
 		this.informationpanel = informationpanel;
 		this.ghanttchartpanel_1 = ghanttchartpanel_1;
 		this.ghanttchartpanel_2 = ghanttchartpanel_2;
@@ -36,7 +36,7 @@ public class OptionPanel extends JPanel{
 		runpanel = new RunPanel(manager);
 		additionalbuttonpanel = new AdditionalButtonPanel(manager);
 		
-		manager.mainFrame = mainframe;
+		manager.mainPanel = mainPanel;
 		manager.coreLabel_1 = CoreLabel_1;
 		manager.coreLabel_2 = CoreLabel_2;
 		manager.coreLabel_3 = CoreLabel_3;
