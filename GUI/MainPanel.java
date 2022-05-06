@@ -31,6 +31,10 @@ public class MainPanel extends JPanel{
 	
 	OptionPanel optionpanel;
 	
+	public JLabel Elec = new JLabel();
+	
+	String elec;
+	
 	public MainPanel(MainFrame mainframe) {
 		Base();																			// 기본 설정(MainFrame 설정)
 		GhanttChartpanel_1.ScrollSetting(GhanttChartScroll_1);
@@ -41,7 +45,7 @@ public class MainPanel extends JPanel{
 		
 		optionpanel = new OptionPanel(informationpanel, GhanttChartpanel_1,GhanttChartpanel_2,
 				GhanttChartpanel_3,GhanttChartpanel_4,CoreLabel_1, CoreLabel_2, CoreLabel_3, CoreLabel_4,
-				ReadyQueuepanel, MFQreadyQueue,  mainframe);
+				ReadyQueuepanel, MFQreadyQueue,  this);
 		add(optionpanel);
 		
 		ReadyQueueScroll.setBounds(10, 30, 700, 83);
@@ -121,6 +125,12 @@ public class MainPanel extends JPanel{
 		Table.setBackground(Color.WHITE);
 		Table.setSize(100,20);
 		add(Table);
+		
+		Elec.setText("<총 전력>: ");
+		Elec.setLocation(500,130);
+		Elec.setBackground(Color.WHITE);
+		Elec.setSize(100,30);
+		add(Elec);
 		
 		add(informationpanel);
 	}

@@ -12,10 +12,7 @@ public class FCFS extends Algorithm{
 		CalculateTime(); // 프로세스 종료 후 시간 계산
 		
 		/*--------------------------종료 조건---------------------------*/
-		if(Terminate()) {
-			System.out.println(elec);
-			return;
-		}
+		if(Terminate()) return;
 		
 		/*------------------------Ready Queue------------------------*/
 		while(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
@@ -49,6 +46,8 @@ public class FCFS extends Algorithm{
 		    		elec += 3;
 		    }
 		}
+	    
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
 	    
 	    /////////////////////////////////////////////////////////////////////////
 //	    if(PresentProcess==null) {

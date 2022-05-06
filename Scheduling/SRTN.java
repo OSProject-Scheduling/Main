@@ -83,5 +83,6 @@ public class SRTN extends Algorithm{
 		    		elec += 3;
 		    }
 		}
+		manager.mainPanel.Elec.setText("총 전력: " + elec);
 	}
 }

@@ -70,6 +70,8 @@ public class RR extends Algorithm{
 		    		elec += 3;
 		    }
 		}
+		manager.mainPanel.Elec.setText("총 전력: " + elec);
+
 	}
 }
 
