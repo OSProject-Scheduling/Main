@@ -16,7 +16,7 @@ public class SPN extends Algorithm{
 		CalculateTime();
 		
 		/*--------------------------종료 조건---------------------------*/
-		Terminate();
+		if(Terminate()) return;
 		
 		/*------------------------Ready Queue------------------------*/
 		while (!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {

@@ -85,7 +85,7 @@ public abstract class Algorithm {
 		}
 	}
 	
-	protected void Terminate() {				// 종료 조건
+	protected Boolean Terminate() {				// 종료 조건
 		if(AlgorithmList.isEmpty() && ReadyQueue.isEmpty()) {			
 			boolean Quit = true;
 			for(int i=0; i<PCoreCount + ECoreCount; i++) {
@@ -97,9 +97,10 @@ public abstract class Algorithm {
 				for(int i=0; i<CoreCount; i++) {
 					ghanttchartPanel[i].addLastSecond();
 				}
-				return;
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	protected void GUISetting() {

@@ -16,7 +16,7 @@ public class HRRN extends Algorithm{
 		CalculateTime(); // 프로세스 종료 후 시간 계산
 		
 		/*--------------------------종료 조건---------------------------*/
-		Terminate();
+		if(Terminate()) return;
 			
 		/*------------------------Ready Queue------------------------*/
 		while(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {

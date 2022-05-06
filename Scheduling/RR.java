@@ -23,7 +23,7 @@ public class RR extends Algorithm{
 		CalculateTime(); 								// 프로세스 종료 후 시간 계산
 
 		/*--------------------------종료 조건---------------------------*/
-		Terminate();
+		if(Terminate()) return;
 		
 		for(int i=0; i<CoreCount; i++) if(PresentProcess[i] == null) ForQuantum[i] = 0; //프로세스 종료 후 ForQuantum을 0으로 초기화
 		
