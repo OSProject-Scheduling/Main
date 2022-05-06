@@ -8,8 +8,12 @@ import java.util.LinkedList;
 
 public class RR extends Algorithm{
 
-	int Quantum;
-	int ForQuantum = 0;
+	int Quantum;			// 퀀텀
+	int ForQuantum = 0;		// 현재 프로세스 실행 시간, 퀀텀과 같은 수가 되면 현재 프로세스 내보내고 0으로 초기화
+	int ForQuantum2 = 0;
+	int ForQuantum3 = 0;
+	int ForQuantum4 = 0;
+	
 	public RR(ProjectManager manager, int Quanturm, int PCoreCount, int ECoreCount) {
 		super(manager, PCoreCount, ECoreCount);
 		this.Quantum = Quanturm;
@@ -17,38 +21,133 @@ public class RR extends Algorithm{
 	}
 
 	void schedulling() {
-		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
-			PresentProcess.TurnaroundTime = time - PresentProcess.ArrivalTime;
-			PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;
-			PresentProcess.NormalizedTime = PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime;
-			manager.information.ChangeInformation(PresentProcess.TurnaroundTime, PresentProcess.WaitingTime, PresentProcess.NormalizedTime, PresentProcess.Row);
-			PresentProcess = null;							// bursttime이 0 이하가 되면 null로 변화
-			ForQuantum = 0;
+		CalculateTime(); 								// 프로세스 종료 후 시간 계산
+
+		// 종료조건
+		if(PresentProcess == null && PresentProcess2 == null && PresentProcess3 == null && PresentProcess4 == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
+			// 현재 실행중인 프로세스가 없고, 레디큐와 알고리즘 리스트 모두 비어있으면 종료
+			System.out.println(time);
+			System.out.println("종료");
+			manager.GhanttChart_1.addLastSecond();
+			return;
 		}
-		if(ForQuantum == Quantum) {
-			ReadyQueue.add(PresentProcess);
+		
+		if(PresentProcess == null) ForQuantum = 0;		//프로세스 종료 후 ForQuantum을 0으로 초기화
+		if(PresentProcess2 == null) ForQuantum2 = 0;
+		if(PresentProcess3 == null) ForQuantum3 = 0;
+		if(PresentProcess4 == null) ForQuantum4 = 0;
+		
+		
+		
+		/*------------------------Ready Queue------------------------*/
+		while(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
+			//프로세스 리스트가 있고, 프로세스 리스트의 첫 프로세스 AR이 time과 같으면 (프로세스들은 AR기준으로 정렬되어 있음) 
+			ReadyQueue.add(AlgorithmList.poll()); 	// AlgorithmList에서 ReadyQueue로 이동
 			manager.ReadyQueue.create_form(ReadyQueue);
-			PresentProcess = null;
-			ForQuantum = 0;
 		}
-		ForQuantum++;
-		if(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
-			ReadyQueue.add(AlgorithmList.poll()); 	// FCFSList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
+		
+		
+		
+		/*------------------------RR 알고리즘--------------------------*/
+		if(ForQuantum == Quantum) {										// 퀀텀과 실행시간이 같아지면
+			ReadyQueue.add(PresentProcess);								// 현재 실행 중인 프로세스를 레디큐 맨 뒤로 보내고
 			manager.ReadyQueue.create_form(ReadyQueue);
+			PresentProcess = null;										// 현재 프로세스를 null
+			ForQuantum = 0;												// 현재 프로세스 시간 초기화
 		}
-		if(PresentProcess == null) {																				// 현재 FCFS가 비어있을때
-			if(!ReadyQueue.isEmpty()) {																			// ReadyQueue가 비어있지 않으면 현재 FCFS로 poll
+		
+		if((PCoreCount + ECoreCount >= 2) && ForQuantum2 == Quantum) { 	// 코어가 2개 이상이고, 퀀텀과 실행시간이 같아지면
+			ReadyQueue.add(PresentProcess2);
+			manager.ReadyQueue.create_form(ReadyQueue);
+			PresentProcess2 = null;
+			ForQuantum2 = 0;
+		}
+		
+		if((PCoreCount + ECoreCount >= 3) && ForQuantum3 == Quantum) { 	// 코어가 3개 이상이고, 퀀텀과 실행시간이 같아지면
+			ReadyQueue.add(PresentProcess3);
+			manager.ReadyQueue.create_form(ReadyQueue);
+			PresentProcess3 = null;
+			ForQuantum3 = 0;
+		}
+		
+		if((PCoreCount + ECoreCount >= 4) && ForQuantum4 == Quantum) { 	// 코어가 4개 이상이고, 퀀텀과 실행시간이 같아지면
+			ReadyQueue.add(PresentProcess4);
+			manager.ReadyQueue.create_form(ReadyQueue);
+			PresentProcess4 = null;
+			ForQuantum4 = 0;
+		}
+
+		ForQuantum++;	// 현재 프로세스 시간 +1
+		ForQuantum2++;
+		ForQuantum3++;
+		ForQuantum4++;
+		
+		if(PresentProcess == null) {										// 현재 실행 중인 프로세스가 없을 때
+			if(!ReadyQueue.isEmpty()) {										// ReadyQueue가 비어있지 않으면 맨 앞 프로세스 실행
 				PresentProcess = ReadyQueue.poll();
 				manager.ReadyQueue.create_form(ReadyQueue);
 			}
 		}
-		if(PresentProcess == null && ReadyQueue.isEmpty() && AlgorithmList.isEmpty()) {
-			manager.GhanttChart_1.addLastSecond();
-			return;
-		}
-		GUIELEC();									
-		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork;											// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기	
 		
+		if((PCoreCount + ECoreCount >= 2) && PresentProcess2 == null) {		// 코어가 2개 이상이고, 현재 실행 중인 프로세스가 없을 때
+			if(!ReadyQueue.isEmpty()) {										// ReadyQueue가 비어있지 않으면 맨 앞 프로세스 실행
+				PresentProcess2 = ReadyQueue.poll();
+				manager.ReadyQueue.create_form(ReadyQueue);
+			}
+		}
+		
+		if((PCoreCount + ECoreCount >= 3) && PresentProcess3 == null) {		// 코어가 3개 이상이고, 현재 실행 중인 프로세스가 없을 때
+			if(!ReadyQueue.isEmpty()) {										// ReadyQueue가 비어있지 않으면 맨 앞 프로세스 실행
+				PresentProcess3 = ReadyQueue.poll();
+				manager.ReadyQueue.create_form(ReadyQueue);
+			}
+		}
+		
+		if((PCoreCount + ECoreCount >= 4) && PresentProcess4 == null) {		// 코어가 4개 이상이고, 현재 실행 중인 프로세스가 없을 때
+			if(!ReadyQueue.isEmpty()) {										// ReadyQueue가 비어있지 않으면 맨 앞 프로세스 실행
+				PresentProcess4 = ReadyQueue.poll();
+				manager.ReadyQueue.create_form(ReadyQueue);
+			}
+		}
+		
+		if(PresentProcess==null) {
+			ghanttchartPanel_1.adding(new JLabel("    "),-1);			
+			elec += ((PCoreCount + ECoreCount)*0.1);
+		}
+		else {
+			ghanttchartPanel_1.adding(new JLabel(PresentProcess.Name), PresentProcess.Row);	
+			elec += PCoreCount*3 + ECoreCount; // 8
+		}  
+		if(PresentProcess2==null) {
+			ghanttchartPanel_2.adding(new JLabel("    "),-1);			
+			elec += ((PCoreCount + ECoreCount)*0.1);
+		}
+		else {
+			ghanttchartPanel_2.adding(new JLabel(PresentProcess2.Name), PresentProcess2.Row);	
+			elec += PCoreCount*3 + ECoreCount; // 8
+		}  
+		if(PresentProcess3==null) {
+			ghanttchartPanel_3.adding(new JLabel("    "),-1);			
+			elec += ((PCoreCount + ECoreCount)*0.1);
+		}
+		else {
+			ghanttchartPanel_3.adding(new JLabel(PresentProcess3.Name), PresentProcess3.Row);	
+			elec += PCoreCount*3 + ECoreCount; // 8
+		}  
+		if(PresentProcess4==null) {
+			ghanttchartPanel_4.adding(new JLabel("    "),-1);			
+			elec += ((PCoreCount + ECoreCount)*0.1);
+		}
+		else {
+			ghanttchartPanel_4.adding(new JLabel(PresentProcess4.Name), PresentProcess4.Row);	
+			elec += PCoreCount*3 + ECoreCount; // 8
+		}  
+		
+									
+		if(!(PresentProcess == null)) PresentProcess.BurstTime -= CoreWork1;	// 현재 RR이 비어있지 않으면 Bursttime에서 처리량 빼주기										// 현재 FCFS가 비어있지 않으면 bursttime에서 처리량 빼주기	
+		if(!(PresentProcess2 == null)) PresentProcess2.BurstTime -= CoreWork2;
+	    if(!(PresentProcess3 == null)) PresentProcess3.BurstTime -= CoreWork3;
+	    if(!(PresentProcess4 == null)) PresentProcess4.BurstTime -= CoreWork4;
 	}
 }
 

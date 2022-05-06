@@ -14,11 +14,10 @@ public class Renderer extends DefaultTableCellRenderer{
 	@Override 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		c.setBackground(ChooseColor(this.row));
+		c.setBackground(ChooseColor(row));
 		c.setForeground(Color.WHITE);
 		this.row++;
 		return c;
-		
 	}
 	public Color ChooseColor(int row) {
 		switch(row + 1){

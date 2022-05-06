@@ -91,27 +91,27 @@ public class MainPanel extends JPanel{
 		CoreLabel_1.setBackground(Color.WHITE);
 		CoreLabel_1.setSize(100, 20);
 		CoreLabel_1.setLocation(10, 330);
-		CoreLabel_1.setText("<P Core>");
+		CoreLabel_1.setText("<E Core>");
 		add(CoreLabel_1);
 		
 		CoreLabel_2.setBackground(Color.WHITE);
 		CoreLabel_2.setSize(100, 20);
 		CoreLabel_2.setLocation(10, 330);
-		CoreLabel_2.setText("<P Core>");
+		CoreLabel_2.setText("<E Core>");
 		add(CoreLabel_2);
 		CoreLabel_2.setVisible(false);
 		
 		CoreLabel_3.setBackground(Color.WHITE);
 		CoreLabel_3.setSize(100, 20);
 		CoreLabel_3.setLocation(10, 330);
-		CoreLabel_3.setText("<P Core>");
+		CoreLabel_3.setText("<E Core>");
 		add(CoreLabel_3);
 		CoreLabel_3.setVisible(false);
 		
 		CoreLabel_4.setBackground(Color.WHITE);
 		CoreLabel_4.setSize(100, 20);
 		CoreLabel_4.setLocation(10, 330);
-		CoreLabel_4.setText("<P Core>");
+		CoreLabel_4.setText("<E Core>");
 		add(CoreLabel_4);
 		CoreLabel_4.setVisible(false);
 		
