@@ -7,9 +7,6 @@ import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.Dimension;
 
 
 import javax.swing.JButton;
@@ -17,9 +14,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import Manager.ProjectManager;
 import Scheduling.Process;
@@ -39,7 +33,7 @@ public class AddPanel extends JPanel{
 	
 	BaseLabel AlgorithmLabel = new BaseLabel("Algorithm");		// algorithm
 	
-	String[] algorithmArray = {"FCFS", "RR", "SPN", "SRTN", "HRRN", "MFQ"};	
+	String[] algorithmArray = {"FCFS", "RR", "SPN", "SRTN", "HRRN", "MDRQ"};	
 	JComboBox<String> AlgorithmComboBox = new JComboBox<String>(algorithmArray);
 	
 	BaseLabel ProcessNameLabel = new BaseLabel("Process Name");	// processName
@@ -60,6 +54,8 @@ public class AddPanel extends JPanel{
 	boolean isMFQChange = false;
 	boolean isCheck = false;
 	boolean isLockAlgorithm = false;
+	
+	boolean LockAddButton = false;
 	
 	public String Priority;
 	public String SetAlgorithm;
@@ -101,11 +97,11 @@ public class AddPanel extends JPanel{
 		
 		
 		/*너네구나*/
-//		Process p1 = new Process("High","p1",1,20, 0);
-//		Process p2 = new Process("High","p2",2,6, 1);
+//		Process p1 = new Process("High","p1",0,20, 0);
+//		Process p2 = new Process("High","p2",1,6, 1);
 //		Process p3 = new Process("High","p3",4,8, 2);
 //		
-//		Process p4 = new Process("High","p4",5,3, 3);
+//		Process p4 = new Process("High","p4",3,3, 3);
 //		Process p5 = new Process("High","p5",6,1, 4);
 //		Process p6 = new Process("Middle","p6",6,7, 5);
 //		
@@ -117,8 +113,8 @@ public class AddPanel extends JPanel{
 //		MFQHighAlgorithmList.add(p2);
 //		MFQHighAlgorithmList.add(p3);
 //		
-//		MFQHighAlgorithmList.add(p4);
-//		MFQHighAlgorithmList.add(p5);
+//		MFQMiddleAlgorithmList.add(p4);
+//		MFQMiddleAlgorithmList.add(p5);
 //		MFQMiddleAlgorithmList.add(p6);
 //		
 //		MFQLowAlorithmList.add(p7);
@@ -136,15 +132,13 @@ public class AddPanel extends JPanel{
 //		manager.information.AddAlgorithm(p7);
 //		manager.information.AddAlgorithm(p8);
 //		manager.information.AddAlgorithm(p9);
-//		manager.information.AddAlgorithm(p10);
-//		manager.information.AddAlgorithm(p11);
-//		manager.information.AddAlgorithm(p12);
+
 		/*너네구나*/
 	}
 	private void Base(){		// addPanel 기본 세팅
-		setSize(240, 201);
+		setSize(250, 201);
 		setLocation(10, 10);
-		setBackground(Color.yellow);
+		setBackground(Color.WHITE);
 		setLayout(null);
 	}
 	
@@ -155,7 +149,8 @@ public class AddPanel extends JPanel{
 		AlgorithmComboBox.setFont(new Font("Dialog", Font.BOLD, 14));		// AlgorithmComboBox adding
 		AlgorithmComboBox.setSize(110, 20);
 		AlgorithmComboBox.setLocation(120, 15);
-		 AlgorithmComboBox.setSelectedIndex(0);
+		AlgorithmComboBox.setBackground(Color.WHITE);
+		AlgorithmComboBox.setSelectedIndex(0);
 		add(AlgorithmComboBox);
 		
 		ProcessNameLabel.setLocation(10, 40);								// ProcessNameLabel adding
@@ -191,6 +186,7 @@ public class AddPanel extends JPanel{
 		PriorityReadyQueueComboBox.setFont(new Font("Dialog", Font.BOLD, 14));	// PriorityReadyQueueComboBox adding
 		PriorityReadyQueueComboBox.setSize(110,20);
 		PriorityReadyQueueComboBox.setLocation(120,135);
+		PriorityReadyQueueComboBox.setBackground(Color.WHITE);
 		PriorityReadyQueueComboBox.setSelectedItem("Middle");
 		add(PriorityReadyQueueComboBox);
 		
@@ -214,7 +210,7 @@ public class AddPanel extends JPanel{
 						manager.runpanel.QuanturmTimeTextField.setVisible(false);
 					}
 
-					if (SetAlgorithm == "MFQ") { // MFQ일 경우 다양한 요소 표시
+					if (SetAlgorithm == "MDRQ") { // MDRQ일 경우 다양한 요소 표시
 						isMFQChange = true;
 						PriorityReadyQueueComboBox.setVisible(true); // ADD부분 우선순위 추가
 						PriorityReadyQueueLabel.setVisible(true);
@@ -234,7 +230,6 @@ public class AddPanel extends JPanel{
 						manager.information.table.getColumn("Priority").setPreferredWidth(20);
 						manager.information.CenterSetting();
 					} else { // MFQ아닐 경우 반대로
-						System.out.print("콤보박스 실행");
 						isCheck = true;
 						PriorityReadyQueueComboBox.setVisible(false);
 						PriorityReadyQueueLabel.setVisible(false);
@@ -274,7 +269,7 @@ public class AddPanel extends JPanel{
 		AddButton.setSize(220, 30);								// addButton adding
 		AddButton.setLocation(10, 170);
 		AddButton.setOpaque(true);
-		AddButton.setBackground(Color.green);
+		AddButton.setBackground(Color.WHITE);
 		AddButton.addActionListener(new AddActionListener());	// add 클릭 시 저 리스너 실행(맨 아래)
 		add(AddButton);
 		
@@ -327,6 +322,14 @@ public class AddPanel extends JPanel{
 	
 	private class AddActionListener  implements ActionListener{				// add 클릭 시 액션 리스너
 		public void actionPerformed(ActionEvent e) {
+			if(LockAddButton) return;
+			if ((manager.algorithm == null) && (manager.mfq == null)) { // 현재 실행 중인 알고리즘이 없을 때
+				if (AlgorithmSetting().ArrivalTime == -1) { // 현재 입력된 값들이 빈칸인 경우 에러 메세지 출력
+				JOptionPane.showMessageDialog(null, "Fill in the blanks.", "Error",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+				} 
+			}
 			if (Row <= 14) {
 				isLockAlgorithm = true;
 				if (!isCheck) {
@@ -354,10 +357,8 @@ public class AddPanel extends JPanel{
 					}
 				}
 				if ((manager.algorithm == null) && (manager.mfq == null)) { // 현재 실행 중인 알고리즘이 없을 때
-					if (AlgorithmSetting().ArrivalTime == -1) { // 현재 입력된 값들이 빈칸인 경우 에러 메세지 출력
-						JOptionPane.showMessageDialog(null, "Fill in the blanks.", "Error",
-								JOptionPane.INFORMATION_MESSAGE);
-					} else if (AlgorithmComboBox.getSelectedItem().toString() == "MFQ") { // MFQ인 경우
+						
+						if (AlgorithmComboBox.getSelectedItem().toString() == "MFQ") { // MFQ인 경우
 						AddProcess = MFQAlgorithmSetting();
 
 						if (AddProcess.Priority.equals("High"))

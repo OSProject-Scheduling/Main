@@ -1,9 +1,7 @@
 package Scheduling;
-import javax.swing.JLabel;
 
 import Manager.ProjectManager;
 
-import java.util.LinkedList;
 
 
 public class RR extends Algorithm{
@@ -21,7 +19,7 @@ public class RR extends Algorithm{
 
 	void schedulling() {
 		CalculateTime(); 								// 프로세스 종료 후 시간 계산
-
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
 		/*--------------------------종료 조건---------------------------*/
 		if(Terminate()) return;
 		
@@ -59,6 +57,7 @@ public class RR extends Algorithm{
 		}
 		manager.ReadyQueue.create_form(ReadyQueue);
 		
+		for(int i=0; i<ReadyQueue.size(); i++) ReadyQueue.get(i).WaitingTime++;		// WT 계산
 		GUISetting();
 		
 		for(int i=0; i<CoreCount; i++) {
@@ -70,8 +69,6 @@ public class RR extends Algorithm{
 		    		elec += 3;
 		    }
 		}
-		manager.mainPanel.Elec.setText("총 전력: " + elec);
-
 	}
 }
 

@@ -1,7 +1,4 @@
 package Scheduling;
-import java.util.LinkedList;
-
-import javax.swing.JLabel;
 
 import Manager.ProjectManager;
 
@@ -16,6 +13,7 @@ public class SRTN extends Algorithm{
 	
 	void schedulling() {
 		CalculateTime();
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
 		
 		/*--------------------------종료 조건---------------------------*/
 		if(Terminate()) return;
@@ -25,17 +23,16 @@ public class SRTN extends Algorithm{
 			for (int i = 0; i <= ReadyQueue.size(); i++) {			// 레디큐의 모든 프로세스를 검사
 				if (i == ReadyQueue.size()) {						// i가 레디큐의 마지막 인자까지 검사했으면 레디큐 맨 뒤에 프로세스 추가
 					ReadyQueue.add(AlgorithmList.poll());
-					manager.ReadyQueue.create_form(ReadyQueue);
 					break;
 				}
 
 				if (ReadyQueue.get(i).BurstTime > AlgorithmList.peekFirst().BurstTime) {	// 프로세스 리스트의 맨 앞 프로세스의 BT가 i번째 프로세스의 BT보다 짧으면
 					ReadyQueue.add(i, AlgorithmList.poll());								// 레디큐의 i번째에 프로세스 추가(새치기)
-					manager.ReadyQueue.create_form(ReadyQueue);
 					break;
 				}
 			}
 		}
+		manager.ReadyQueue.create_form(ReadyQueue);
 		
 		/*------------------------SRTN 알고리즘------------------------*/
 		for(int i=0; i<CoreCount; i++) {
@@ -73,7 +70,9 @@ public class SRTN extends Algorithm{
 		}
 		manager.ReadyQueue.create_form(ReadyQueue);
 		
+		for(int i=0; i<ReadyQueue.size(); i++) ReadyQueue.get(i).WaitingTime++;		// WT 계산
 		GUISetting();
+		
 		for(int i=0; i<CoreCount; i++) {
 			if(!(PresentProcess == null)) {
 		    	PresentProcess[i].BurstTime -= CoreWork[i];	// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
@@ -83,6 +82,5 @@ public class SRTN extends Algorithm{
 		    		elec += 3;
 		    }
 		}
-		manager.mainPanel.Elec.setText("총 전력: " + elec);
 	}
 }

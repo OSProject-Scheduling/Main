@@ -1,13 +1,10 @@
 package GUI;
 import java.awt.Color;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import Manager.ProjectManager;
 
@@ -28,9 +25,9 @@ public class AdditionalButtonPanel extends JPanel{
 	}
 	
 	private void Base(){
-		setSize(500, 90);
-		setLocation(10, 215);
-		setBackground(Color.YELLOW);
+		setSize(500, 80);
+		setLocation(10, 220);
+		setBackground(Color.WHITE);
 		setLayout(null);
 	}
 	
@@ -39,7 +36,7 @@ public class AdditionalButtonPanel extends JPanel{
 		PauseButton.setSize(220, 30);								// PauseButton adding
 		PauseButton.setLocation(10, 10);
 		PauseButton.setOpaque(true);
-		PauseButton.setBackground(Color.green);
+		PauseButton.setBackground(Color.WHITE);
 		PauseButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
 				if(!(manager.algorithm == null)) manager.algorithm.timer.cancel();
@@ -51,7 +48,7 @@ public class AdditionalButtonPanel extends JPanel{
 		ReStartButton.setSize(220, 30);								// RestartButton adding
 		ReStartButton.setLocation(270, 10);
 		ReStartButton.setOpaque(true);
-		ReStartButton.setBackground(Color.green);
+		ReStartButton.setBackground(Color.WHITE);
 		ReStartButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
 				if(!(manager.algorithm == null)) manager.algorithm.start();
@@ -63,7 +60,7 @@ public class AdditionalButtonPanel extends JPanel{
 		ReSetButton.setSize(480, 30);								// ResetButton adding
 		ReSetButton.setLocation(10, 50);
 		ReSetButton.setOpaque(true);
-		ReSetButton.setBackground(Color.green);
+		ReSetButton.setBackground(Color.WHITE);
 		ReSetButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
 				if(!(manager.algorithm == null)) manager.algorithm.timer.cancel();

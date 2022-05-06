@@ -21,7 +21,7 @@ public class ReadyQueuePanel extends JPanel{
 	
 	public ReadyQueuePanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-
+		setBackground(Color.WHITE);
 	}
 	public void ScrollSetting(JScrollPane ReadyQueueScrollbar) {
 		this.ReadyQueueScrollBar = ReadyQueueScrollbar;
@@ -111,8 +111,11 @@ public class ReadyQueuePanel extends JPanel{
 			case 14:
 				color = new Color(51,0,102);
 				return color;
+			case 15:
+				color = new Color(0,102,153);
+				return color;
 			default:
-				color = new Color(153,51,0);
+				color = new Color(0,0,0);
 				return color;
 		}
 	}
