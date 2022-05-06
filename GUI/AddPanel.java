@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import Manager.ProjectManager;
@@ -74,10 +75,10 @@ public class AddPanel extends JPanel{
 //		Process p7 = new Process("p7",3,1, 6);
 //		Process p8 = new Process("p8",5,4, 7);
 //		Process p9 = new Process("p9",6,5, 8);
-//		Process p10 = new Process("p9",7,5, 8);
-//		Process p11 = new Process("p9",8,5, 8);
-//		Process p12 = new Process("p9",9,5, 8);
-//		
+//		Process p10 = new Process("p10",7,5, 9);
+//		Process p11 = new Process("p11",8,5, 10);
+//		Process p12 = new Process("p12",9,5, 11);
+		
 //		AlgorithmList.add(p1);
 //		AlgorithmList.add(p2);
 //		AlgorithmList.add(p3);
@@ -94,41 +95,44 @@ public class AddPanel extends JPanel{
 		
 		
 		/*너네구나*/
-		Process p1 = new Process("High","p1",1,20, 0);
-		Process p2 = new Process("High","p2",2,6, 1);
-		Process p3 = new Process("High","p3",4,8, 2);
-		
-		Process p4 = new Process("High","p4",5,3, 3);
-		Process p5 = new Process("High","p5",6,1, 4);
-		Process p6 = new Process("Middle","p6",6,7, 5);
-		
-		Process p7 = new Process("Low","p7",3,1, 6);
-		Process p8 = new Process("Low","p8",5,4, 7);
-		Process p9 = new Process("Low","p9",6,5, 8);
-		
-		MFQHighAlgorithmList.add(p1);
-		MFQHighAlgorithmList.add(p2);
-		MFQHighAlgorithmList.add(p3);
-		
-		MFQHighAlgorithmList.add(p4);
-		MFQHighAlgorithmList.add(p5);
-		MFQMiddleAlgorithmList.add(p6);
-		
-		MFQLowAlorithmList.add(p7);
-		MFQLowAlorithmList.add(p8);
-		MFQLowAlorithmList.add(p9);
-		
-		manager.information.AddAlgorithm(p1);
-		manager.information.AddAlgorithm(p2);
-		manager.information.AddAlgorithm(p3);
-		
-		manager.information.AddAlgorithm(p4);
-		manager.information.AddAlgorithm(p5);
-		manager.information.AddAlgorithm(p6);
-		
-		manager.information.AddAlgorithm(p7);
-		manager.information.AddAlgorithm(p8);
-		manager.information.AddAlgorithm(p9);
+//		Process p1 = new Process("High","p1",1,20, 0);
+//		Process p2 = new Process("High","p2",2,6, 1);
+//		Process p3 = new Process("High","p3",4,8, 2);
+//		
+//		Process p4 = new Process("High","p4",5,3, 3);
+//		Process p5 = new Process("High","p5",6,1, 4);
+//		Process p6 = new Process("Middle","p6",6,7, 5);
+//		
+//		Process p7 = new Process("Low","p7",3,1, 6);
+//		Process p8 = new Process("Low","p8",5,4, 7);
+//		Process p9 = new Process("Low","p9",6,5, 8);
+//		
+//		MFQHighAlgorithmList.add(p1);
+//		MFQHighAlgorithmList.add(p2);
+//		MFQHighAlgorithmList.add(p3);
+//		
+//		MFQHighAlgorithmList.add(p4);
+//		MFQHighAlgorithmList.add(p5);
+//		MFQMiddleAlgorithmList.add(p6);
+//		
+//		MFQLowAlorithmList.add(p7);
+//		MFQLowAlorithmList.add(p8);
+//		MFQLowAlorithmList.add(p9);
+//		
+//		manager.information.AddAlgorithm(p1);
+//		manager.information.AddAlgorithm(p2);
+//		manager.information.AddAlgorithm(p3);
+//		
+//		manager.information.AddAlgorithm(p4);
+//		manager.information.AddAlgorithm(p5);
+//		manager.information.AddAlgorithm(p6);
+//		
+//		manager.information.AddAlgorithm(p7);
+//		manager.information.AddAlgorithm(p8);
+//		manager.information.AddAlgorithm(p9);
+//		manager.information.AddAlgorithm(p10);
+//		manager.information.AddAlgorithm(p11);
+//		manager.information.AddAlgorithm(p12);
 		/*너네구나*/
 	}
 	private void Base(){		// addPanel 기본 세팅
@@ -215,9 +219,12 @@ public class AddPanel extends JPanel{
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(false);		// 기존 Readyquueue 안보이게
 					manager.ReadyQueue.ReadyQueueLabel.setVisible(false);
 					
-					manager.information.model.addColumn("Priority");
-					manager.information.table.getColumn("Priority").setPreferredWidth(20);
-					manager.information.CenterSetting();
+					System.out.println(manager.information.table.getColumnCount());
+					if(manager.information.table.getColumnCount() == 6) {
+						if(manager.information.model.getColumnCount()==6) manager.information.model.addColumn("Priority");
+						manager.information.table.getColumn("Priority").setPreferredWidth(20);
+						manager.information.CenterSetting();
+					}
 				}
 				else {													// MFQ아닐 경우 반대로
 					PriorityReadyQueueComboBox.setVisible(false);
@@ -234,10 +241,11 @@ public class AddPanel extends JPanel{
 					manager.ReadyQueue.ReadyQueueScrollBar.setVisible(true);
 					manager.ReadyQueue.ReadyQueueLabel.setVisible(true);
 					
-					String[] TableHeader = {"Process Name", "Arrival time", "Burst time", 		// 우선순위 표시
-                            "Waiting time", "Turnaround time", "Normalized TT"};
-
-                    manager.information.model.setColumnIdentifiers(TableHeader);
+					System.out.println(manager.information.model.getColumnCount());
+					if(manager.information.table.getColumnCount() == 7) {
+						TableColumn tcol = manager.information.table.getColumnModel().getColumn(6);
+						manager.information.table.removeColumn(tcol);
+					}
 				}
 			}
 		});
