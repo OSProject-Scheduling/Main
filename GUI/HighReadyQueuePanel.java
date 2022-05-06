@@ -14,6 +14,7 @@ public class HighReadyQueuePanel extends JPanel{
 	
 	JScrollPane ReadyQueueScrollBar;
 	JLabel HighReadyQueueLabel;
+	Color color;
 	int PrevProcessList;
 	
 	public HighReadyQueuePanel() {
@@ -50,7 +51,7 @@ public class HighReadyQueuePanel extends JPanel{
 				JLabel label = new JLabel(ProcessList.get(i).Name);
 				label.setHorizontalAlignment(JLabel.CENTER);
 				label.setOpaque(true);
-				label.setBackground(Color.yellow);
+				label.setBackground(ChooseColor(ProcessList.get(i).Row));
 				label.setPreferredSize(new Dimension(60, 80));
 				space.setPreferredSize(new Dimension(20,80));
 				add(label);
@@ -66,5 +67,54 @@ public class HighReadyQueuePanel extends JPanel{
 		}
 		
 		PrevProcessList = ProcessList.size();
+	}
+	
+	public Color ChooseColor(int row) {
+		switch(row + 1){
+			case 1:
+				color = new Color(51,51,153);
+				return color;
+			case 2:
+				color = new Color(153,51,51);
+				return color;
+			case 3:
+				color = new Color(102,102,102);
+				return color;
+			case 4:
+				color = new Color(0,152,0);
+				return color;
+			case 5:
+				color = new Color(102,0,102);
+				return color;
+			case 6:
+				color = new Color(204,51,0);
+				return color;
+			case 7:
+				color = new Color(153,0,153);
+				return color;
+			case 8:
+				color = new Color(204,153,0);
+				return color;
+			case 9:
+				color=  new Color(0,153,153);
+				return color;
+			case 10:
+				color = new Color(51,51,51);
+				return color;
+			case 11:
+				color = new Color(102,51,102);
+				return color;
+			case 12:
+				return Color.LIGHT_GRAY;
+			case 13:
+				color= new Color(51,0,51);
+				return color;
+			case 14:
+				color = new Color(51,0,102);
+				return color;
+			default:
+				color = new Color(153,51,0);
+				return color;
+		}
 	}
 }

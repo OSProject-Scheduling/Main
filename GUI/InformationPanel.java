@@ -2,7 +2,10 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,10 +34,12 @@ public class InformationPanel extends JPanel{
 	JTable table = new JTable(model);
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 	
-	Renderer renderer = new Renderer();
 	JScrollPane scrollpane = new JScrollPane(table);
 
+	Renderer renderer = new Renderer();
+	
 	ArrayList<Object[]> list = new ArrayList<>();
+	
 
 	int InsertCount = 0;
 	
@@ -55,7 +60,6 @@ public class InformationPanel extends JPanel{
 		table.setLocation(10, 20);
 		table.setRowHeight(25);
 		scrollpane.setBounds(2, 0, 695, 400);
-		
 		CenterSetting();
 	
 		add(scrollpane);
@@ -138,7 +142,7 @@ public class InformationPanel extends JPanel{
 			InsertCount++;
 		}
 		TableColumn col = table.getColumnModel().getColumn(0);
-		col.setCellRenderer(new Renderer());
+		col.setCellRenderer(renderer);
 	}
 	public void ChangeInformation(double TT, double WT, double NTT, int Row) {
 		model.setValueAt(WT, Row, 3);
