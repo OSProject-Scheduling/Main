@@ -96,8 +96,32 @@ public class RunPanel extends JPanel{
 		ECoreSpinner.setLocation(190, 35);
 		add(ECoreSpinner);
 		
-		PCoreSpinner.addChangeListener(new SpinnerChangeListener());
-		ECoreSpinner.addChangeListener(new SpinnerChangeListener());
+		PCoreSpinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) > 4) {
+					PCoreSpinner.setValue(Integer.parseInt(PCoreSpinner.getValue().toString())-1);
+				}
+				else if(Integer.parseInt(PCoreSpinner.getValue().toString()) + Integer.parseInt(ECoreSpinner.getValue().toString()) < 1){
+					PCoreSpinner.setValue(Integer.parseInt(PCoreSpinner.getValue().toString())+1);
+				}
+				GhanttChartGUISetting();
+			}
+		});
+		ECoreSpinner.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if (Integer.parseInt(PCoreSpinner.getValue().toString())
+						+ Integer.parseInt(ECoreSpinner.getValue().toString()) > 4) {
+					ECoreSpinner.setValue(Integer.parseInt(ECoreSpinner.getValue().toString()) - 1);
+				} else if (Integer.parseInt(PCoreSpinner.getValue().toString())
+						+ Integer.parseInt(ECoreSpinner.getValue().toString()) < 1) {
+					ECoreSpinner.setValue(Integer.parseInt(ECoreSpinner.getValue().toString()) + 1);
+				}
+				GhanttChartGUISetting();
+			}
+		});
 		
 		QuanturmTimeLabel.setLocation(10, 80);								// Quanturm adding
 		add(QuanturmTimeLabel);
@@ -144,133 +168,124 @@ public class RunPanel extends JPanel{
 		add(RunButton);
 	}
 	
-	private class SpinnerChangeListener implements ChangeListener{
-		public void stateChanged(ChangeEvent e) {
-			int PCoreCount = Integer.parseInt(PCoreSpinner.getValue().toString());
-			int ECoreCount = Integer.parseInt(ECoreSpinner.getValue().toString());
-			if((PCoreCount + ECoreCount) > 4) {								// 1미만, 4초과 못하게
-				ECoreSpinner.setValue(Integer.parseInt(ECoreSpinner.getValue().toString())-1);
+	private void GhanttChartGUISetting() {
+		int PCoreCount = Integer.parseInt(PCoreSpinner.getValue().toString());
+		int ECoreCount = Integer.parseInt(ECoreSpinner.getValue().toString());
+		if((PCoreCount + ECoreCount) == 1) {
+			if(PCoreCount == 1) manager.coreLabel_1.setText("<P Core>");
+			else manager.coreLabel_1.setText("<E Core>");
+			manager.coreLabel_1.setLocation(10, 330);
+			manager.coreLabel_2.setVisible(false);
+			manager.coreLabel_3.setVisible(false);
+			manager.coreLabel_4.setVisible(false);
+			manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 350);
+			manager.GhanttChart_2.GhanttchartScroll.setVisible(false);
+			manager.GhanttChart_3.GhanttchartScroll.setVisible(false);
+			manager.GhanttChart_4.GhanttchartScroll.setVisible(false);
+		}
+		else if((PCoreCount + ECoreCount) == 2) {
+			if(PCoreCount==0) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<E Core>");
 			}
-			else if((PCoreCount + ECoreCount) < 1){
-				ECoreSpinner.setValue(Integer.parseInt(ECoreSpinner.getValue().toString())+1);
+			else if(PCoreCount==1) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<P Core>");
 			}
-			
-			if((PCoreCount + ECoreCount) == 1) {
-				if(PCoreCount == 1) manager.coreLabel_1.setText("<P Core>");
-				else manager.coreLabel_1.setText("<E Core>");
-				manager.coreLabel_1.setLocation(10, 330);
-				manager.coreLabel_2.setVisible(false);
-				manager.coreLabel_3.setVisible(false);
-				manager.coreLabel_4.setVisible(false);
-				manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 350);
-				manager.GhanttChart_2.GhanttchartScroll.setVisible(false);
-				manager.GhanttChart_3.GhanttchartScroll.setVisible(false);
-				manager.GhanttChart_4.GhanttchartScroll.setVisible(false);
+			else {
+				manager.coreLabel_1.setText("<P Core>");
+				manager.coreLabel_2.setText("<P Core>");
 			}
-			else if((PCoreCount + ECoreCount) == 2) {
-				if(PCoreCount==0) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<E Core>");
-				}
-				else if(PCoreCount==1) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<P Core>");
-				}
-				else {
-					manager.coreLabel_1.setText("<P Core>");
-					manager.coreLabel_2.setText("<P Core>");
-				}
-				manager.coreLabel_2.setVisible(true);
-				manager.coreLabel_3.setVisible(false);
-				manager.coreLabel_4.setVisible(false);
-				manager.coreLabel_1.setLocation(10, 210);
-				manager.coreLabel_2.setLocation(10, 450);
-				manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 230);
-				manager.GhanttChart_2.GhanttchartScroll.setLocation(10, 470);
-				manager.GhanttChart_2.GhanttchartScroll.setVisible(true);
-				manager.GhanttChart_3.GhanttchartScroll.setVisible(false);
-				manager.GhanttChart_4.GhanttchartScroll.setVisible(false);
+			manager.coreLabel_2.setVisible(true);
+			manager.coreLabel_3.setVisible(false);
+			manager.coreLabel_4.setVisible(false);
+			manager.coreLabel_1.setLocation(10, 210);
+			manager.coreLabel_2.setLocation(10, 450);
+			manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 230);
+			manager.GhanttChart_2.GhanttchartScroll.setLocation(10, 470);
+			manager.GhanttChart_2.GhanttchartScroll.setVisible(true);
+			manager.GhanttChart_3.GhanttchartScroll.setVisible(false);
+			manager.GhanttChart_4.GhanttchartScroll.setVisible(false);
+		}
+		else if((PCoreCount + ECoreCount) == 3) {
+			if(PCoreCount==0) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<E Core>");
+				manager.coreLabel_3.setText("<E Core>");
 			}
-			else if((PCoreCount + ECoreCount) == 3) {
-				if(PCoreCount==0) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<E Core>");
-					manager.coreLabel_3.setText("<E Core>");
-				}
-				else if(PCoreCount==1) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<E Core>");
-					manager.coreLabel_3.setText("<P Core>");
-				}
-				else if(PCoreCount==2) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<P Core>");
-					manager.coreLabel_3.setText("<P Core>");
-				}
-				else {
-					manager.coreLabel_1.setText("<P Core>");
-					manager.coreLabel_2.setText("<P Core>");
-					manager.coreLabel_3.setText("<P Core>");
-				}
-				manager.coreLabel_2.setVisible(true);
-				manager.coreLabel_3.setVisible(true);
-				manager.coreLabel_4.setVisible(false);
-				manager.coreLabel_1.setLocation(10, 180);
-				manager.coreLabel_2.setLocation(10, 340);
-				manager.coreLabel_3.setLocation(10, 500);
-				manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 200);
-				manager.GhanttChart_2.GhanttchartScroll.setLocation(10, 360);
-				manager.GhanttChart_3.GhanttchartScroll.setLocation(10, 520);
-				manager.GhanttChart_2.GhanttchartScroll.setVisible(true);
-				manager.GhanttChart_3.GhanttchartScroll.setVisible(true);
-				manager.GhanttChart_4.GhanttchartScroll.setVisible(false);
+			else if(PCoreCount==1) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<E Core>");
+				manager.coreLabel_3.setText("<P Core>");
 			}
-			else if((PCoreCount + ECoreCount) == 4) {
-				if(PCoreCount==0) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<E Core>");
-					manager.coreLabel_3.setText("<E Core>");
-					manager.coreLabel_4.setText("<E Core>");
-				}
-				else if(PCoreCount==1) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<E Core>");
-					manager.coreLabel_3.setText("<E Core>");
-					manager.coreLabel_4.setText("<P Core>");
-				}
-				else if(PCoreCount==2) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<E Core>");
-					manager.coreLabel_3.setText("<P Core>");
-					manager.coreLabel_4.setText("<P Core>");
-				}
-				else if(PCoreCount==3) {
-					manager.coreLabel_1.setText("<E Core>");
-					manager.coreLabel_2.setText("<P Core>");
-					manager.coreLabel_3.setText("<P Core>");
-					manager.coreLabel_4.setText("<P Core>");
-				}
-				else {
-					manager.coreLabel_1.setText("<P Core>");
-					manager.coreLabel_2.setText("<P Core>");
-					manager.coreLabel_3.setText("<P Core>");
-					manager.coreLabel_4.setText("<P Core>");
-				}
-				manager.coreLabel_2.setVisible(true);
-				manager.coreLabel_3.setVisible(true);
-				manager.coreLabel_4.setVisible(true);
-				manager.coreLabel_1.setLocation(10, 150);
-				manager.coreLabel_2.setLocation(10, 300);
-				manager.coreLabel_3.setLocation(10, 450);
-				manager.coreLabel_4.setLocation(10, 600);
-				manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 170);
-				manager.GhanttChart_2.GhanttchartScroll.setLocation(10, 320);
-				manager.GhanttChart_3.GhanttchartScroll.setLocation(10, 470);
-				manager.GhanttChart_4.GhanttchartScroll.setLocation(10, 620);
-				manager.GhanttChart_2.GhanttchartScroll.setVisible(true);
-				manager.GhanttChart_3.GhanttchartScroll.setVisible(true);
-				manager.GhanttChart_4.GhanttchartScroll.setVisible(true);
+			else if(PCoreCount==2) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<P Core>");
+				manager.coreLabel_3.setText("<P Core>");
 			}
+			else {
+				manager.coreLabel_1.setText("<P Core>");
+				manager.coreLabel_2.setText("<P Core>");
+				manager.coreLabel_3.setText("<P Core>");
+			}
+			manager.coreLabel_2.setVisible(true);
+			manager.coreLabel_3.setVisible(true);
+			manager.coreLabel_4.setVisible(false);
+			manager.coreLabel_1.setLocation(10, 180);
+			manager.coreLabel_2.setLocation(10, 340);
+			manager.coreLabel_3.setLocation(10, 500);
+			manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 200);
+			manager.GhanttChart_2.GhanttchartScroll.setLocation(10, 360);
+			manager.GhanttChart_3.GhanttchartScroll.setLocation(10, 520);
+			manager.GhanttChart_2.GhanttchartScroll.setVisible(true);
+			manager.GhanttChart_3.GhanttchartScroll.setVisible(true);
+			manager.GhanttChart_4.GhanttchartScroll.setVisible(false);
+		}
+		else if((PCoreCount + ECoreCount) == 4) {
+			if(PCoreCount==0) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<E Core>");
+				manager.coreLabel_3.setText("<E Core>");
+				manager.coreLabel_4.setText("<E Core>");
+			}
+			else if(PCoreCount==1) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<E Core>");
+				manager.coreLabel_3.setText("<E Core>");
+				manager.coreLabel_4.setText("<P Core>");
+			}
+			else if(PCoreCount==2) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<E Core>");
+				manager.coreLabel_3.setText("<P Core>");
+				manager.coreLabel_4.setText("<P Core>");
+			}
+			else if(PCoreCount==3) {
+				manager.coreLabel_1.setText("<E Core>");
+				manager.coreLabel_2.setText("<P Core>");
+				manager.coreLabel_3.setText("<P Core>");
+				manager.coreLabel_4.setText("<P Core>");
+			}
+			else {
+				manager.coreLabel_1.setText("<P Core>");
+				manager.coreLabel_2.setText("<P Core>");
+				manager.coreLabel_3.setText("<P Core>");
+				manager.coreLabel_4.setText("<P Core>");
+			}
+			manager.coreLabel_2.setVisible(true);
+			manager.coreLabel_3.setVisible(true);
+			manager.coreLabel_4.setVisible(true);
+			manager.coreLabel_1.setLocation(10, 150);
+			manager.coreLabel_2.setLocation(10, 300);
+			manager.coreLabel_3.setLocation(10, 450);
+			manager.coreLabel_4.setLocation(10, 600);
+			manager.GhanttChart_1.GhanttchartScroll.setLocation(10, 170);
+			manager.GhanttChart_2.GhanttchartScroll.setLocation(10, 320);
+			manager.GhanttChart_3.GhanttchartScroll.setLocation(10, 470);
+			manager.GhanttChart_4.GhanttchartScroll.setLocation(10, 620);
+			manager.GhanttChart_2.GhanttchartScroll.setVisible(true);
+			manager.GhanttChart_3.GhanttchartScroll.setVisible(true);
+			manager.GhanttChart_4.GhanttchartScroll.setVisible(true);
 		}
 	}
 	

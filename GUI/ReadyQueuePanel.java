@@ -16,6 +16,8 @@ public class ReadyQueuePanel extends JPanel{
 	JLabel ReadyQueueLabel;
 	Color color;
 	int PrevProcessList;
+	int UpperCount = 8;
+	int SetWidth = 621;
 	
 	public ReadyQueuePanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -28,15 +30,19 @@ public class ReadyQueuePanel extends JPanel{
 	public void create_form(LinkedList<Process> ProcessList) {
 		removeAll();
 		repaint();
-		if(ProcessList.size()>8) {
-			ReadyQueueScrollBar.setBounds(10, 30, 700, 100);
-			setPreferredSize(new Dimension(621+80*(ProcessList.size()-8), getHeight()));
+		if(ReadyQueueScrollBar.getWidth() < 600) {
+			UpperCount = 3;
+			SetWidth = 222;
+		}
+		if(ProcessList.size()>UpperCount) {
+			ReadyQueueScrollBar.setSize(ReadyQueueScrollBar.getWidth(), 100);
+			setPreferredSize(new Dimension(SetWidth+80*(ProcessList.size()-UpperCount), getHeight()));
 			ReadyQueueScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		}
 		else {
 			ReadyQueueScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			ReadyQueueScrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-			ReadyQueueScrollBar.setBounds(10, 30, 700, 83);
+			ReadyQueueScrollBar.setSize(ReadyQueueScrollBar.getWidth(), 83);
 		}
 		if (ProcessList.size() > 0) {
 			for (int i = 0; i < ProcessList.size(); i++) {
