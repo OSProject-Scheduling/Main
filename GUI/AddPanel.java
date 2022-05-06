@@ -63,57 +63,72 @@ public class AddPanel extends JPanel{
 		Base();													// addpanel 기본 세팅
 		ComponentSetting();										// addpanel에 추가할 요소들 세팅
 		
-//		AlgorithmList.add(new Process("P1", 0, 15, 0));
-//		AlgorithmList.add(new Process("P2", 1, 1, 1));
-//		AlgorithmList.add(new Process("P3", 2, 1, 2));
+//		Process p1 = new Process("p1",1,20, 0);
+//		Process p2 = new Process("p2",2,6, 1);
+//		Process p3 = new Process("p3",4,8, 2);
 //		
-//		AlgorithmList.add(new Process("P4", 3, 1, 3));
-//		AlgorithmList.add(new Process("P5", 4, 1, 4));
-//		AlgorithmList.add(new Process("P6", 5, 1, 5));
-//		AlgorithmList.add(new Process("P7", 6, 1, 6));
-//		AlgorithmList.add(new Process("P8", 7, 1, 7));
-//		AlgorithmList.add(new Process("P9", 8, 1, 8));
-//		AlgorithmList.add(new Process("P10", 9, 1, 9));
-//		AlgorithmList.add(new Process("P11", 10, 1, 10));
-//		AlgorithmList.add(new Process("P12", 11, 1, 11));
-//		AlgorithmList.add(new Process("P13", 12, 1, 12));
+//		Process p4 = new Process("p4",3,3, 3);
+//		Process p5 = new Process("p5",5,1, 4);
+//		Process p6 = new Process("p6",6,7, 5);
+//		
+//		Process p7 = new Process("p7",3,1, 6);
+//		Process p8 = new Process("p8",5,4, 7);
+//		Process p9 = new Process("p9",6,5, 8);
+//		Process p10 = new Process("p9",7,5, 8);
+//		Process p11 = new Process("p9",8,5, 8);
+//		Process p12 = new Process("p9",9,5, 8);
+//		
+//		AlgorithmList.add(p1);
+//		AlgorithmList.add(p2);
+//		AlgorithmList.add(p3);
+//		AlgorithmList.add(p4);
+//		AlgorithmList.add(p5);
+//		
+//		AlgorithmList.add(p6);
+//		AlgorithmList.add(p7);
+//		AlgorithmList.add(p8);
+//		AlgorithmList.add(p9);
+//		AlgorithmList.add(p10);
+//		AlgorithmList.add(p11);
+//		AlgorithmList.add(p12);
+		
 		
 		/*너네구나*/
-//		Process p1 = new Process("High","p1",1,20, 0);
-//		Process p2 = new Process("High","p2",2,6, 1);
-//		Process p3 = new Process("High","p3",4,8, 2);
-//		
-//		Process p4 = new Process("Middle","p4",3,3, 3);
-//		Process p5 = new Process("Middle","p5",5,1, 4);
-//		Process p6 = new Process("Middle","p6",6,7, 5);
-//		
-//		Process p7 = new Process("Low","p7",3,1, 6);
-//		Process p8 = new Process("Low","p8",5,4, 7);
-//		Process p9 = new Process("Low","p9",6,5, 8);
-//		
-//		MFQHighAlgorithmList.add(p1);
-//		MFQHighAlgorithmList.add(p2);
-//		MFQHighAlgorithmList.add(p3);
-//		
-//		MFQMiddleAlgorithmList.add(p4);
-//		MFQMiddleAlgorithmList.add(p5);
-//		MFQMiddleAlgorithmList.add(p6);
-//		
-//		MFQLowAlorithmList.add(p7);
-//		MFQLowAlorithmList.add(p8);
-//		MFQLowAlorithmList.add(p9);
-//		
-//		manager.information.AddAlgorithm(p1);
-//		manager.information.AddAlgorithm(p2);
-//		manager.information.AddAlgorithm(p3);
-//		
-//		manager.information.AddAlgorithm(p4);
-//		manager.information.AddAlgorithm(p5);
-//		manager.information.AddAlgorithm(p6);
-//		
-//		manager.information.AddAlgorithm(p7);
-//		manager.information.AddAlgorithm(p8);
-//		manager.information.AddAlgorithm(p9);
+		Process p1 = new Process("High","p1",1,20, 0);
+		Process p2 = new Process("High","p2",2,6, 1);
+		Process p3 = new Process("High","p3",4,8, 2);
+		
+		Process p4 = new Process("High","p4",5,3, 3);
+		Process p5 = new Process("High","p5",6,1, 4);
+		Process p6 = new Process("Middle","p6",6,7, 5);
+		
+		Process p7 = new Process("Low","p7",3,1, 6);
+		Process p8 = new Process("Low","p8",5,4, 7);
+		Process p9 = new Process("Low","p9",6,5, 8);
+		
+		MFQHighAlgorithmList.add(p1);
+		MFQHighAlgorithmList.add(p2);
+		MFQHighAlgorithmList.add(p3);
+		
+		MFQHighAlgorithmList.add(p4);
+		MFQHighAlgorithmList.add(p5);
+		MFQMiddleAlgorithmList.add(p6);
+		
+		MFQLowAlorithmList.add(p7);
+		MFQLowAlorithmList.add(p8);
+		MFQLowAlorithmList.add(p9);
+		
+		manager.information.AddAlgorithm(p1);
+		manager.information.AddAlgorithm(p2);
+		manager.information.AddAlgorithm(p3);
+		
+		manager.information.AddAlgorithm(p4);
+		manager.information.AddAlgorithm(p5);
+		manager.information.AddAlgorithm(p6);
+		
+		manager.information.AddAlgorithm(p7);
+		manager.information.AddAlgorithm(p8);
+		manager.information.AddAlgorithm(p9);
 		/*너네구나*/
 	}
 	private void Base(){		// addPanel 기본 세팅
@@ -183,21 +198,13 @@ public class AddPanel extends JPanel{
 				else {
 					manager.runpanel.QuanturmTimeLabel.setVisible(false);
 					manager.runpanel.QuanturmTimeTextField.setVisible(false);
-					manager.runpanel.QuanturmTimeTextField.setText("");
 				}
 				
 				if(SetAlgorithm == "MFQ") {									// MFQ일 경우 다양한 요소 표시
 					PriorityReadyQueueComboBox.setVisible(true);			// ADD부분 우선순위 추가
 					PriorityReadyQueueLabel.setVisible(true);
 					
-					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(true);	// 우선순위에 맞는 Queue 표시
-					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(true);
-		
-					manager.lowReadyQueue.ReadyQueueScrollBar.setVisible(true);		
-					manager.lowReadyQueue.LowReadyQueueLabel.setVisible(true);
-					
-					manager.MidReadyQueue.ReadyQueueScrollBar.setVisible(true);
-					manager.MidReadyQueue.MiddleReadyQueueLabel.setVisible(true);
+					manager.MFQreadyQueue.setVisible(true);
 					
 					manager.runpanel.DivLabel.setVisible(true);
 					manager.runpanel.DivTextField.setVisible(true);
@@ -216,14 +223,7 @@ public class AddPanel extends JPanel{
 					PriorityReadyQueueComboBox.setVisible(false);
 					PriorityReadyQueueLabel.setVisible(false);
 					
-					manager.HighReadyQueue.HighReadyQueueLabel.setVisible(false);
-					manager.HighReadyQueue.ReadyQueueScrollBar.setVisible(false);
-					
-					manager.lowReadyQueue.ReadyQueueScrollBar.setVisible(false);
-					manager.lowReadyQueue.LowReadyQueueLabel.setVisible(false);
-					
-					manager.MidReadyQueue.ReadyQueueScrollBar.setVisible(false);
-					manager.MidReadyQueue.MiddleReadyQueueLabel.setVisible(false);
+					manager.MFQreadyQueue.setVisible(false);
 					
 					manager.runpanel.DivLabel.setVisible(false);
 					manager.runpanel.DivTextField.setVisible(false);
@@ -262,7 +262,7 @@ public class AddPanel extends JPanel{
 	private class ProcessNameKeyListener extends KeyAdapter{		// 프로세스 이름 관리 리스너
 		public void keyTyped(KeyEvent e) {	
 			JTextField t = (JTextField)e.getSource();
-			if(t.getText().length()>=10) e.consume();		// 글자 수 제한
+			if(t.getText().length()>=7) e.consume();		// 글자 수 제한
 		}
 	}
 	

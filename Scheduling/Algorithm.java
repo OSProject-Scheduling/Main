@@ -52,11 +52,11 @@ public abstract class Algorithm {
 				}
 			};
 			timer = new Timer();
-			timer.schedule(task, 100,100); 																	// 1초마다 실행
+			timer.schedule(task, 1000,1000); 																	// 1초마다 실행
 	}
 	
 	protected void CalculateTime() {				// TT / WT / NTT 계산
-		if(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
+		while(!(PresentProcess == null) && PresentProcess.BurstTime <= 0) {
 	         PresentProcess.TurnaroundTime = (time - PresentProcess.ArrivalTime) * CoreWork;                               // TT 계산
 	         PresentProcess.WaitingTime = PresentProcess.TurnaroundTime - PresentProcess.StaticBurstTime;               // WT 계산
 	         PresentProcess.NormalizedTime = Math.round(((PresentProcess.TurnaroundTime / PresentProcess.StaticBurstTime)*100)) / 100.0;            // NTT 계산

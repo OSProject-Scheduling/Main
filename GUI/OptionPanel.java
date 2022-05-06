@@ -17,24 +17,19 @@ public class OptionPanel extends JPanel{
 	GhanttChartPanel ghanttchartpanel_3;
 	GhanttChartPanel ghanttchartpanel_4;
 	ReadyQueuePanel readyQueue;
-	HighReadyQueuePanel highreadyQueue;
-	MiddleReadyQueuePanel midreadyQueue;
-	LowReadyQueuePanel lowreadyQueue;
+	MFQReadyQueue MFQreadyQueue;
 	
 	public OptionPanel(InformationPanel informationpanel, GhanttChartPanel ghanttchartpanel_1, GhanttChartPanel ghanttchartpanel_2,
 			GhanttChartPanel ghanttchartpanel_3,GhanttChartPanel ghanttchartpanel_4, JLabel CoreLabel_1, JLabel CoreLabel_2,
 			JLabel CoreLabel_3, JLabel CoreLabel_4,
-			ReadyQueuePanel readyQueue, HighReadyQueuePanel highreadyQueue, MiddleReadyQueuePanel midreadyQueue,
-			LowReadyQueuePanel lowreadyQueue, MainFrame mainframe) {
+			ReadyQueuePanel readyQueue, MFQReadyQueue MFQreadyQueue, MainFrame mainframe) {
 		this.informationpanel = informationpanel;
 		this.ghanttchartpanel_1 = ghanttchartpanel_1;
 		this.ghanttchartpanel_2 = ghanttchartpanel_2;
 		this.ghanttchartpanel_3 = ghanttchartpanel_3;
 		this.ghanttchartpanel_4 = ghanttchartpanel_4;
 		this.readyQueue = readyQueue;
-		this.highreadyQueue = highreadyQueue;
-		this.midreadyQueue = midreadyQueue;
-		this.lowreadyQueue = lowreadyQueue;
+		this.MFQreadyQueue = MFQreadyQueue;
 		
 		Base();
 		addpanel = new AddPanel(manager);
@@ -57,7 +52,7 @@ public class OptionPanel extends JPanel{
 		setLocation(730, 10);
 		setBackground(Color.RED);
 		manager = new ProjectManager(informationpanel, readyQueue, ghanttchartpanel_1, 
-				ghanttchartpanel_2, ghanttchartpanel_3, ghanttchartpanel_4,  highreadyQueue, midreadyQueue, lowreadyQueue);
+				ghanttchartpanel_2, ghanttchartpanel_3, ghanttchartpanel_4,  MFQreadyQueue);
 		setLayout(null);
 	}
 }

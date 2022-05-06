@@ -9,14 +9,7 @@ public class MainPanel extends JPanel{
 	ReadyQueuePanel ReadyQueuepanel = new ReadyQueuePanel();							// ReadyQueue
 	JScrollPane ReadyQueueScroll = new JScrollPane(ReadyQueuepanel);
 	
-	HighReadyQueuePanel HighReadyQueuepanel = new HighReadyQueuePanel();				// HighReadyQueue
-	JScrollPane HighReadyQueueScroll = new JScrollPane(HighReadyQueuepanel);
-	
-	MiddleReadyQueuePanel MiddleReadyQueuePanel = new MiddleReadyQueuePanel();			// MiddleReadyQueue
-	JScrollPane MiddleReadyQueueScroll = new JScrollPane(MiddleReadyQueuePanel);	
-	
-	LowReadyQueuePanel LowReadyQueuePanel = new LowReadyQueuePanel();					// LowReadyQueue
-	JScrollPane LowReadyQueueScroll = new JScrollPane(LowReadyQueuePanel);
+	MFQReadyQueue MFQreadyQueue = new MFQReadyQueue();									// MFQ용 ReadyQueue
 	
 	JLabel CoreLabel_1 = new JLabel();
 	GhanttChartPanel GhanttChartpanel_1 = new GhanttChartPanel();							// GhanttChart
@@ -45,27 +38,16 @@ public class MainPanel extends JPanel{
 		GhanttChartpanel_3.ScrollSetting(GhanttChartScroll_3);
 		GhanttChartpanel_4.ScrollSetting(GhanttChartScroll_4);
 		ReadyQueuepanel.ScrollSetting(ReadyQueueScroll);
-		HighReadyQueuepanel.ScrollSetting(HighReadyQueueScroll);
-		MiddleReadyQueuePanel.ScrollSetting(MiddleReadyQueueScroll);
-		LowReadyQueuePanel.ScrollSetting(LowReadyQueueScroll);
 		
 		optionpanel = new OptionPanel(informationpanel, GhanttChartpanel_1,GhanttChartpanel_2,
 				GhanttChartpanel_3,GhanttChartpanel_4,CoreLabel_1, CoreLabel_2, CoreLabel_3, CoreLabel_4,
-				ReadyQueuepanel, HighReadyQueuepanel, 
-				MiddleReadyQueuePanel, LowReadyQueuePanel, mainframe);
+				ReadyQueuepanel, MFQreadyQueue,  mainframe);
 		add(optionpanel);
 		
 		ReadyQueueScroll.setBounds(10, 30, 700, 83);
 		add(ReadyQueueScroll);
 		
-		HighReadyQueueScroll.setBounds(10,30,220,83);
-		add(HighReadyQueueScroll);
-		
-		MiddleReadyQueueScroll.setBounds(250,30,220,83);
-		add(MiddleReadyQueueScroll);
-		
-		LowReadyQueueScroll.setBounds(490,30,220,83);
-		add(LowReadyQueueScroll);
+		add(MFQreadyQueue);
 		
 		GhanttChartScroll_1.setBounds(10, 350, 700, 113);
 		add(GhanttChartScroll_1);
@@ -81,6 +63,7 @@ public class MainPanel extends JPanel{
 		GhanttChartScroll_4.setBounds(10, 620, 700, 113);
 		add(GhanttChartScroll_4);
 		GhanttChartScroll_4.setVisible(false);
+		
 		ComponentSetting();																		// 구성요소 설정
 	}
 	
@@ -98,30 +81,6 @@ public class MainPanel extends JPanel{
 		ReadyQueueLabel.setSize(100,20);
 		ReadyQueuepanel.ReadyQueueLabel = ReadyQueueLabel;
 		add(ReadyQueueLabel);
-		
-		JLabel HighReadyQueueLabel = new JLabel("<HighReadyQueue>");
-		HighReadyQueueLabel.setLocation(10,10);
-		HighReadyQueueLabel.setBackground(Color.WHITE);
-		HighReadyQueueLabel.setSize(120,20);
-		HighReadyQueuepanel.HighReadyQueueLabel = HighReadyQueueLabel;
-		add(HighReadyQueueLabel);
-		HighReadyQueueLabel.setVisible(false);
-		
-		JLabel MiddleReadyQueueLabel = new JLabel("<MiddleReadyQueue>");
-		MiddleReadyQueueLabel.setLocation(250,10);
-		MiddleReadyQueueLabel.setBackground(Color.WHITE);
-		MiddleReadyQueueLabel.setSize(130,20);
-		MiddleReadyQueuePanel.MiddleReadyQueueLabel = MiddleReadyQueueLabel;
-		add(MiddleReadyQueueLabel);
-		MiddleReadyQueueLabel.setVisible(false);
-		
-		JLabel LowReadyQueueLabel = new JLabel("<LowReadyQueue>");
-		LowReadyQueueLabel.setLocation(490,10);
-		LowReadyQueueLabel.setBackground(Color.WHITE);
-		LowReadyQueueLabel.setSize(120,20);
-		LowReadyQueuePanel.LowReadyQueueLabel = LowReadyQueueLabel;
-		add(LowReadyQueueLabel);
-		LowReadyQueueLabel.setVisible(false);
 		
 		JLabel GhanttChartLabel = new JLabel("<GhanttChart>");
 		GhanttChartLabel.setLocation(10,130);
