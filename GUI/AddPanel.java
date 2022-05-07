@@ -200,8 +200,8 @@ public class AddPanel extends JPanel{
 					AlgorithmComboBox.setSelectedItem(SetAlgorithm);
 				}
 				else {
-					SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
-					if (SetAlgorithm == "RR") { // RR일 경우 Quanturm 표시
+					if (AlgorithmComboBox.getSelectedItem() == "RR") { // RR일 경우 Quanturm 표시
+						SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
 						manager.runpanel.QuanturmTimeLabel.setVisible(true);
 						manager.runpanel.QuanturmTimeTextField.setVisible(true);
 					} 
@@ -210,26 +210,31 @@ public class AddPanel extends JPanel{
 						manager.runpanel.QuanturmTimeTextField.setVisible(false);
 					}
 
-					if (SetAlgorithm == "MDRQ") { // MDRQ일 경우 다양한 요소 표시
-						isMFQChange = true;
-						PriorityReadyQueueComboBox.setVisible(true); // ADD부분 우선순위 추가
-						PriorityReadyQueueLabel.setVisible(true);
+					if (AlgorithmComboBox.getSelectedItem() == "MDRQ") { // MDRQ일 경우 다양한 요소 표시
+						if (SetAlgorithm != AlgorithmComboBox.getSelectedItem()) {
+							SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
+							isMFQChange = true;
+							PriorityReadyQueueComboBox.setVisible(true); // ADD부분 우선순위 추가
+							PriorityReadyQueueLabel.setVisible(true);
 
-						manager.MFQreadyQueue.setVisible(true);
+							manager.MFQreadyQueue.setVisible(true);
 
-						manager.runpanel.DivLabel.setVisible(true);
-						manager.runpanel.DivTextField.setVisible(true);
+							manager.runpanel.DivLabel.setVisible(true);
+							manager.runpanel.DivTextField.setVisible(true);
 
-						manager.runpanel.MaxQuanturmLabel.setVisible(true);
-						manager.runpanel.MaxQuanturmTextField.setVisible(true);
+							manager.runpanel.MaxQuanturmLabel.setVisible(true);
+							manager.runpanel.MaxQuanturmTextField.setVisible(true);
 
-						manager.ReadyQueue.ReadyQueueScrollBar.setVisible(false); // 기존 Readyquueue 안보이게
-						manager.ReadyQueue.ReadyQueueLabel.setVisible(false);
+							manager.ReadyQueue.ReadyQueueScrollBar.setVisible(false); // 기존 Readyquueue 안보이게
+							manager.ReadyQueue.ReadyQueueLabel.setVisible(false);
 
-						manager.information.model.addColumn("Priority");
-						manager.information.table.getColumn("Priority").setPreferredWidth(20);
-						manager.information.CenterSetting();
-					} else { // MFQ아닐 경우 반대로
+							manager.information.model.addColumn("Priority");
+							manager.information.table.getColumn("Priority").setPreferredWidth(20);
+							manager.information.CenterSetting();
+						}
+					}
+					else { // MFQ아닐 경우 반대로
+						SetAlgorithm = AlgorithmComboBox.getSelectedItem().toString();
 						isCheck = true;
 						PriorityReadyQueueComboBox.setVisible(false);
 						PriorityReadyQueueLabel.setVisible(false);
