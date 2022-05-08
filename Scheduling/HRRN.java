@@ -9,9 +9,9 @@ public class HRRN extends Algorithm{
 		// TODO Auto-generated constructor stub
 	}
 	
-	void schedulling() {
+	protected void schedulling() {
 		CalculateTime(); // 프로세스 종료 후 시간 계산
-		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0 + "W");
 		/*--------------------------종료 조건---------------------------*/
 		if(Terminate()) return;			
 		/*------------------------Ready Queue------------------------*/
@@ -22,7 +22,6 @@ public class HRRN extends Algorithm{
 		
 		for (int i = 0; i < ReadyQueue.size(); i++) { 	// 현재 ReadyQueue에 있는 프로세스들의 TT,WT,ResponseRatio 계산
 			ReadyQueue.get(i).TurnaroundTime = time - ReadyQueue.get(i).ArrivalTime;
-			ReadyQueue.get(i).WaitingTime = ReadyQueue.get(i).TurnaroundTime / ReadyQueue.get(i).StaticBurstTime;
 			ReadyQueue.get(i).ResponseRatio = (ReadyQueue.get(i).WaitingTime + ReadyQueue.get(i).BurstTime) / ReadyQueue.get(i).BurstTime;
 		}
 
@@ -39,30 +38,13 @@ public class HRRN extends Algorithm{
 
 		/*------------------------HRRN 알고리즘------------------------*/
 		
-		for(int i=0; i<CoreCount; i++) {
-			if(PresentProcess[i] == null) {							// 현재 실행 중인 프로세스가 없고
-				if(!ReadyQueue.isEmpty()) {							// 레디큐가 비어있지 않으면						
-					PresentProcess[i] = ReadyQueue.poll();				// 현재 프로세스 추가
-				}
-				else {
-					elec += 0.1;
-				}
-			}
-		}
+		ReadyQueue_To_PresentProcess();
+		
 		manager.ReadyQueue.create_form(ReadyQueue);
 		
-		//GUIELEC();
 		for(int i=0; i<ReadyQueue.size(); i++) ReadyQueue.get(i).WaitingTime++;		// WT 계산
 		GUISetting();
 		
-		for(int i=0; i<CoreCount; i++) {
-			if(!(PresentProcess[i] == null)) {
-		    	PresentProcess[i].BurstTime -= CoreWork[i];	// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
-		    	if(CoreWork[i] == 1)						// e코어이면 전력+1
-		    		elec += 1;
-		    	else									// p코어이면 전력+3
-		    		elec += 3;
-		    }
-		}
+		ElecBurstTImeCalculate();
 	}
 }

@@ -1,6 +1,7 @@
 package GUI;
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -8,34 +9,39 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class MainPanel extends JPanel{
-	ReadyQueuePanel ReadyQueuepanel = new ReadyQueuePanel();							// ReadyQueue
-	JScrollPane ReadyQueueScroll = new JScrollPane(ReadyQueuepanel);
+	private ReadyQueuePanel ReadyQueuepanel = new ReadyQueuePanel();							// ReadyQueue
+	private JScrollPane ReadyQueueScroll = new JScrollPane(ReadyQueuepanel);
 	
-	MFQReadyQueue MFQreadyQueue = new MFQReadyQueue();									// MFQ용 ReadyQueue
+	private MFQReadyQueue MFQreadyQueue = new MFQReadyQueue();									// MFQ용 ReadyQueue
 	
-	JLabel CoreLabel_1 = new JLabel();
-	GhanttChartPanel GhanttChartpanel_1 = new GhanttChartPanel();							// GhanttChart
-	JScrollPane GhanttChartScroll_1 = new JScrollPane(GhanttChartpanel_1);
+	private JLabel CoreLabel_1 = new JLabel();
+	private GhanttChartPanel GhanttChartpanel_1 = new GhanttChartPanel();							// GhanttChart
+	private JScrollPane GhanttChartScroll_1 = new JScrollPane(GhanttChartpanel_1);
 	
-	JLabel CoreLabel_2 = new JLabel();
-	GhanttChartPanel GhanttChartpanel_2 = new GhanttChartPanel();							// GhanttChart
-	JScrollPane GhanttChartScroll_2 = new JScrollPane(GhanttChartpanel_2);
+	private JLabel CoreLabel_2 = new JLabel();
+	private GhanttChartPanel GhanttChartpanel_2 = new GhanttChartPanel();							// GhanttChart
+	private JScrollPane GhanttChartScroll_2 = new JScrollPane(GhanttChartpanel_2);
 	
-	JLabel CoreLabel_3 = new JLabel();
-	GhanttChartPanel GhanttChartpanel_3 = new GhanttChartPanel();							// GhanttChart
-	JScrollPane GhanttChartScroll_3 = new JScrollPane(GhanttChartpanel_3);
+	private JLabel CoreLabel_3 = new JLabel();
+	private GhanttChartPanel GhanttChartpanel_3 = new GhanttChartPanel();							// GhanttChart
+	private JScrollPane GhanttChartScroll_3 = new JScrollPane(GhanttChartpanel_3);
 	
-	JLabel CoreLabel_4 = new JLabel();
-	GhanttChartPanel GhanttChartpanel_4 = new GhanttChartPanel();							// GhanttChart
-	JScrollPane GhanttChartScroll_4 = new JScrollPane(GhanttChartpanel_4);
+	private JLabel CoreLabel_4 = new JLabel();
+	private GhanttChartPanel GhanttChartpanel_4 = new GhanttChartPanel();							// GhanttChart
+	private JScrollPane GhanttChartScroll_4 = new JScrollPane(GhanttChartpanel_4);
 	
-	InformationPanel informationpanel = new InformationPanel();							// Information Table
+	private InformationPanel informationpanel = new InformationPanel();							// Information Table
 	
-	OptionPanel optionpanel;
+	private OptionPanel optionpanel;
 	
 	public JLabel Elec = new JLabel();
 	
-	String elec;
+	private JLabel imag = new JLabel();
+	ImageIcon KoreatechImg = new ImageIcon("image/Koreatech.png");
+	private JLabel Student_1 = new JLabel("김성원 2018136015");
+	private JLabel Student_2 = new JLabel("정찬영 2018136116");
+	private JLabel Student_3 = new JLabel("김문웅 2020136015");
+	private JLabel Student_4 = new JLabel("오준혁 2020136082");
 	
 	public MainPanel(MainFrame mainframe) {
 		Base();																			// 기본 설정(MainFrame 설정)
@@ -74,7 +80,6 @@ public class MainPanel extends JPanel{
 		GhanttChartScroll_2.getViewport().addChangeListener(new ListenAdditionsScrolled(GhanttChartScroll_2));
 		GhanttChartScroll_3.getViewport().addChangeListener(new ListenAdditionsScrolled(GhanttChartScroll_3));
 		GhanttChartScroll_4.getViewport().addChangeListener(new ListenAdditionsScrolled(GhanttChartScroll_4));
-
 		
 		ComponentSetting();																		// 구성요소 설정
 	}
@@ -141,6 +146,26 @@ public class MainPanel extends JPanel{
 		add(Elec);
 		
 		add(informationpanel);
+		
+		imag.setIcon(KoreatechImg);
+		imag.setSize(150, 200);
+		imag.setLocation(1250, 20);
+		add(imag);
+		
+		Student_1.setLocation(1275, 230);
+		Student_2.setLocation(1275, 250);
+		Student_3.setLocation(1275, 270);
+		Student_4.setLocation(1275, 290);
+		
+		Student_1.setSize(150, 20);
+		Student_2.setSize(150, 20);
+		Student_3.setSize(150, 20);
+		Student_4.setSize(150, 20);
+		
+		add(Student_1);
+		add(Student_2);
+		add(Student_3);
+		add(Student_4);
 	}
 	
 	private class ListenAdditionsScrolled implements ChangeListener{

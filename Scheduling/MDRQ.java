@@ -14,35 +14,35 @@ import Manager.ProjectManager;
 import java.util.LinkedList;
 
 public class MDRQ {
-	int MaxQuantum;
-	int ForQuantum[];
-	int Quantum;
-	int remain = 0;
-	int Div;
+	public int MaxQuantum;
+	private int ForQuantum[];
+	private int Quantum;
+	private int remain = 0;
+	private int Div;
 	
-	protected GhanttChartPanel[] ghanttchartPanel;
+	private GhanttChartPanel[] ghanttchartPanel;
 
-	protected Process PresentProcess[];
+	private Process PresentProcess[];
 	
-	protected int CoreWork[];
+	private int CoreWork[];
 	
-	protected LinkedList<Process> HighAlgorithmList = new LinkedList<>();
-	protected LinkedList<Process> MiddleAlgorithmList = new LinkedList<>();
-	protected LinkedList<Process> LowAlgorithmList = new LinkedList<>();
+	private LinkedList<Process> HighAlgorithmList = new LinkedList<>();
+	private LinkedList<Process> MiddleAlgorithmList = new LinkedList<>();
+	private LinkedList<Process> LowAlgorithmList = new LinkedList<>();
 
-	protected LinkedList<Process> HighReadyQueue = new LinkedList<>();
-	protected LinkedList<Process> MiddleReadyQueue = new LinkedList<>();
-	protected LinkedList<Process> LowReadyQueue = new LinkedList<>();
+	private LinkedList<Process> HighReadyQueue = new LinkedList<>();
+	private LinkedList<Process> MiddleReadyQueue = new LinkedList<>();
+	private LinkedList<Process> LowReadyQueue = new LinkedList<>();
 	
-	protected int time = 0;
+	private int time = 0;
 	
-	int PCoreCount;
-	int ECoreCount;
-	int CoreCount;
+	public int PCoreCount;
+	public int ECoreCount;
+	private int CoreCount;
 	
-	double elec = 0;
+	private double elec = 0;
 	
-	ProjectManager manager;
+	private ProjectManager manager;
 	
 	public Timer timer = new Timer(); // 타이머 중지를 위한 public 설정
 
@@ -105,7 +105,7 @@ public class MDRQ {
 		timer.schedule(task, 1000, 1000); // 1초마다 실행
 	}
 	
-	protected void CalculateTime() {				// TT / WT / NTT 계산
+	private void CalculateTime() {				// TT / WT / NTT 계산
 		for(int i=0; i<CoreCount; i++) {
 			if(!(PresentProcess[i] == null) && PresentProcess[i].BurstTime <= 0) {
 		         PresentProcess[i].TurnaroundTime = time - PresentProcess[i].ArrivalTime;                               // TT 계산             // WT 계산
@@ -116,9 +116,9 @@ public class MDRQ {
 		}
 	}
 
-	void schedulling() { // MFQ용 스케쥴링
+	private void schedulling() { // MFQ용 스케쥴링
 		CalculateTime();								//프로세스가 BrustTime이 종료되었을경우 프로세스의 WT,TT,NTT 계산
-		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0 + "W");
 		/*--------------------------종료 조건---------------------------*/
 		if ((HighAlgorithmList.isEmpty() && HighReadyQueue.isEmpty())
 				&& (MiddleAlgorithmList.isEmpty() && MiddleReadyQueue.isEmpty())
@@ -129,7 +129,13 @@ public class MDRQ {
 					Quit = false;
 				}
 			}
-			if(Quit == true) return;
+			if(Quit == true) {
+				for (int i = 0; i < CoreCount; i++) {
+					ghanttchartPanel[i].addLastSecond();
+				}
+				manager.mdrq = null;
+				return;
+			}
 		}
 		
 		for(int i=0; i<CoreCount; i++) if(PresentProcess[i] == null) ForQuantum[i] = 0; //프로세스 종료 후 ForQuantum을 0으로 초기화
@@ -144,17 +150,20 @@ public class MDRQ {
 			LowReadyQueue.add(LowAlgorithmList.poll()); 	// FCFSList에서 ReadyQueue로 이동(ArrivalTime에 맞으면)
 		}
 		//High ReadyQueue
-		if(!(HighAlgorithmList.isEmpty()) || !(HighReadyQueue.isEmpty())){			
-			/*자신에게 할당된 시간이 끝나면 자원을 빼았김 (PresentProcess --> ReadyQueue맨뒤에 추가)*/
-			for(int i=0; i<CoreCount; i++) {
-				if(!(PresentProcess[i] == null) && ForQuantum[i] == Quantum) {
-					HighReadyQueue.add(PresentProcess[i]);
-					PresentProcess[i] = null;
-					ForQuantum[i] = 0;
-				}
-				ForQuantum[i]++; 	//현재 프로세스가 진행 시간 +1
+		
+		/*자신에게 할당된 시간이 끝나면 자원을 빼았김 (PresentProcess --> ReadyQueue맨뒤에 추가)*/
+		for(int i=0; i<CoreCount; i++) {
+			if(!(PresentProcess[i] == null) && ForQuantum[i] >= Quantum) {
+				if(PresentProcess[i].Priority.equals("High")) HighReadyQueue.add(PresentProcess[i]);
+				else if(PresentProcess[i].Priority.equals("Middle")) MiddleReadyQueue.add(PresentProcess[i]);
+				else if(PresentProcess[i].Priority.equals("Low")) LowReadyQueue.add(PresentProcess[i]);
+				PresentProcess[i] = null;
+				ForQuantum[i] = 0;
 			}
-			
+			if(CoreWork[i]==1) ForQuantum[i]++; 	//현재 프로세스가 진행 시간 +1
+			else ForQuantum[i] += 2; 	//현재 프로세스가 진행 시간 +2
+		}
+		if(!(HighAlgorithmList.isEmpty()) || !(HighReadyQueue.isEmpty())){			
 			/*현재 실행중인 프로세스가 없을때 ReadyQueue에 있는 프로세스 실행*/
 			for(int i=0; i<CoreCount; i++) {
 				if(PresentProcess[i] == null) {																				// 현재 FCFS가 비어있을때
@@ -166,8 +175,13 @@ public class MDRQ {
 						else {
 							if (PresentProcess[i].count <= Div-remain /*1*/) {
 								Quantum = (int)(PresentProcess[i].StaticBurstTime/Div);
+								if(Quantum > MaxQuantum) Quantum = MaxQuantum;
 							}
-							else Quantum = (int)(PresentProcess[i].StaticBurstTime/Div) + 1;
+							else {
+								Quantum = (int)(PresentProcess[i].StaticBurstTime/Div) + 1;
+								if(Quantum > MaxQuantum) Quantum = MaxQuantum;
+							}
+							
 						}
 					}
 				}
@@ -176,17 +190,6 @@ public class MDRQ {
 		
 		//Middle ReadyQueue ReadyQueue
 		else if(!(MiddleAlgorithmList.isEmpty()) || !(MiddleReadyQueue.isEmpty())){
-			/*자신에게 할당된 시간이 끝나면 자원을 빼았김 (PresentProcess --> ReadyQueue맨뒤에 추가)*/
-			for(int i=0; i<CoreCount; i++) {
-				if(!(PresentProcess[i] == null) && ForQuantum[i] == Quantum) {
-					MiddleReadyQueue.add(PresentProcess[i]);
-					PresentProcess[i] = null;
-					ForQuantum[i] = 0;
-				}
-				ForQuantum[i]++;		//현재 프로세스가 진행시간 +1
-			}
-			
-			
 			/*현재 실행중인 프로세스가 없을때 ReadyQueue에 있는 프로세스 실행*/
 			for(int i=0; i<CoreCount; i++) {
 				if(PresentProcess[i] == null) {																				// 현재 FCFS가 비어있을때
@@ -198,8 +201,13 @@ public class MDRQ {
 						else {
 							if (PresentProcess[i].count <= Div-remain /*1*/) {
 								Quantum = (int)(PresentProcess[i].StaticBurstTime/Div);
+								if(Quantum > MaxQuantum) Quantum = MaxQuantum;
 							}
-							else Quantum = (int)(PresentProcess[i].StaticBurstTime/Div) + 1;
+							else {
+								Quantum = (int)(PresentProcess[i].StaticBurstTime/Div) + 1;
+								if(Quantum > MaxQuantum) Quantum = MaxQuantum;
+							}
+							
 						}
 					}
 				}
@@ -208,16 +216,6 @@ public class MDRQ {
 		
 		//Low
 		else if(!(LowAlgorithmList.isEmpty()) || !(LowReadyQueue.isEmpty())){		
-			/*자신에게 할당된 시간이 끝나면 자원을 빼았김 (PresentProcess --> ReadyQueue맨뒤에 추가)*/
-			for(int i=0; i<CoreCount; i++) {
-				if(!(PresentProcess[i] == null) && ForQuantum[i] == Quantum) {
-					LowReadyQueue.add(PresentProcess[i]);
-					PresentProcess[i] = null;
-					ForQuantum[i] = 0;
-				}
-				ForQuantum[i]++;		//현재 프로세스가 진행시간 +1
-			}
-			
 			/*현재 실행중인 프로세스가 없을때 ReadyQueue에 있는 프로세스 실행*/
 			for(int i=0; i<CoreCount; i++) {
 				if(PresentProcess[i] == null) {																				// 현재 FCFS가 비어있을때
@@ -229,8 +227,12 @@ public class MDRQ {
 						else {
 							if (PresentProcess[i].count <= Div-remain /*1*/) {
 								Quantum = (int)(PresentProcess[i].StaticBurstTime/Div);
+								if(Quantum > MaxQuantum) Quantum = MaxQuantum;
 							}
-							else Quantum = (int)(PresentProcess[i].StaticBurstTime/Div) + 1;
+							else {
+								Quantum = (int)(PresentProcess[i].StaticBurstTime/Div) + 1;
+								if(Quantum > MaxQuantum) Quantum = MaxQuantum;
+							}
 						}
 					}
 				}
@@ -240,7 +242,6 @@ public class MDRQ {
 		//Middle-> High  승급조건
 		for (int i = 0; i < MiddleReadyQueue.size(); i++) {														//현재 ReadyQueue에 있는 프로세스들의 TT,WT,ResponseRatio 계산
 			MiddleReadyQueue.get(i).TurnaroundTime = time - MiddleReadyQueue.get(i).ArrivalTime;
-			MiddleReadyQueue.get(i).WaitingTime = MiddleReadyQueue.get(i).TurnaroundTime/MiddleReadyQueue.get(i).StaticBurstTime;
 			MiddleReadyQueue.get(i).ResponseRatio = (MiddleReadyQueue.get(i).WaitingTime + MiddleReadyQueue.get(i).StaticBurstTime) / MiddleReadyQueue.get(i).StaticBurstTime;
 			if((MiddleReadyQueue.get(i).ResponseRatio <= 15 && MiddleReadyQueue.get(i).ResponseRatio > 10 && HighReadyQueue.size() <=3) || MiddleReadyQueue.get(i).ResponseRatio > 15) {
 				MiddleReadyQueue.get(i).Priority = "High";
@@ -252,7 +253,6 @@ public class MDRQ {
 		//Low-> Middle  승급조건
 		for (int i = 0; i < LowReadyQueue.size(); i++) {														//현재 ReadyQueue에 있는 프로세스들의 TT,WT,ResponseRatio 계산
 			LowReadyQueue.get(i).TurnaroundTime = time - LowReadyQueue.get(i).ArrivalTime;
-			LowReadyQueue.get(i).WaitingTime = LowReadyQueue.get(i).TurnaroundTime/LowReadyQueue.get(i).StaticBurstTime;
 			LowReadyQueue.get(i).ResponseRatio = (LowReadyQueue.get(i).WaitingTime + LowReadyQueue.get(i).StaticBurstTime) / LowReadyQueue.get(i).StaticBurstTime;
 			if((LowReadyQueue.get(i).ResponseRatio <= 20 && LowReadyQueue.get(i).ResponseRatio > 15 && MiddleReadyQueue.size() <=5) || LowReadyQueue.get(i).ResponseRatio > 20) {
 				LowReadyQueue.get(i).ArrivalTime = time;
@@ -285,5 +285,4 @@ public class MDRQ {
 			}
 		}
 	}
-
 }

@@ -14,8 +14,9 @@ public class MainFrame extends JFrame{
 	
 	private void Base() {					// Frame창 기본 설정
 		setLayout(null);
-		setSize(1514, 797);
+		setSize(1450, 797);
 		setTitle("OSProject");
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	

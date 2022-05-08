@@ -22,30 +22,30 @@ import Scheduling.Process;
 
 public class RunPanel extends JPanel{
 
-	int QuanturmTime = 0;
+	private int QuanturmTime = 0;
 	
-	ProjectManager manager;	
+	private ProjectManager manager;	
 	
-	JButton RunButton = new JButton("Run");								// RunButton
+	private JButton RunButton = new JButton("Run");								// RunButton
 
-	BaseLabel QuanturmTimeLabel = new BaseLabel("Quenturm");			// Quanturm
-	JTextField QuanturmTimeTextField = new JTextField(10);
+	public BaseLabel QuanturmTimeLabel = new BaseLabel("Quenturm");			// Quanturm
+	public JTextField QuanturmTimeTextField = new JTextField(10);
 	
-	BaseLabel MaxQuanturmLabel = new BaseLabel("Max Quanturm");			// MFQ용 max Quanturm, Div
-	JTextField MaxQuanturmTextField = new JTextField(10);
+	public BaseLabel MaxQuanturmLabel = new BaseLabel("Max Quanturm");			// MFQ용 max Quanturm, Div
+	public JTextField MaxQuanturmTextField = new JTextField(10);
 	
-	BaseLabel DivLabel = new BaseLabel("Div");
-	JTextField DivTextField = new JTextField(10);
+	public BaseLabel DivLabel = new BaseLabel("Div");
+	public JTextField DivTextField = new JTextField(10);
 	
-	BaseLabel CoreLabel = new BaseLabel("Core");						// Core
+	private BaseLabel CoreLabel = new BaseLabel("Core");						// Core
 	
-	JLabel PCoreLabel = new JLabel("P");						
-	JSpinner PCoreSpinner;
-	JComponent PEditor;
+	private JLabel PCoreLabel = new JLabel("P");						
+	private JSpinner PCoreSpinner;
+	private JComponent PEditor;
 	
-	JLabel ECoreLabel = new JLabel("E");
-	JSpinner ECoreSpinner;
-	JComponent EEditor;
+	private JLabel ECoreLabel = new JLabel("E");
+	private JSpinner ECoreSpinner;
+	private JComponent EEditor;
 	
 	public RunPanel(ProjectManager manager) {
 		this.manager = manager;
@@ -303,7 +303,7 @@ public class RunPanel extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			int PCoreCount = Integer.parseInt(PCoreSpinner.getValue().toString());
 			int ECoreCount = Integer.parseInt(ECoreSpinner.getValue().toString());
-			if((manager.algorithm == null) && (manager.mfq == null)) {
+			if((manager.algorithm == null) && (manager.mdrq == null)) {
 				if(manager.addPanel.AlgorithmList.isEmpty() && manager.addPanel.MFQHighAlgorithmList.isEmpty() &&
 						manager.addPanel.MFQMiddleAlgorithmList.isEmpty() && manager.addPanel.MFQLowAlorithmList.isEmpty()) {
 					JOptionPane.showMessageDialog(null,  "Add Process", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -316,7 +316,7 @@ public class RunPanel extends JPanel{
 					}
 					else QuanturmTime = Integer.parseInt(QuanturmTimeTextField.getText());
 				}
-				if(manager.addPanel.SetAlgorithm == "MFQ") {
+				if(manager.addPanel.SetAlgorithm == "MDRQ") {
 					if(DivTextField.getText().equals("")) {
 						JOptionPane.showMessageDialog(null,  "Need Div", "Error", JOptionPane.INFORMATION_MESSAGE);
 						return;
@@ -336,6 +336,10 @@ public class RunPanel extends JPanel{
 						}
 					}
 				}
+				for(int i = 0 ; i<manager.addPanel.AlgorithmList.size(); i++) {
+					manager.addPanel.AlgorithmList.get(i).Row = i;
+				}
+				System.out.print(manager.addPanel.SetAlgorithm);
 				if(manager.addPanel.SetAlgorithm == null) {
 					manager.addPanel.SetAlgorithm = "FCFS";
 				}
@@ -344,7 +348,7 @@ public class RunPanel extends JPanel{
 				else if(manager.addPanel.SetAlgorithm == "SPN") manager.algorithm = new SPN(manager, PCoreCount, ECoreCount);
 				else if(manager.addPanel.SetAlgorithm == "SRTN") manager.algorithm = new SRTN(manager, PCoreCount, ECoreCount);
 				else if(manager.addPanel.SetAlgorithm == "HRRN") manager.algorithm = new HRRN(manager, PCoreCount, ECoreCount);
-				else if(manager.addPanel.SetAlgorithm == "MFQ") manager.mfq = new MDRQ(manager, 
+				else if(manager.addPanel.SetAlgorithm == "MDRQ") manager.mdrq = new MDRQ(manager, 
 						Integer.parseInt(MaxQuanturmTextField.getText()), Integer.parseInt(DivTextField.getText()), PCoreCount, ECoreCount);
 					
 				manager.addPanel.RunningState();
@@ -355,12 +359,11 @@ public class RunPanel extends JPanel{
 	}
 	
 	private void RunningState() {
-		PCoreSpinner.disable();
-		ECoreSpinner.disable();
-		DivTextField.setEditable(false);
-		MaxQuanturmTextField.setEditable(false);
-		QuanturmTimeTextField.setEditable(false);
-		manager.addPanel.LockAddButton = true;
-	}
-
+	      PCoreSpinner.setEnabled(false);
+	      ECoreSpinner.setEnabled(false);
+	      DivTextField.setEditable(false);
+	      MaxQuanturmTextField.setEditable(false);
+	      QuanturmTimeTextField.setEditable(false);
+	      manager.addPanel.LockAddButton = true;
+	   }
 }

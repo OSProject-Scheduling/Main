@@ -6,18 +6,18 @@ import javax.swing.JPanel;
 import Manager.ProjectManager;
 
 public class OptionPanel extends JPanel{
-	ProjectManager manager;
+	private ProjectManager manager;
 	
-	AddPanel addpanel;
-	RunPanel runpanel;
-	AdditionalButtonPanel additionalbuttonpanel;
-	InformationPanel informationpanel;
-	GhanttChartPanel ghanttchartpanel_1;
-	GhanttChartPanel ghanttchartpanel_2;
-	GhanttChartPanel ghanttchartpanel_3;
-	GhanttChartPanel ghanttchartpanel_4;
-	ReadyQueuePanel readyQueue;
-	MFQReadyQueue MFQreadyQueue;
+	private AddPanel addpanel;
+	private RunPanel runpanel;
+	private AdditionalButtonPanel additionalbuttonpanel;
+	private InformationPanel informationpanel;
+	private GhanttChartPanel ghanttchartpanel_1;
+	private GhanttChartPanel ghanttchartpanel_2;
+	private GhanttChartPanel ghanttchartpanel_3;
+	private GhanttChartPanel ghanttchartpanel_4;
+	private ReadyQueuePanel readyQueue;
+	private MFQReadyQueue MFQreadyQueue;
 	
 	public OptionPanel(InformationPanel informationpanel, GhanttChartPanel ghanttchartpanel_1, GhanttChartPanel ghanttchartpanel_2,
 			GhanttChartPanel ghanttchartpanel_3,GhanttChartPanel ghanttchartpanel_4, JLabel CoreLabel_1, JLabel CoreLabel_2,

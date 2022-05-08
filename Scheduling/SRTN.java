@@ -3,17 +3,15 @@ package Scheduling;
 import Manager.ProjectManager;
 
 public class SRTN extends Algorithm{
-	Process tmpProcess;
-	int pass = 1;
 
 	public SRTN(ProjectManager manager, int PCoreCount, int ECoreCount) {
 		super(manager, PCoreCount, ECoreCount);
 		// TODO Auto-generated constructor stub
 	}
 	
-	void schedulling() {
+	protected void schedulling() {
 		CalculateTime();
-		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0 + "W");
 		
 		/*--------------------------종료 조건---------------------------*/
 		if(Terminate()) return;
@@ -32,7 +30,6 @@ public class SRTN extends Algorithm{
 				}
 			}
 		}
-		manager.ReadyQueue.create_form(ReadyQueue);
 		
 		/*------------------------SRTN 알고리즘------------------------*/
 		for(int i=0; i<CoreCount; i++) {
@@ -56,31 +53,14 @@ public class SRTN extends Algorithm{
 				}
 			}
 		}
-		manager.ReadyQueue.create_form(ReadyQueue);
 		
-		for(int i=0; i<CoreCount; i++) {
-			if (PresentProcess[i] == null) { 									// 현재 진행중인 프로세스가 없고
-				if (!ReadyQueue.isEmpty()) { 								// ReadyQueue가 비어있지 않으면
-					PresentProcess[i] = ReadyQueue.poll(); 					// ReadyQueue에서 BurstTime이 가장 짦은 프로세스를 진행시킴
-				}
-				else {														// 레디큐가 비어있으면 대기전력 0.1+
-					elec += 0.1;
-				}
-			}
-		}
+		ReadyQueue_To_PresentProcess();
+		
 		manager.ReadyQueue.create_form(ReadyQueue);
 		
 		for(int i=0; i<ReadyQueue.size(); i++) ReadyQueue.get(i).WaitingTime++;		// WT 계산
 		GUISetting();
 		
-		for(int i=0; i<CoreCount; i++) {
-			if(!(PresentProcess == null)) {
-		    	PresentProcess[i].BurstTime -= CoreWork[i];	// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
-		    	if(CoreWork[i] == 1)						// e코어이면 전력+1
-		    		elec += 1;
-		    	else									// p코어이면 전력+3
-		    		elec += 3;
-		    }
-		}
+		ElecBurstTImeCalculate();
 	}
 }
