@@ -19,7 +19,7 @@ public class ProjectManager {
 	public MainFrame mainFrame;
 	public MainPanel mainPanel;
 	public Algorithm algorithm;
-	public MDRQ mfq;
+	public MDRQ mdrq;
 	public JLabel coreLabel_1;
 	public JLabel coreLabel_2;
 	public JLabel coreLabel_3;

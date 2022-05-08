@@ -17,9 +17,9 @@ public class RR extends Algorithm{
 		// TODO Auto-generated constructor stub
 	}
 
-	void schedulling() {
+	protected void schedulling() {
 		CalculateTime(); 								// 프로세스 종료 후 시간 계산
-		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0 + "W");
 		/*--------------------------종료 조건---------------------------*/
 		if(Terminate()) return;
 		
@@ -29,7 +29,6 @@ public class RR extends Algorithm{
 		while(!AlgorithmList.isEmpty() && time == AlgorithmList.peekFirst().ArrivalTime) {
 			//프로세스 리스트가 있고, 프로세스 리스트의 첫 프로세스 AR이 time과 같으면 (프로세스들은 AR기준으로 정렬되어 있음) 
 			ReadyQueue.add(AlgorithmList.poll()); 	// AlgorithmList에서 ReadyQueue로 이동
-			manager.ReadyQueue.create_form(ReadyQueue);
 		}
 	
 		
@@ -41,34 +40,16 @@ public class RR extends Algorithm{
 				ForQuantum[i] = 0;												// 현재 프로세스 시간 초기화
 			}
 		}
-		manager.ReadyQueue.create_form(ReadyQueue);
 
 		for(int i=0; i<CoreCount; i++) ForQuantum[i]++; 						// 현재 프로세스 시간 +1
 
-		for(int i=0; i<CoreCount; i++) {
-			if(PresentProcess[i] == null) {										// 현재 실행 중인 프로세스가 없을 때
-				if(!ReadyQueue.isEmpty()) {										// ReadyQueue가 비어있지 않으면 맨 앞 프로세스 실행
-					PresentProcess[i] = ReadyQueue.poll();
-				}
-				else {															// 레디큐가 비어있으면 대기전력 0.1+
-					elec += 0.1;												
-				}
-			}
-		}
+		ReadyQueue_To_PresentProcess();
 		manager.ReadyQueue.create_form(ReadyQueue);
 		
 		for(int i=0; i<ReadyQueue.size(); i++) ReadyQueue.get(i).WaitingTime++;		// WT 계산
 		GUISetting();
 		
-		for(int i=0; i<CoreCount; i++) {
-			if(!(PresentProcess[i] == null)) {
-		    	PresentProcess[i].BurstTime -= CoreWork[i];						// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
-		    	if(CoreWork[i] == 1)											// e코어이면 전력+1
-		    		elec += 1;
-		    	else															// p코어이면 전력+3
-		    		elec += 3;
-		    }
-		}
+		ElecBurstTImeCalculate();
 	}
 }
 

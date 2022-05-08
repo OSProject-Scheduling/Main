@@ -10,9 +10,9 @@ public class SPN extends Algorithm{
 		// TODO Auto-generated constructor stub
 	}
 
-	void schedulling() {
+	protected void schedulling() {
 		CalculateTime();
-		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0);
+		manager.mainPanel.Elec.setText("총 전력: " + Math.round(elec*100)/100.0 + "W");
 		/*--------------------------종료 조건---------------------------*/
 		if(Terminate()) return;
 		
@@ -30,33 +30,15 @@ public class SPN extends Algorithm{
 				}
 			}
 		}
-		manager.ReadyQueue.create_form(ReadyQueue);
 		/*-------------------------SPN 알고리즘------------------------*/
 		
-		for(int i=0; i<CoreCount; i++) {
-			if(PresentProcess[i] == null) {											// 현재 실행 중인 프로세스가 없을 때
-				if(!ReadyQueue.isEmpty()) {											// ReadyQueue가 비어있지 않으면
-					PresentProcess[i] = ReadyQueue.poll();								// ReadyQueue의 첫 프로세스를 실행
-				}
-				else {																// 레디큐가 비어있으면 대기전력 0.1+
-					elec += 0.1;
-				}
-			}
-		}
+		ReadyQueue_To_PresentProcess();
 		manager.ReadyQueue.create_form(ReadyQueue);
 		
 		for(int i=0; i<ReadyQueue.size(); i++) ReadyQueue.get(i).WaitingTime++;		// WT 계산
 		GUISetting();
 		
-		for(int i=0; i<CoreCount; i++) {
-			if(!(PresentProcess[i] == null)) {
-		    	PresentProcess[i].BurstTime -= CoreWork[i];	// 현재 실행 중인 프로세스가 있다면 Bursttime에서 처리량 빼주기
-		    	if(CoreWork[i] == 1)						// e코어이면 전력+1
-		    		elec += 1;
-		    	else									// p코어이면 전력+3
-		    		elec += 3;
-		    }
-		}
+		ElecBurstTImeCalculate();
 	}
 	
 }

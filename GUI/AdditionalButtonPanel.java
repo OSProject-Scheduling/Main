@@ -9,13 +9,13 @@ import javax.swing.JPanel;
 import Manager.ProjectManager;
 
 public class AdditionalButtonPanel extends JPanel{
-	ProjectManager manager;	
+	private ProjectManager manager;	
 	
-	JButton PauseButton = new JButton("Pause");
+	private JButton PauseButton = new JButton("Pause");
 	
-	JButton ReStartButton = new JButton("Restart");
+	private JButton ReStartButton = new JButton("Restart");
 	
-	JButton ReSetButton = new JButton("Reset");
+	private JButton ReSetButton = new JButton("Reset");
 	
 	public AdditionalButtonPanel(ProjectManager manager) {
 		this.manager = manager;
@@ -40,7 +40,7 @@ public class AdditionalButtonPanel extends JPanel{
 		PauseButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
 				if(!(manager.algorithm == null)) manager.algorithm.timer.cancel();
-				if(!(manager.mfq == null)) manager.mfq.timer.cancel();
+				if(!(manager.mdrq == null)) manager.mdrq.timer.cancel();
 			}
 		});
 		add(PauseButton);
@@ -52,7 +52,7 @@ public class AdditionalButtonPanel extends JPanel{
 		ReStartButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
 				if(!(manager.algorithm == null)) manager.algorithm.start();
-				if(!(manager.mfq == null)) manager.mfq.start();
+				if(!(manager.mdrq == null)) manager.mdrq.start();
 			}
 		});
 		add(ReStartButton);
@@ -64,7 +64,7 @@ public class AdditionalButtonPanel extends JPanel{
 		ReSetButton.addActionListener(new ActionListener() {		// ActionListener
 			public void actionPerformed(ActionEvent e) {
 				if(!(manager.algorithm == null)) manager.algorithm.timer.cancel();
-				if(!(manager.mfq == null)) manager.mfq.timer.cancel();				// mfq 변경 해줘야함
+				if(!(manager.mdrq == null)) manager.mdrq.timer.cancel();				// mfq 변경 해줘야함
 				manager.mainFrame.setContentPane(new MainPanel(manager.mainFrame));
 			}
 		});
